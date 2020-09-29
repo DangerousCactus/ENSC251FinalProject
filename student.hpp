@@ -18,17 +18,26 @@ class Student {
 
   Student();
 
-  string getFirstName();
-  string getLastName();
-  float getcgpa();
-  int getResearchScore();
-  int getApplicationID();
+  string getFirstName() const;
+  string getLastName() const;
+  float getcgpa() const;
+  int getResearchScore() const;
+  int getApplicationID() const;
 
   void setFirstName(string name);
   void setLastName(string name);
   void setcgpa(float cgpa);
   void setResearchScore(int researchScore);
   void setApplicationID(int applicationID);
+
+  int friend compareCGPA(const Student student1, const Student student2);
+  int friend compareResearchScore(const Student student1,
+                                  const Student student2);
+  int friend compareFirstName(const Student student1, const Student student2);
+  int friend compareLastName(const Student student1, const Student student2);
+
+  friend ostream& operator<<(ostream& outs,
+                             const Student& student);
 };
 
 class DomesticStudent : public Student {
@@ -45,31 +54,10 @@ class DomesticStudent : public Student {
 
   DomesticStudent();
 
-  string getProvince();
+  string getProvince() const;
   void setProvince(string province);
-};
 
-class InternationalStudent : public Student {
- private:
-  string country;
-  ToeflScore toefl;
-
- public:
-  InternationalStudent(string firstName,
-                       string lastName,
-                       float cgpa,
-                       int reseachScore,
-                       int applicationID,
-                       string country,
-                       ToeflScore toefl);
-
-  InternationalStudent();
-
-  string getCountry();
-  ToeflScore getToefl();
-
-  void setCountry(string country);
-  void getToefl(ToeflScore toefl);
+  friend ostream& operator<<(ostream& outs, const DomesticStudent& student);
 };
 
 class ToeflScore {
@@ -91,9 +79,35 @@ class ToeflScore {
   void setWriting(int score);
   void setTotal(int score);
 
-  int getReading();
-  int getlistening();
-  int getSpeaking();
-  int getWriting();
-  int getTotal();
+  int getReading() const;
+  int getlistening() const;
+  int getSpeaking() const;
+  int getWriting() const;
+  int getTotal() const;
+};
+
+class InternationalStudent : public Student {
+ private:
+  string country;
+  ToeflScore toefl;
+
+ public:
+  InternationalStudent(string firstName,
+                       string lastName,
+                       float cgpa,
+                       int reseachScore,
+                       int applicationID,
+                       string country,
+                       ToeflScore toefl);
+
+  InternationalStudent();
+
+  void setCountry(string country);
+  void setToefl(ToeflScore toefl);
+
+  string getCountry() const;
+  ToeflScore getToefl() const;
+
+  friend ostream& operator<<(ostream& outs,
+                             const InternationalStudent& student);
 };

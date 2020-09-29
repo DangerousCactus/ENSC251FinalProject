@@ -1,5 +1,6 @@
 // student.cpp to implement your classes
 #include "student.hpp"
+#include <iostream>
 
 Student::Student(string firstName,
                  string lastName,
@@ -14,19 +15,19 @@ Student::Student(string firstName,
 
 Student::Student(){};
 
-string Student::getFirstName() {
+string Student::getFirstName() const {
   return firstName;
 }
-string Student::getLastName() {
+string Student::getLastName() const {
   return lastName;
 }
-float Student::getcgpa() {
+float Student::getcgpa() const {
   return cgpa;
 }
-int Student::getResearchScore() {
+int Student::getResearchScore() const {
   return researchScore;
 }
-int Student::getApplicationID() {
+int Student::getApplicationID() const {
   return applicationID;
 }
 
@@ -58,7 +59,7 @@ DomesticStudent::DomesticStudent(string firstName,
 
 DomesticStudent::DomesticStudent() : Student(){};
 
-string DomesticStudent::getProvince() {
+string DomesticStudent::getProvince() const {
   return province;
 };
 void DomesticStudent::setProvince(string province) {
@@ -79,17 +80,17 @@ InternationalStudent::InternationalStudent(string firstName,
 
 InternationalStudent::InternationalStudent() : Student(){};
 
-string InternationalStudent::getCountry() {
+string InternationalStudent::getCountry() const {
   return country;
 };
-ToeflScore InternationalStudent::getToefl() {
+ToeflScore InternationalStudent::getToefl() const {
   return toefl;
 };
 
 void InternationalStudent::setCountry(string country) {
   this->country = country;
 };
-void InternationalStudent::getToefl(ToeflScore toefl) {
+void InternationalStudent::setToefl(ToeflScore toefl) {
   this->toefl = toefl;
 }
 
@@ -130,18 +131,79 @@ void ToeflScore::setTotal(int score) {
   total = score;
 };
 
-int ToeflScore::getReading() {
+int ToeflScore::getReading() const {
   return reading;
 };
-int ToeflScore::getlistening() {
+int ToeflScore::getlistening() const {
   return listening;
 };
-int ToeflScore::getSpeaking() {
+int ToeflScore::getSpeaking() const {
   return speaking;
 };
-int ToeflScore::getWriting() {
+int ToeflScore::getWriting() const {
   return writing;
 };
-int ToeflScore::getTotal() {
+int ToeflScore::getTotal() const {
   return total;
+};
+
+int compareCGPA(const Student student1, const Student student2) {
+  if (student1.cgpa > student2.cgpa) {
+    return 1;
+  } else if (student1.cgpa < student2.cgpa) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+int compareResearchScore(const Student student1, const Student student2) {
+  if (student1.researchScore > student2.researchScore) {
+    return 1;
+  } else if (student1.researchScore < student2.researchScore) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+int compareFirstName(const Student student1, const Student student2) {
+  if (student1.firstName > student2.firstName) {
+    return 1;
+  } else if (student1.firstName < student2.firstName) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+int compareLastName(const Student student1, const Student student2) {
+  if (student1.lastName > student2.lastName) {
+    return 1;
+  } else if (student1.lastName < student2.lastName) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
+ostream& operator<<(ostream& outs, const Student& student) {
+  outs << "First Name: " << student.getFirstName() << '\n';
+  outs << "Last Name: " << student.getLastName() << '\n';
+  outs << "CGPA: " << student.getcgpa() << '\n';
+  outs << "Research Score: " << student.getResearchScore() << '\n';
+  outs << "Application ID: " << student.getApplicationID() << '\n';
+
+  return outs;
+};
+
+ostream& operator<<(ostream& outs, const DomesticStudent& student) {
+  outs << static_cast<Student>(student);
+  outs << "Province: " << student.province << '\n';
+
+  return outs;
+};
+
+ostream& operator<<(ostream& outs, const InternationalStudent& student) {
+  outs << static_cast<Student>(student);
+  outs << "Country: " << student.country << '\n';
+  // outs << "TOEFL: " << student.country << '\n';
+  return outs;
 };
