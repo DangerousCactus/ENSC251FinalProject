@@ -36,8 +36,7 @@ class Student {
   int friend compareFirstName(const Student student1, const Student student2);
   int friend compareLastName(const Student student1, const Student student2);
 
-  friend ostream& operator<<(ostream& outs,
-                             const Student& student);
+  friend ostream& operator<<(ostream& outs, const Student& student);
 };
 
 class DomesticStudent : public Student {
@@ -69,7 +68,6 @@ class ToeflScore {
   int total;
 
  public:
-  ToeflScore(int reading, int listening, int speaking, int writing, int total);
   ToeflScore(int reading, int listening, int speaking, int writing);
   ToeflScore();
 
@@ -84,6 +82,8 @@ class ToeflScore {
   int getSpeaking() const;
   int getWriting() const;
   int getTotal() const;
+
+  friend ostream& operator<<(ostream& outs, const ToeflScore& score);
 };
 
 class InternationalStudent : public Student {
@@ -99,6 +99,17 @@ class InternationalStudent : public Student {
                        int applicationID,
                        string country,
                        ToeflScore toefl);
+
+  InternationalStudent(string firstName,
+                       string lastName,
+                       float cgpa,
+                       int reseachScore,
+                       int applicationID,
+                       string country,
+                       int reading,
+                       int listening,
+                       int speaking,
+                       int writing);
 
   InternationalStudent();
 

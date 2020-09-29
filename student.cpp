@@ -78,6 +78,21 @@ InternationalStudent::InternationalStudent(string firstName,
   this->toefl = toefl;
 }
 
+InternationalStudent::InternationalStudent(string firstName,
+                                           string lastName,
+                                           float cgpa,
+                                           int reseachScore,
+                                           int applicationID,
+                                           string country,
+                                           int reading,
+                                           int listening,
+                                           int speaking,
+                                           int writing)
+    : Student(firstName, lastName, cgpa, reseachScore, applicationID) {
+  this->country = country;
+  this->toefl = ToeflScore(reading, listening, speaking, writing);
+}
+
 InternationalStudent::InternationalStudent() : Student(){};
 
 string InternationalStudent::getCountry() const {
@@ -93,17 +108,6 @@ void InternationalStudent::setCountry(string country) {
 void InternationalStudent::setToefl(ToeflScore toefl) {
   this->toefl = toefl;
 }
-
-ToeflScore::ToeflScore(int reading,
-                       int listening,
-                       int speaking,
-                       int writing,
-                       int total)
-    : reading(reading),
-      listening(listening),
-      speaking(speaking),
-      writing(writing),
-      total(total) {}
 
 ToeflScore::ToeflScore(int reading, int listening, int speaking, int writing)
     : reading(reading),
@@ -204,6 +208,14 @@ ostream& operator<<(ostream& outs, const DomesticStudent& student) {
 ostream& operator<<(ostream& outs, const InternationalStudent& student) {
   outs << static_cast<Student>(student);
   outs << "Country: " << student.country << '\n';
-  // outs << "TOEFL: " << student.country << '\n';
+  outs << student.toefl;
+  return outs;
+};
+
+ostream& operator<<(ostream& outs, const ToeflScore& score) {
+  outs << "TOEFL Scores:  Reading: " << score.reading
+       << " | Listening: " << score.listening << " | Speaking: " << score.speaking
+       << " | Writing: " << score.writing << '\n';
+
   return outs;
 };
