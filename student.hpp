@@ -65,8 +65,8 @@ class InternationalStudent : public Student {
 
   InternationalStudent();
 
-  void getCountry();
-  void getToefl();
+  string getCountry();
+  ToeflScore getToefl();
 
   void setCountry(string country);
   void getToefl(ToeflScore toefl);
