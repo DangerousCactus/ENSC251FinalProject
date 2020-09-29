@@ -82,6 +82,7 @@ class ToeflScore {
 
  public:
   ToeflScore(int reading, int listening, int speaking, int writing, int total);
+  ToeflScore(int reading, int listening, int speaking, int writing);
   ToeflScore();
 
   void setReading(int score);
