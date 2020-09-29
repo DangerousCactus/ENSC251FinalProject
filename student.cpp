@@ -189,11 +189,11 @@ int compareLastName(const Student student1, const Student student2) {
 };
 
 ostream& operator<<(ostream& outs, const Student& student) {
-  outs << "First Name: " << student.getFirstName() << '\n';
-  outs << "Last Name: " << student.getLastName() << '\n';
-  outs << "CGPA: " << student.getcgpa() << '\n';
-  outs << "Research Score: " << student.getResearchScore() << '\n';
-  outs << "Application ID: " << student.getApplicationID() << '\n';
+  outs << "First Name: " << student.firstName << '\n';
+  outs << "Last Name: " << student.lastName << '\n';
+  outs << "CGPA: " << student.cgpa << '\n';
+  outs << "Research Score: " << student.researchScore << '\n';
+  outs << "Application ID: " << student.applicationID << '\n';
 
   return outs;
 };
@@ -214,8 +214,65 @@ ostream& operator<<(ostream& outs, const InternationalStudent& student) {
 
 ostream& operator<<(ostream& outs, const ToeflScore& score) {
   outs << "TOEFL Scores:  Reading: " << score.reading
-       << " | Listening: " << score.listening << " | Speaking: " << score.speaking
-       << " | Writing: " << score.writing << '\n';
+       << " | Listening: " << score.listening
+       << " | Speaking: " << score.speaking << " | Writing: " << score.writing
+       << '\n';
 
   return outs;
+};
+
+void sortByCgpa(Student* students[], int len) {
+  Student* temp;
+
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+      if (students[j]->cgpa < students[j + 1]->cgpa) {
+        temp = students[j];
+        students[j] = students[j + 1];
+        students[j + 1] = temp;
+      }
+    }
+  }
+};
+
+void sortByResearchScore(Student* students[], int len) {
+  Student* temp;
+
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+      if (students[j]->researchScore < students[j + 1]->researchScore) {
+        temp = students[j];
+        students[j] = students[j + 1];
+        students[j + 1] = temp;
+      }
+    }
+  }
+};
+
+void sortByFirstName(Student* students[], int len) {
+  Student* temp;
+
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+      if (students[j + 1]->firstName < students[j]->firstName) {
+        temp = students[j];
+        students[j] = students[j + 1];
+        students[j + 1] = temp;
+      }
+    }
+  }
+};
+
+void sortByLastName(Student* students[], int len) {
+  Student* temp;
+
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+      if (students[j + 1]->lastName < students[j]->lastName) {
+        temp = students[j];
+        students[j] = students[j + 1];
+        students[j + 1] = temp;
+      }
+    }
+  }
 };

@@ -11,8 +11,8 @@
  *and manipulating classes and objects
  */
 int main() {
-  DomesticStudent domesticStudents[100];
-  InternationalStudent internationalStudents[100];
+  Student* domesticStudents[100];
+  Student* internationalStudents[100];
 
   // Read the domestic-stu.txt file and exit if failed
   string line;
@@ -71,7 +71,7 @@ int main() {
     //  << lastName << " from " << province << " province has cgpa of "
     //  << cgpa << ", and research score of " << researchScore << endl;
     applicationID = 2020000 + dom_stu_count - 1;
-    domesticStudents[dom_stu_count - 1] = DomesticStudent(
+    domesticStudents[dom_stu_count - 1] = new DomesticStudent(
         firstName, lastName, cgpa, researchScore, applicationID, province);
 
     dom_stu_count++;
@@ -125,7 +125,7 @@ int main() {
     writing = atoi(s_writing.c_str());
 
     applicationID = 2020000 + dom_stu_count + int_stu_count - 1;
-    internationalStudents[int_stu_count - 1] = InternationalStudent(
+    internationalStudents[int_stu_count - 1] = new InternationalStudent(
         firstName, lastName, cgpa, researchScore, applicationID, country,
         reading, listening, speaking, writing);
 
@@ -135,16 +135,19 @@ int main() {
   // close your file
   internationalFile.close();
 
-  for (int i = 0; i < sizeof(domesticStudents) / sizeof(*domesticStudents);
-       i++) {
-    cout << domesticStudents[i] << endl;
+  sortByCgpa(domesticStudents, 100);
+  sortByResearchScore(domesticStudents, 100);
+  sortByFirstName(domesticStudents, 100);
+  sortByLastName(domesticStudents, 100);
+  for (int i = 0; i < dom_stu_count - 1; i++) {
+    cout << *domesticStudents[i] << endl;
   }
 
-  for (int i = 0;
-       i < sizeof(internationalStudents) / sizeof(*internationalStudents);
-       i++) {
-    cout << internationalStudents[i] << endl;
-  }
+  // for (int i = 0;
+  //      i < int_stu_count -1;
+  //      i++) {
+  //   cout << *internationalStudents[i] << endl;
+  // }
 
   return 0;
 }

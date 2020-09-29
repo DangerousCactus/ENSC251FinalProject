@@ -2,7 +2,7 @@
 using namespace std;  // use namespace std
 #include <string>     //you will have to use string in C++
 class Student {
- private:
+ protected:
   string firstName;
   string lastName;
   float cgpa;
@@ -37,6 +37,10 @@ class Student {
   int friend compareLastName(const Student student1, const Student student2);
 
   friend ostream& operator<<(ostream& outs, const Student& student);
+  friend void sortByCgpa(Student* students[], int len);
+  friend void sortByResearchScore(Student* students[], int len);
+  friend void sortByFirstName(Student* students[], int len);
+  friend void sortByLastName(Student* students[], int len);
 };
 
 class DomesticStudent : public Student {
