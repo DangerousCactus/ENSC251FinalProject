@@ -88,12 +88,6 @@ int main() {
   getline(internationalFile, line);
   int int_stu_count = 1;
   while (getline(internationalFile, line)) {
-    /*process each line, get each field separated by a comma.
-     *We use istringstream to handle it.
-     *Note in this example code here, we assume the file format
-     *is perfect and do NOT handle error cases. We will leave the
-     *error and exception handling of file format to Lab Assignment 4
-     */
     istringstream ss(line);
 
     string firstName, lastName, country, s_cgpa, s_researchScore, s_reading,
