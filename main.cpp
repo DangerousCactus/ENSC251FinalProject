@@ -35,7 +35,7 @@ int main() {
    *use get and set functions to manipulate your object, and
    *print the object content to the screen
    */
-  int dom_stu_count = 1;
+  int dom_stu_count = 0;
   while (getline(domesticFile, line)) {
     /*process each line, get each field separated by a comma.
      *We use istringstream to handle it.
@@ -70,8 +70,8 @@ int main() {
     //   cout << "Domestic student " << dom_stu_count << " " << firstName << " "
     //  << lastName << " from " << province << " province has cgpa of "
     //  << cgpa << ", and research score of " << researchScore << endl;
-    applicationID = 20200000 + dom_stu_count - 1;
-    domesticStudents[dom_stu_count - 1] = new DomesticStudent(
+    applicationID = 20200000 + dom_stu_count;
+    domesticStudents[dom_stu_count] = new DomesticStudent(
         firstName, lastName, cgpa, researchScore, applicationID, province);
 
     dom_stu_count++;
@@ -86,7 +86,7 @@ int main() {
     return -1;
   }
   getline(internationalFile, line);
-  int int_stu_count = 1;
+  int int_stu_count = 0;
   while (getline(internationalFile, line)) {
     istringstream ss(line);
 
@@ -124,14 +124,13 @@ int main() {
     getline(ss, s_writing, ',');
     writing = atoi(s_writing.c_str());
 
-    applicationID = 20200000 + dom_stu_count + int_stu_count - 1;
-    internationalStudents[int_stu_count - 1] = new InternationalStudent(
+    applicationID = 20200000 + dom_stu_count + int_stu_count;
+    internationalStudents[int_stu_count] = new InternationalStudent(
         firstName, lastName, cgpa, researchScore, applicationID, country,
         reading, listening, speaking, writing);
 
     int_stu_count++;
   }
-  int_stu_count--;
   // close your file
   internationalFile.close();
 
@@ -144,9 +143,9 @@ int main() {
   // }
 
   sortByOverall(internationalStudents, int_stu_count);
-  // for (int i = 0; i < int_stu_count - 1; i++) {
-  //   cout << *internationalStudents[i] << endl;
-  // }
+  for (int i = 0; i < int_stu_count; i++) {
+    cout << *internationalStudents[i] << endl;
+  }
 
   return 0;
 }
