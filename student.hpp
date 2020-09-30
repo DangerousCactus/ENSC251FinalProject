@@ -61,6 +61,8 @@ class DomesticStudent : public Student {
   void setProvince(string province);
 
   friend ostream& operator<<(ostream& outs, const DomesticStudent& student);
+  friend void sortByLocation(DomesticStudent* students[], int len);
+  friend void sortByOverall(DomesticStudent* students[], int len);
 };
 
 class ToeflScore {
@@ -125,4 +127,8 @@ class InternationalStudent : public Student {
 
   friend ostream& operator<<(ostream& outs,
                              const InternationalStudent& student);
+
+  friend void sortByLocation(InternationalStudent* students[], int len);
+  friend void sortByOverall(InternationalStudent* students[], int& len);
+  friend void removeLowToeflScores(InternationalStudent* students[], int& len);
 };

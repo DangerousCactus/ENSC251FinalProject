@@ -221,58 +221,100 @@ ostream& operator<<(ostream& outs, const ToeflScore& score) {
   return outs;
 };
 
-void sortByCgpa(Student* students[], int len) {
-  Student* temp;
+void swap(Student** student1, Student** student2) {
+  Student* temp = *student1;
+  *student1 = *student2;
+  *student2 = temp;
+}
 
+// Decending order
+void sortByCgpa(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++) {
     for (int j = 0; j < len - 1 - i; j++) {
       if (students[j]->cgpa < students[j + 1]->cgpa) {
-        temp = students[j];
-        students[j] = students[j + 1];
-        students[j + 1] = temp;
+        swap(students[j], students[j + 1]);
       }
     }
   }
 };
 
 void sortByResearchScore(Student* students[], int len) {
-  Student* temp;
-
   for (int i = 0; i < len - 1; i++) {
     for (int j = 0; j < len - 1 - i; j++) {
       if (students[j]->researchScore < students[j + 1]->researchScore) {
-        temp = students[j];
-        students[j] = students[j + 1];
-        students[j + 1] = temp;
+        swap(students[j], students[j + 1]);
       }
     }
   }
 };
 
+// Alphabetical order (A -> Z)
 void sortByFirstName(Student* students[], int len) {
-  Student* temp;
-
   for (int i = 0; i < len - 1; i++) {
     for (int j = 0; j < len - 1 - i; j++) {
       if (students[j + 1]->firstName < students[j]->firstName) {
-        temp = students[j];
-        students[j] = students[j + 1];
-        students[j + 1] = temp;
+        swap(students[j], students[j + 1]);
       }
     }
   }
 };
 
 void sortByLastName(Student* students[], int len) {
-  Student* temp;
-
   for (int i = 0; i < len - 1; i++) {
     for (int j = 0; j < len - 1 - i; j++) {
       if (students[j + 1]->lastName < students[j]->lastName) {
-        temp = students[j];
-        students[j] = students[j + 1];
-        students[j + 1] = temp;
+        swap(students[j], students[j + 1]);
       }
     }
   }
 };
+
+void sortByLocation(DomesticStudent* students[], int len) {
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+      if (students[j + 1]->province < students[j]->province) {
+        swap(students[j], students[j + 1]);
+      }
+    }
+  }
+}
+
+void sortByLocation(InternationalStudent* students[], int len) {
+  for (int i = 0; i < len - 1; i++) {
+    for (int j = 0; j < len - 1 - i; j++) {
+      if (students[j + 1]->country < students[j]->country) {
+        swap(students[j], students[j + 1]);
+      }
+    }
+  }
+}
+
+void sortByOverall(DomesticStudent* students[], int len) {
+  sortByLocation(students, len);
+  sortByCgpa((Student**)students, len);
+  sortByResearchScore((Student**)students, len);
+}
+
+void removeLowToeflScores(InternationalStudent* students[], int& len) {
+  int i = 0;
+  while (i < len) {
+    if (students[i]->toefl.getlistening() < 20 ||
+        students[i]->toefl.getReading() < 20 ||
+        students[i]->toefl.getWriting() < 20 ||
+        students[i]->toefl.getSpeaking() < 20 ||
+        students[i]->toefl.getTotal() < 93) {
+      //cout << students[i]->firstName << students[i]->lastName << students[i]->toefl;
+      swap(students[i], students[len - 1]);
+      len--;
+    } else {
+      i++;
+    }
+  }
+}
+
+void sortByOverall(InternationalStudent* students[], int& len) {
+  removeLowToeflScores(students, len);
+  sortByLocation(students, len);
+  sortByCgpa((Student**)students, len);
+  sortByResearchScore((Student**)students, len);
+}

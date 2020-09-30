@@ -11,8 +11,8 @@
  *and manipulating classes and objects
  */
 int main() {
-  Student* domesticStudents[100];
-  Student* internationalStudents[100];
+  DomesticStudent* domesticStudents[100];
+  InternationalStudent* internationalStudents[100];
 
   // Read the domestic-stu.txt file and exit if failed
   string line;
@@ -70,7 +70,7 @@ int main() {
     //   cout << "Domestic student " << dom_stu_count << " " << firstName << " "
     //  << lastName << " from " << province << " province has cgpa of "
     //  << cgpa << ", and research score of " << researchScore << endl;
-    applicationID = 2020000 + dom_stu_count - 1;
+    applicationID = 20200000 + dom_stu_count - 1;
     domesticStudents[dom_stu_count - 1] = new DomesticStudent(
         firstName, lastName, cgpa, researchScore, applicationID, province);
 
@@ -124,28 +124,27 @@ int main() {
     getline(ss, s_writing, ',');
     writing = atoi(s_writing.c_str());
 
-    applicationID = 2020000 + dom_stu_count + int_stu_count - 1;
+    applicationID = 20200000 + dom_stu_count + int_stu_count - 1;
     internationalStudents[int_stu_count - 1] = new InternationalStudent(
         firstName, lastName, cgpa, researchScore, applicationID, country,
         reading, listening, speaking, writing);
 
     int_stu_count++;
   }
-
+  int_stu_count--;
   // close your file
   internationalFile.close();
 
-  sortByCgpa(domesticStudents, 100);
-  sortByResearchScore(domesticStudents, 100);
-  sortByFirstName(domesticStudents, 100);
-  sortByLastName(domesticStudents, 100);
-  for (int i = 0; i < dom_stu_count - 1; i++) {
-    cout << *domesticStudents[i] << endl;
-  }
+  // sortByOverall(domesticStudents, 100);
+  // //sortByResearchScore((Student**)domesticStudents, 100);
+  // // sortByFirstName(domesticStudents, 100);
+  // // sortByLastName(domesticStudents, 100);
+  // for (int i = 0; i < dom_stu_count - 1; i++) {
+  //   cout << *domesticStudents[i] << endl;
+  // }
 
-  // for (int i = 0;
-  //      i < int_stu_count -1;
-  //      i++) {
+  sortByOverall(internationalStudents, int_stu_count);
+  // for (int i = 0; i < int_stu_count - 1; i++) {
   //   cout << *internationalStudents[i] << endl;
   // }
 
