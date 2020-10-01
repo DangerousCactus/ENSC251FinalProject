@@ -1,6 +1,6 @@
-// header file student.hpp to declare your classes
 using namespace std;  // use namespace std
 #include <string>     //you will have to use string in C++
+
 class Student {
  protected:
   string firstName;
@@ -10,10 +10,7 @@ class Student {
   int applicationID;
 
  public:
-  Student(string firstName,
-          string lastName,
-          float cgpa,
-          int reseachScore,
+  Student(string firstName, string lastName, float cgpa, int reseachScore,
           int applicationID);
 
   Student();
@@ -37,10 +34,6 @@ class Student {
   int friend compareLastName(const Student student1, const Student student2);
 
   friend ostream& operator<<(ostream& outs, const Student& student);
-  friend void sortByCgpa(Student* students[], int len);
-  friend void sortByResearchScore(Student* students[], int len);
-  friend void sortByFirstName(Student* students[], int len);
-  friend void sortByLastName(Student* students[], int len);
 };
 
 class DomesticStudent : public Student {
@@ -48,12 +41,8 @@ class DomesticStudent : public Student {
   string province;
 
  public:
-  DomesticStudent(string firstName,
-                  string lastName,
-                  float cgpa,
-                  int reseachScore,
-                  int applicationID,
-                  string province);
+  DomesticStudent(string firstName, string lastName, float cgpa,
+                  int reseachScore, int applicationID, string province);
 
   DomesticStudent();
 
@@ -62,7 +51,6 @@ class DomesticStudent : public Student {
 
   friend ostream& operator<<(ostream& outs, const DomesticStudent& student);
   friend void sortByLocation(DomesticStudent* students[], int len);
-  friend void sortByOverall(DomesticStudent* students[], int len);
 };
 
 class ToeflScore {
@@ -98,24 +86,13 @@ class InternationalStudent : public Student {
   ToeflScore toefl;
 
  public:
-  InternationalStudent(string firstName,
-                       string lastName,
-                       float cgpa,
-                       int reseachScore,
-                       int applicationID,
-                       string country,
+  InternationalStudent(string firstName, string lastName, float cgpa,
+                       int reseachScore, int applicationID, string country,
                        ToeflScore toefl);
 
-  InternationalStudent(string firstName,
-                       string lastName,
-                       float cgpa,
-                       int reseachScore,
-                       int applicationID,
-                       string country,
-                       int reading,
-                       int listening,
-                       int speaking,
-                       int writing);
+  InternationalStudent(string firstName, string lastName, float cgpa,
+                       int reseachScore, int applicationID, string country,
+                       int reading, int listening, int speaking, int writing);
 
   InternationalStudent();
 
@@ -129,6 +106,13 @@ class InternationalStudent : public Student {
                              const InternationalStudent& student);
 
   friend void sortByLocation(InternationalStudent* students[], int len);
-  friend void sortByOverall(InternationalStudent* students[], int& len);
   friend void removeLowToeflScores(InternationalStudent* students[], int& len);
 };
+
+void sortByCgpa(Student* students[], int len);
+void sortByResearchScore(Student* students[], int len);
+void sortByFirstName(Student* students[], int len);
+void sortByLastName(Student* students[], int len);
+void sortByOverall(Student* students[], int& len);
+void sortByOverall(DomesticStudent* students[], int len);
+void sortByOverall(InternationalStudent* students[], int& len);
