@@ -20,3 +20,7 @@ student.o: student.cpp
 #remove built files
 clean:
 	rm -rf main main.o student.o *~
+
+#Zip the files (for GitHub CI)
+zip:
+	mkdir finalProject && cp -f ./*.* Makefile finalProject/ && zip -r finalProject.zip finalProject && rm -rf finalProject/

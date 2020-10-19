@@ -8,11 +8,22 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: make
-      run: make
+      - uses: actions/checkout@v2
+      - name: make
+        run: |
+          make
+          make clean
+          make zip
+
+      - name: Upload-Code
+        uses: actions/upload-artifact@v2
+        with:
+          name: finalProject.zip
+          path: finalProject.zip
+
+
+      
 

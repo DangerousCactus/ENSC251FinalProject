@@ -193,11 +193,11 @@ ostream& operator<<(ostream& outs, const ToeflScore& score) {
   return outs;
 };
 
-void swap(Student** student1, Student** student2) {
-  Student* temp = *student1;
-  *student1 = *student2;
-  *student2 = temp;
-}
+// void swap(Student** student1, Student** student2) {
+//   Student* temp = *student1;
+//   *student1 = *student2;
+//   *student2 = temp;
+// }
 
 // Decending order
 void sortByCgpa(Student* students[], int len) {
