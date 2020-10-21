@@ -2,7 +2,7 @@ using namespace std;  // use namespace std
 #include <string>     //you will have to use string in C++
 
 class Student {
- protected:
+ private:
   string firstName;
   string lastName;
   float cgpa;

@@ -6,7 +6,7 @@ Student::Student(string firstName, string lastName, float cgpa,
     : firstName(firstName), lastName(lastName), cgpa(cgpa),
       researchScore(reseachScore), applicationID(applicationID) {}
 
-Student::Student(){};
+Student::Student() {}
 
 string Student::getFirstName() const {
   return firstName;
@@ -51,10 +51,10 @@ DomesticStudent::DomesticStudent() : Student(){};
 
 string DomesticStudent::getProvince() const {
   return province;
-};
+}
 void DomesticStudent::setProvince(string province) {
   this->province = province;
-};
+}
 
 InternationalStudent::InternationalStudent(string firstName, string lastName,
                                            float cgpa, int reseachScore,
@@ -79,14 +79,14 @@ InternationalStudent::InternationalStudent() : Student(){};
 
 string InternationalStudent::getCountry() const {
   return country;
-};
+}
 ToeflScore InternationalStudent::getToefl() const {
   return toefl;
-};
+}
 
 void InternationalStudent::setCountry(string country) {
   this->country = country;
-};
+}
 void InternationalStudent::setToefl(ToeflScore toefl) {
   this->toefl = toefl;
 }
@@ -101,64 +101,60 @@ ToeflScore::ToeflScore() {}
 
 void ToeflScore::setReading(int score) {
   reading = score;
-};
+}
 void ToeflScore::setlistening(int score) {
   listening = score;
-};
+}
 void ToeflScore::setSpeaking(int score) {
   speaking = score;
-};
+}
 void ToeflScore::setWriting(int score) {
   writing = score;
-};
+}
 void ToeflScore::setTotal(int score) {
   total = score;
-};
+}
 
 int ToeflScore::getReading() const {
   return reading;
-};
+}
 int ToeflScore::getlistening() const {
   return listening;
-};
+}
 int ToeflScore::getSpeaking() const {
   return speaking;
-};
+}
 int ToeflScore::getWriting() const {
   return writing;
-};
+}
 int ToeflScore::getTotal() const {
   return total;
-};
+}
 
 int compareCGPA(const Student student1, const Student student2) {
-  if (student1.cgpa < student2.cgpa) {
+  if (student1.cgpa < student2.cgpa)
     return -1;
-  } else {
+  else
     return student1.cgpa > student2.cgpa;
-  }
-};
+}
 int compareResearchScore(const Student student1, const Student student2) {
-  if (student1.researchScore < student2.researchScore) {
+  if (student1.researchScore < student2.researchScore)
     return -1;
-  } else {
+  else
     return student1.researchScore > student2.researchScore;
-  }
-};
+}
 int compareFirstName(const Student student1, const Student student2) {
-  if (student1.firstName < student2.firstName) {
+  if (student1.firstName < student2.firstName)
     return -1;
-  } else {
+  else
     return student1.firstName > student2.firstName;
-  }
-};
+}
 int compareLastName(const Student student1, const Student student2) {
-  if (student1.lastName < student2.lastName) {
+  if (student1.lastName < student2.lastName)
     return -1;
-  } else {
+  else
     return student1.lastName > student2.lastName;
-  }
-};
+}
 
 ostream& operator<<(ostream& outs, const Student& student) {
   outs << "First Name: " << student.firstName << '\n';
@@ -168,21 +164,21 @@ ostream& operator<<(ostream& outs, const Student& student) {
   outs << "Application ID: " << student.applicationID << '\n';
 
   return outs;
-};
+}
 
 ostream& operator<<(ostream& outs, const DomesticStudent& student) {
   outs << static_cast<Student>(student);
   outs << "Province: " << student.province << '\n';
 
   return outs;
-};
+}
 
 ostream& operator<<(ostream& outs, const InternationalStudent& student) {
   outs << static_cast<Student>(student);
   outs << "Country: " << student.country << '\n';
   outs << student.toefl;
   return outs;
-};
+}
 
 ostream& operator<<(ostream& outs, const ToeflScore& score) {
   outs << "TOEFL Scores:  Reading: " << score.reading
@@ -191,74 +187,50 @@ ostream& operator<<(ostream& outs, const ToeflScore& score) {
        << '\n';
 
   return outs;
-};
-
-// void swap(Student** student1, Student** student2) {
-//   Student* temp = *student1;
-//   *student1 = *student2;
-//   *student2 = temp;
-// }
+}
 
 // Decending order
 void sortByCgpa(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = 0; j < len - 1 - i; j++) {
-      if (compareCGPA(*students[j], *students[j + 1]) < 0) {
+  for (int i = 0; i < len - 1; i++)
+    for (int j = 0; j < len - 1 - i; j++)
+      if (compareCGPA(*students[j], *students[j + 1]) < 0)
         swap(students[j], students[j + 1]);
-      }
-    }
-  }
-};
+}
 
 void sortByResearchScore(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = 0; j < len - 1 - i; j++) {
-      if (compareResearchScore(*students[j], *students[j + 1]) < 0) {
+  for (int i = 0; i < len - 1; i++)
+    for (int j = 0; j < len - 1 - i; j++)
+      if (compareResearchScore(*students[j], *students[j + 1]) < 0)
         swap(students[j], students[j + 1]);
-      }
-    }
-  }
-};
+}
 
 // Alphabetical order (A -> Z)
 void sortByFirstName(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = 0; j < len - 1 - i; j++) {
-      if (compareFirstName(*students[j], *students[j + 1]) > 0) {
+  for (int i = 0; i < len - 1; i++)
+    for (int j = 0; j < len - 1 - i; j++)
+      if (compareFirstName(*students[j], *students[j + 1]) > 0)
         swap(students[j], students[j + 1]);
-      }
-    }
-  }
-};
+}
 
 void sortByLastName(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = 0; j < len - 1 - i; j++) {
-      if (compareLastName(*students[j], *students[j + 1]) > 0) {
+  for (int i = 0; i < len - 1; i++)
+    for (int j = 0; j < len - 1 - i; j++)
+      if (compareLastName(*students[j], *students[j + 1]) > 0)
         swap(students[j], students[j + 1]);
-      }
-    }
-  }
-};
+}
 
 void sortByLocation(DomesticStudent* students[], int len) {
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = 0; j < len - 1 - i; j++) {
-      if (students[j + 1]->province < students[j]->province) {
+  for (int i = 0; i < len - 1; i++)
+    for (int j = 0; j < len - 1 - i; j++)
+      if (students[j + 1]->province < students[j]->province)
         swap(students[j], students[j + 1]);
-      }
-    }
-  }
 }
 
 void sortByLocation(InternationalStudent* students[], int len) {
-  for (int i = 0; i < len - 1; i++) {
-    for (int j = 0; j < len - 1 - i; j++) {
-      if (students[j + 1]->country < students[j]->country) {
+  for (int i = 0; i < len - 1; i++)
+    for (int j = 0; j < len - 1 - i; j++)
+      if (students[j + 1]->country < students[j]->country)
         swap(students[j], students[j + 1]);
-      }
-    }
-  }
 }
 
 void sortByOverall(Student* students[], int& len) {
