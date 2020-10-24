@@ -4,7 +4,9 @@
 #include <fstream>   //file processing
 #include <iostream>  //cin and cout
 #include <sstream>   //formatted string processing
-#include "student.hpp"
+#include "domesticStudent.hpp"
+#include "internationalStudent.hpp"
+
 
 /*I provide example code here to help you read the input
  *data from a file, so that you can focus on creating
