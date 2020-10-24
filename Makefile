@@ -6,8 +6,8 @@ run: main
 	./main
 
 #link main.o and student.o to executable main
-main: main.o student.o
-	g++ -g -o main main.o student.o
+main: main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o
+	g++ -g -o main main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o
 
 #compile the main.cpp to main.o
 main.o: main.cpp
@@ -17,9 +17,21 @@ main.o: main.cpp
 student.o: student.cpp
 	g++ -g -c student.cpp
 
+#compile the student.cpp to student.o
+internationalStudent.o: student.cpp
+	g++ -g -c internationalStudent.cpp
+
+#compile the student.cpp to student.o
+domesticStudent.o: student.cpp
+	g++ -g -c domesticStudent.cpp
+
+#compile the student.cpp to student.o
+TOEFLScore.o: student.cpp
+	g++ -g -c TOEFLScore.cpp
+
 #remove built files
 clean:
-	rm -rf main main.o student.o *~
+	rm -rf main *.o *~
 
 #Zip the files (for GitHub CI)
 zip:
