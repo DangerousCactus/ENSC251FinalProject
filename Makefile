@@ -17,15 +17,15 @@ main.o: main.cpp
 student.o: student.cpp
 	g++ -g -c student.cpp
 
-#compile the student.cpp to student.o
+#compile the internationalStudent.cpp to internationalStudent.o
 internationalStudent.o: student.cpp
 	g++ -g -c internationalStudent.cpp
 
-#compile the student.cpp to student.o
+#compile the domesticStudent.cpp to domesticStudent.o
 domesticStudent.o: student.cpp
 	g++ -g -c domesticStudent.cpp
 
-#compile the student.cpp to student.o
+#compile the TOEFLScore.cpp to TOEFLScore.o
 TOEFLScore.o: student.cpp
 	g++ -g -c TOEFLScore.cpp
 
