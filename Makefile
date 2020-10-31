@@ -31,8 +31,17 @@ TOEFLScore.o: student.cpp
 
 #remove built files
 clean:
-	rm -rf main *.o *~
+	rm -rf build main *.o *~
 
 #Zip the files (for GitHub CI)
 zip:
 	mkdir finalProject && cp -f ./*.* Makefile finalProject/ && zip -r finalProject.zip finalProject && rm -rf finalProject/
+
+#Test using gtest and CMaKE
+gtest:
+	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -B build/ -G "Unix Makefiles" &&\
+	cmake --build build/ --config Debug --target all -- -j 10 &&\
+	cmake --build build/ --config Debug --target all -- -j 10
+
+tests:
+	build/test/tests

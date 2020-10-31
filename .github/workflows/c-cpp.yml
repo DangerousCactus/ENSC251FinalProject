@@ -11,21 +11,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: make
+        run: make
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install gtest manually
+        run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
+      - name: make and check
         run: |
-          make
-          make clean
-          make zip
-
-      - name: Upload-Code
-        uses: actions/upload-artifact@v2
-        with:
-          name: finalProject.zip
-          path: finalProject.zip
-
-
-      
+          make gtest
+          make tests      
 
