@@ -12,7 +12,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: build
       - uses: actions/checkout@v2
       - name: make
         run: make
@@ -20,8 +19,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install gtest manually
       - uses: actions/checkout@v2
+      - name: Install gtest manually
         run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
       - name: make and check
         run: |
