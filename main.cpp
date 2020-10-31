@@ -2,8 +2,50 @@
 #include <fstream>   //file processing
 #include <iostream>  //cin and cout
 #include <sstream>   //formatted string processing
+#include <climits>
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
+
+const std::string RED = "\033[31m";
+const std::string GREEN = "\033[32m";
+const std::string YELLOW = "\033[33m";
+const std::string BOLD = "\033[1m";
+const std::string CLEAR = "\033[0m";
+
+// 
+void forceIntInput(std::istream& inps, std::string message, int& field, int maxAllow) {
+  bool fail = false;
+  bool valid = false;
+  do {
+    std::cout << message;
+    inps >> field;
+
+    fail = inps.fail();
+    if (fail) {
+      inps.clear();
+      inps.ignore(INT_MAX, '\n');
+      std::cout << YELLOW << BOLD << "Enter a number please. Try again:\n"
+                << CLEAR;
+      continue;
+    }
+
+    inps.ignore(INT_MAX, '\n');
+
+    if(field > maxAllow){
+      std::cout << YELLOW << BOLD
+                << "Please enter a valid selection. Try again:\n"
+                << CLEAR;
+    } else if (field > 0) {
+      valid = true;
+    } else {
+      std::cout << YELLOW << BOLD
+                << "Please enter a positive number. Try again:\n"
+                << CLEAR;
+    }
+
+  } while (!valid);
+}
+
 
 int main() {
   DomesticStudent* domesticStudents[100];
@@ -113,10 +155,83 @@ int main() {
 
   // End reading of files and loading of student data
 
-  sortByOverall(internationalStudents, int_stu_count);
-  for (int i = 0; i < int_stu_count; i++) {
-    cout << *internationalStudents[i] << endl;
+  // sortByOverall(internationalStudents, int_stu_count);
+  // for (int i = 0; i < int_stu_count; i++) {
+  //   cout << *internationalStudents[i] << endl;
+  // }
+
+
+  int domOrInt = 0, sortType = 0;
+
+  while(true){
+    cout << string(50, '-') << '\n';
+    cout << "Student Database\n";
+    cout << string(50, '-') << '\n';
+
+
+    cout << "1. Domestic" << endl;  
+    cout << "2. International" << endl;
+ 
+    forceIntInput(cin, "Choose International or Domestic student database: ", domOrInt, 2);
+
+    cout << "Sorting Order" << endl;
+    cout << "1. CGPA" << endl;
+    cout << "2. Research Score" << endl;
+    cout << "3. First Name" << endl;
+    cout << "4. Last Name" << endl;
+    cout << "5. Overall" << endl;
+    cout << "6. Quit" << endl;
+
+
+    forceIntInput(cin, "Choose a sorting order: ", sortType, 6);
+ 
+    
+    switch(sortType){
+      case 1:
+        if(domOrInt == 1)
+          sortByCGPA((Student**)domesticStudents, dom_stu_count);
+        else
+          sortByCGPA((Student**)internationalStudents, int_stu_count);
+        break;
+      case 2:
+        if(domOrInt == 1)
+          sortByResearchScore((Student**)domesticStudents, dom_stu_count);
+        else
+          sortByResearchScore((Student**)internationalStudents, int_stu_count);
+        break;
+      case 3:
+        if(domOrInt == 1)
+          sortByFirstName((Student**)domesticStudents, dom_stu_count);
+        else
+          sortByFirstName((Student**)internationalStudents, int_stu_count);
+        break;
+      case 4:
+        if(domOrInt == 1)
+          sortByLastName((Student**)domesticStudents, dom_stu_count);
+        else
+          sortByLastName((Student**)internationalStudents, int_stu_count);
+        break;
+      case 5:
+        if(domOrInt == 1)
+          sortByOverall(domesticStudents, dom_stu_count);
+        else
+          sortByOverall(internationalStudents, int_stu_count);
+        break;
+      case 6:
+        cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLEAR;
+        return 0;
+      default:
+        cout <<  RED << "\nInvalid Input!"<<BOLD <<"\n\nPlease try again\n\n" << CLEAR <<endl;
+      
+    }
+      if(domOrInt == 1)
+        for (int i = 0; i < dom_stu_count; i++) 
+          cout << *domesticStudents[i] << endl;
+      else
+        for (int i = 0; i < int_stu_count; i++) 
+          cout << *internationalStudents[i] << endl;
+
+
   }
 
-  return 0;
 }

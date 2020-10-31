@@ -8,6 +8,7 @@ Student::Student(string firstName, string lastName, float cgpa,
 
 Student::Student() {}
 
+// Gets
 string Student::getFirstName() const {
   return firstName;
 }
@@ -24,6 +25,7 @@ int Student::getApplicationID() const {
   return applicationID;
 }
 
+// Sets
 void Student::setFirstName(string name) {
   firstName = name;
 }
@@ -40,24 +42,31 @@ void Student::setApplicationID(int applicationID) {
   this->applicationID = applicationID;
 }
 
+//
 int compareCGPA(const Student student1, const Student student2) {
   if (student1.cgpa < student2.cgpa)
     return -1;
   else
     return student1.cgpa > student2.cgpa;
 }
+
+//
 int compareResearchScore(const Student student1, const Student student2) {
   if (student1.researchScore < student2.researchScore)
     return -1;
   else
     return student1.researchScore > student2.researchScore;
 }
+
+//
 int compareFirstName(const Student student1, const Student student2) {
   if (student1.firstName < student2.firstName)
     return -1;
   else
     return student1.firstName > student2.firstName;
 }
+
+//
 int compareLastName(const Student student1, const Student student2) {
   if (student1.lastName < student2.lastName)
     return -1;
@@ -65,6 +74,7 @@ int compareLastName(const Student student1, const Student student2) {
     return student1.lastName > student2.lastName;
 }
 
+//
 ostream& operator<<(ostream& outs, const Student& student) {
   outs << "First Name: " << student.firstName << '\n';
   outs << "Last Name: " << student.lastName << '\n';

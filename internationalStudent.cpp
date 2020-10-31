@@ -25,6 +25,7 @@ InternationalStudent::InternationalStudent(string firstName, string lastName,
 
 InternationalStudent::InternationalStudent() : Student(){};
 
+// Gets
 string InternationalStudent::getCountry() const {
   return country;
 }
@@ -32,24 +33,33 @@ ToeflScore InternationalStudent::getToefl() const {
   return toefl;
 }
 
+// Sets
 void InternationalStudent::setCountry(string country) {
   this->country = country;
 }
 void InternationalStudent::setToefl(ToeflScore toefl) {
   this->toefl = toefl;
 }
+
+// Overloads the << operator to output the country
 ostream& operator<<(ostream& outs, const InternationalStudent& student) {
   outs << static_cast<Student>(student);
   outs << "Country: " << student.country << '\n';
   outs << student.toefl;
   return outs;
 }
+
+// sortByLocation
+// Sorts students by location based on country in ascending order
 void sortByLocation(InternationalStudent* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (students[j + 1]->country < students[j]->country)
         swap(students[j], students[j + 1]);
 }
+
+// removeLowToeflScores
+// 
 void removeLowToeflScores(InternationalStudent* students[], int& len) {
   int i = 0;
   while (i < len) {
@@ -67,6 +77,10 @@ void removeLowToeflScores(InternationalStudent* students[], int& len) {
     }
   }
 }
+
+// sortByOverall
+// Sorts students by Research Score first, then CGPA. If same CGPA, 
+// Country is used in ascending order.
 void sortByOverall(InternationalStudent* students[], int& len) {
   removeLowToeflScores(students, len);
   sortByLocation(students, len);

@@ -39,7 +39,7 @@ class Student {
   friend ostream& operator<<(ostream& outs, const Student& student);
 };
 
-void sortbyCGPA(Student* students[], int len);
+void sortByCGPA(Student* students[], int len);
 void sortByResearchScore(Student* students[], int len);
 void sortByFirstName(Student* students[], int len);
 void sortByLastName(Student* students[], int len);

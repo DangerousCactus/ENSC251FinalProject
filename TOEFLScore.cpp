@@ -8,6 +8,7 @@ ToeflScore::ToeflScore(int reading, int listening, int speaking, int writing)
 
 ToeflScore::ToeflScore() {}
 
+// Sets
 void ToeflScore::setReading(int score) {
   reading = score;
 }
@@ -24,6 +25,7 @@ void ToeflScore::setTotal(int score) {
   total = score;
 }
 
+// Gets
 int ToeflScore::getReading() const {
   return reading;
 }
@@ -39,6 +41,9 @@ int ToeflScore::getWriting() const {
 int ToeflScore::getTotal() const {
   return total;
 }
+
+// Overloads << operator to output TOEFL scores in the order:
+// Reading, Lisenting, Speaking, Writing
 ostream& operator<<(ostream& outs, const ToeflScore& score) {
   outs << "TOEFL Scores:  Reading: " << score.reading
        << " | Listening: " << score.listening

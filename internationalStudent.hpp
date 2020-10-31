@@ -26,6 +26,7 @@ class InternationalStudent : public Student {
   string getCountry() const;
   ToeflScore getToefl() const;
 
+  // Overloads the << operator to output the country
   friend ostream& operator<<(ostream& outs,
                              const InternationalStudent& student);
 
