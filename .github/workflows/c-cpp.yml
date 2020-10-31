@@ -18,10 +18,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: make and check
         run: |
-          make
-          make clean
           make gtest
-          make test
+          make tests
           make zip
 
       - name: Upload-Code

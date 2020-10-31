@@ -31,7 +31,7 @@ TOEFLScore.o: student.cpp
 
 #remove built files
 clean:
-	rm -rf main *.o *~
+	rm -rf build main *.o *~
 
 #Zip the files (for GitHub CI)
 zip:
@@ -41,7 +41,7 @@ zip:
 gtest:
 	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -H/root/ENSC252/finalProject -B/root/ENSC252/finalProject/build -G "Unix Makefiles" &&\
 	/usr/bin/cmake --build /root/ENSC252/finalProject/build --config Debug --target all -- -j 10 &&\
-	/usr/bin/cmake --build /root/ENSC252/finalProject/build --config Debug --target all -- -j 10 &&\
+	/usr/bin/cmake --build /root/ENSC252/finalProject/build --config Debug --target all -- -j 10
 
-test:
+tests:
 	/root/ENSC252/finalProject/build/test/tests
