@@ -40,8 +40,7 @@ zip:
 #Test using gtest and CMaKE
 gtest:
 	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -B build/ -G "Unix Makefiles" &&\
-	cmake --build build/ --config Debug --target all -- -j 10 &&\
-	cmake --build build/ --config Debug --target all -- -j 10
+	cmake --build build/ --config Debug --target all -- -j 10 
 
 tests:
 	build/test/tests
