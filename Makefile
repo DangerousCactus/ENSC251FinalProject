@@ -39,7 +39,7 @@ zip:
 
 #Test using gtest and CMaKE
 gtest:
-	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -H/root/ENSC252/finalProject -B/root/ENSC252/finalProject/build -G "Unix Makefiles" &&\
+	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -B build/ -G "Unix Makefiles" &&\
 	cmake --build build/ --config Debug --target all -- -j 10 &&\
 	cmake --build build/ --config Debug --target all -- -j 10
 
