@@ -60,11 +60,9 @@ void sortByLocation(InternationalStudent* students[], int len) {
 }
 
 // removeLowToeflScores
-<<<<<<< HEAD
 // Drops student if their TOEFL scores does not meet the threshold
 =======
-//
->>>>>>> origin/main
+
 void removeLowToeflScores(InternationalStudent* students[], int& len) {
   int i = 0;
   while (i < len) {
@@ -84,13 +82,9 @@ void removeLowToeflScores(InternationalStudent* students[], int& len) {
 }
 
 // sortByOverall
-<<<<<<< HEAD
 // Sorts students by Research Score first, then CGPA. If same CGPA, 
 // Country is used in ascending order (A - Z).
-=======
-// Sorts students by Research Score first, then CGPA. If same CGPA,
-// Country is used in ascending order.
->>>>>>> origin/main
+
 void sortByOverall(InternationalStudent* students[], int& len) {
   removeLowToeflScores(students, len);
   sortByLocation(students, len);
