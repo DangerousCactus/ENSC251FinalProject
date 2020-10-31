@@ -36,3 +36,12 @@ clean:
 #Zip the files (for GitHub CI)
 zip:
 	mkdir finalProject && cp -f ./*.* Makefile finalProject/ && zip -r finalProject.zip finalProject && rm -rf finalProject/
+
+#Test using gtest and CMaKE
+gtest:
+	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -H/root/ENSC252/finalProject -B/root/ENSC252/finalProject/build -G "Unix Makefiles" &&\
+	/usr/bin/cmake --build /root/ENSC252/finalProject/build --config Debug --target all -- -j 10 &&\
+	/usr/bin/cmake --build /root/ENSC252/finalProject/build --config Debug --target all -- -j 10 &&\
+
+test:
+	/root/ENSC252/finalProject/build/test/tests

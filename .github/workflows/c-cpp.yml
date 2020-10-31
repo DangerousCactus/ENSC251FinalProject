@@ -14,10 +14,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: make
+      - name: make and check
         run: |
           make
           make clean
+          make gtest
+          make test
           make zip
 
       - name: Upload-Code
