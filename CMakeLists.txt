@@ -10,7 +10,7 @@ set(CMAKE_POSITION_INDEPENDENT ON)
 
 enable_testing()
 
-add_subdirectory(googletest)
+add_subdirectory(/usr/src/googletest/googletest googletest)
 
 set(Headers
     student.hpp
