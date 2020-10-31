@@ -75,7 +75,7 @@ int compareLastName(const Student student1, const Student student2) {
     return student1.lastName > student2.lastName;
 }
 
-// Overloads << operator to output student information including: 
+// Overloads << operator to output student information including:
 // First Name, Last Name, CGPA, Research Score, Application ID.
 ostream& operator<<(ostream& outs, const Student& student) {
   outs << setw(15) << left << student.firstName << ' ' << setw(15) << left
@@ -120,7 +120,7 @@ void sortByLastName(Student* students[], int len) {
 }
 
 // sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA, 
+// Sorts students by Research Score first, then CGPA. If same CGPA,
 // Province or Country is used in ascending order (A - Z).
 void sortByOverall(Student* students[], int& len) {
   sortByCGPA(students, len);

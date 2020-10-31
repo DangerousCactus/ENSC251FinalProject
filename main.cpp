@@ -12,11 +12,10 @@ const std::string YELLOW = "\033[33m";
 const std::string BOLD = "\033[1m";
 const std::string CLEAR = "\033[0m";
 
-
 // forceIntInput
 // Helper function to reject invalid input and suggests possible correction
-void forceIntInput(std::istream& inps, std::string message, int& field, int maxAllow) {
-
+void forceIntInput(std::istream& inps, std::string message, int& field,
+                   int maxAllow) {
   bool fail = false;
   bool valid = false;
   do {
@@ -164,10 +163,9 @@ int main() {
 
   int domOrInt = 0, sortType = 0;
 
-
-// Menu while loop
-// User chooses either Domestic or International student database
-  while(true){
+  // Menu while loop
+  // User chooses either Domestic or International student database
+  while (true) {
     cout << string(50, '-') << '\n';
     cout << "Student Database\n";
     cout << string(50, '-') << '\n';
@@ -175,7 +173,8 @@ int main() {
     cout << "1. Domestic" << endl;
     cout << "2. International" << endl;
 
-// User chooses the sorting order of the previously selected student database
+    // User chooses the sorting order of the previously selected student
+    // database
     cout << "Sorting Order" << endl;
 
     forceIntInput(cin, "Choose International or Domestic student database: ",
@@ -190,16 +189,9 @@ int main() {
     cout << "6. Overall" << endl;
     cout << "7. Quit" << endl;
 
-    forceIntInput(cin, "Choose a sorting order: ", sortType, 6);
- 
-    
-    switch(sortType){
-
-
     forceIntInput(cin, "Choose a sorting order: ", sortType, 7);
 
     switch (sortType) {
-
       case 1:
         if (domOrInt == 1)
           sortByCGPA((Student**)domesticStudents, dom_stu_count);
@@ -243,14 +235,14 @@ int main() {
         cout << RED << "\nInvalid Input!" << BOLD << "\n\nPlease try again\n\n"
              << CLEAR << endl;
     }
-    // Loops through the array of pointers for the selected student database 
+    // Loops through the array of pointers for the selected student database
     // and outputs each student's information.
-      if(domOrInt == 1)
-        for (int i = 0; i < dom_stu_count; i++) 
-          cout << *domesticStudents[i] << endl;
-      else
-        for (int i = 0; i < int_stu_count; i++) 
-          cout << *internationalStudents[i] << endl;
+    if (domOrInt == 1)
+      for (int i = 0; i < dom_stu_count; i++)
+        cout << *domesticStudents[i] << endl;
+    else
+      for (int i = 0; i < int_stu_count; i++)
+        cout << *internationalStudents[i] << endl;
 
     if (domOrInt == 1)
       for (int i = 0; i < dom_stu_count; i++)
