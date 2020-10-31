@@ -43,4 +43,4 @@ gtest:
 	cmake --build build/ --config Debug --target all -- -j 10 
 
 tests:
-	build/test/tests
+	cd build/test && ./tests

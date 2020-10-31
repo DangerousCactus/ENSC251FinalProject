@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include "../domesticStudent.cpp"
-#include "../internationalStudent.cpp"
-#include "../student.cpp"
+#include "../domesticStudent.hpp"
+#include "../internationalStudent.hpp"
+#include "../student.hpp"
 
 TEST(studentTest, studentGettersSetters) {
   Student student("Bob", "Builder", 2.0, 95, 0);

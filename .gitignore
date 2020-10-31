@@ -40,7 +40,4 @@ main
 
 googletest/
 build/
-test/*
-!test/studentTest.cpp
-!test/CMakeLists.txt
 

@@ -10,7 +10,6 @@ ToeflScore::ToeflScore() {}
 // Sets
 void ToeflScore::setReading(int score) {
   this->reading = score;
-  cout << "testing";
 }
 void ToeflScore::setlistening(int score) {
   this->listening = score;
