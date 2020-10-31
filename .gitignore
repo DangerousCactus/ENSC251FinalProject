@@ -36,3 +36,7 @@
 main
 
 *.zip
+googletest/
+test/*
+!test/studentTest.cpp
+!test/CMakeLists.txt

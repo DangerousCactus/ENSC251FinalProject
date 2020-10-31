@@ -2,11 +2,11 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ all ]
   pull_request:
-    branches: [ main ]
+    branches: [ all ]
   workflow_dispatch:
-    branches: [ main ]
+    branches: [ all ]
 
 jobs:
   build:
