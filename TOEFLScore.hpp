@@ -10,7 +10,6 @@ class ToeflScore {
   int listening;
   int speaking;
   int writing;
-  int total;
 
  public:
   ToeflScore(int reading, int listening, int speaking, int writing);
@@ -20,8 +19,12 @@ class ToeflScore {
   void setlistening(int score);
   void setSpeaking(int score);
   void setWriting(int score);
+<<<<<<< HEAD
   void setTotal(int score);
   // Gets
+=======
+
+>>>>>>> origin/main
   int getReading() const;
   int getlistening() const;
   int getSpeaking() const;

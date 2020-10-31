@@ -1,8 +1,8 @@
+#include <climits>
 #include <cstdlib>   //atof and atoi
 #include <fstream>   //file processing
 #include <iostream>  //cin and cout
 #include <sstream>   //formatted string processing
-#include <climits>
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
 
@@ -12,9 +12,15 @@ const std::string YELLOW = "\033[33m";
 const std::string BOLD = "\033[1m";
 const std::string CLEAR = "\033[0m";
 
+<<<<<<< HEAD
 // forceIntInput
 // Helper function to reject invalid input and suggests possible correction
 void forceIntInput(std::istream& inps, std::string message, int& field, int maxAllow) {
+=======
+//
+void forceIntInput(std::istream& inps, std::string message, int& field,
+                   int maxAllow) {
+>>>>>>> origin/main
   bool fail = false;
   bool valid = false;
   do {
@@ -32,7 +38,7 @@ void forceIntInput(std::istream& inps, std::string message, int& field, int maxA
 
     inps.ignore(INT_MAX, '\n');
 
-    if(field > maxAllow){
+    if (field > maxAllow) {
       std::cout << YELLOW << BOLD
                 << "Please enter a valid selection. Try again:\n"
                 << CLEAR;
@@ -46,7 +52,6 @@ void forceIntInput(std::istream& inps, std::string message, int& field, int maxA
 
   } while (!valid);
 }
-
 
 int main() {
   DomesticStudent* domesticStudents[100];
@@ -161,73 +166,94 @@ int main() {
   //   cout << *internationalStudents[i] << endl;
   // }
 
-
   int domOrInt = 0, sortType = 0;
 
+<<<<<<< HEAD
 // Menu while loop
 // User chooses either Domestic or International student database
   while(true){
+=======
+  while (true) {
+>>>>>>> origin/main
     cout << string(50, '-') << '\n';
     cout << "Student Database\n";
     cout << string(50, '-') << '\n';
 
-
-    cout << "1. Domestic" << endl;  
+    cout << "1. Domestic" << endl;
     cout << "2. International" << endl;
- 
-    forceIntInput(cin, "Choose International or Domestic student database: ", domOrInt, 2);
 
+<<<<<<< HEAD
 // User chooses the sorting order of the previously selected student database
     cout << "Sorting Order" << endl;
+=======
+    forceIntInput(cin, "Choose International or Domestic student database: ",
+                  domOrInt, 2);
+
+    cout << "\nSorting Order" << endl;
+>>>>>>> origin/main
     cout << "1. CGPA" << endl;
     cout << "2. Research Score" << endl;
     cout << "3. First Name" << endl;
     cout << "4. Last Name" << endl;
-    cout << "5. Overall" << endl;
-    cout << "6. Quit" << endl;
+    cout << "5. Location" << endl;
+    cout << "6. Overall" << endl;
+    cout << "7. Quit" << endl;
 
+<<<<<<< HEAD
 // Calls input helper function
     forceIntInput(cin, "Choose a sorting order: ", sortType, 6);
  
     
     switch(sortType){
+=======
+    forceIntInput(cin, "Choose a sorting order: ", sortType, 7);
+
+    switch (sortType) {
+>>>>>>> origin/main
       case 1:
-        if(domOrInt == 1)
+        if (domOrInt == 1)
           sortByCGPA((Student**)domesticStudents, dom_stu_count);
         else
           sortByCGPA((Student**)internationalStudents, int_stu_count);
         break;
       case 2:
-        if(domOrInt == 1)
+        if (domOrInt == 1)
           sortByResearchScore((Student**)domesticStudents, dom_stu_count);
         else
           sortByResearchScore((Student**)internationalStudents, int_stu_count);
         break;
       case 3:
-        if(domOrInt == 1)
+        if (domOrInt == 1)
           sortByFirstName((Student**)domesticStudents, dom_stu_count);
         else
           sortByFirstName((Student**)internationalStudents, int_stu_count);
         break;
       case 4:
-        if(domOrInt == 1)
+        if (domOrInt == 1)
           sortByLastName((Student**)domesticStudents, dom_stu_count);
         else
           sortByLastName((Student**)internationalStudents, int_stu_count);
         break;
       case 5:
-        if(domOrInt == 1)
+        if (domOrInt == 1)
+          sortByLocation(domesticStudents, dom_stu_count);
+        else
+          sortByLocation(internationalStudents, int_stu_count);
+        break;
+      case 6:
+        if (domOrInt == 1)
           sortByOverall(domesticStudents, dom_stu_count);
         else
           sortByOverall(internationalStudents, int_stu_count);
         break;
-      case 6:
+      case 7:
         cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLEAR;
         return 0;
       default:
-        cout <<  RED << "\nInvalid Input!"<<BOLD <<"\n\nPlease try again\n\n" << CLEAR <<endl;
-      
+        cout << RED << "\nInvalid Input!" << BOLD << "\n\nPlease try again\n\n"
+             << CLEAR << endl;
     }
+<<<<<<< HEAD
     // Loops through the array of pointers for the selected student database 
     // and outputs each student's information.
       if(domOrInt == 1)
@@ -236,6 +262,13 @@ int main() {
       else
         for (int i = 0; i < int_stu_count; i++) 
           cout << *internationalStudents[i] << endl;
+=======
+    if (domOrInt == 1)
+      for (int i = 0; i < dom_stu_count; i++)
+        cout << *domesticStudents[i] << endl;
+    else
+      for (int i = 0; i < int_stu_count; i++)
+        cout << *internationalStudents[i] << endl;
+>>>>>>> origin/main
   }
-
 }

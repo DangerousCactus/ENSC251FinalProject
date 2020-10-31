@@ -23,7 +23,7 @@ void DomesticStudent::setProvince(string province) {
 // Overloads the << operator to output the province
 ostream& operator<<(ostream& outs, const DomesticStudent& student) {
   outs << static_cast<Student>(student);
-  outs << "Province: " << student.province << '\n';
+  outs << " | Province: " << student.province;
 
   return outs;
 }
@@ -38,7 +38,7 @@ void sortByLocation(DomesticStudent* students[], int len) {
 }
 
 // sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA, 
+// Sorts students by Research Score first, then CGPA. If same CGPA,
 // Province is used in ascending order.
 void sortByOverall(DomesticStudent* students[], int len) {
   sortByLocation(students, len);

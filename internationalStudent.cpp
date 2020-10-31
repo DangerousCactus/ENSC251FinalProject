@@ -2,6 +2,7 @@
 #include "TOEFLScore.hpp"
 
 using namespace std;
+#include <iomanip>
 #include <iostream>
 
 InternationalStudent::InternationalStudent(string firstName, string lastName,
@@ -44,8 +45,8 @@ void InternationalStudent::setToefl(ToeflScore toefl) {
 // Overloads the << operator to output the country
 ostream& operator<<(ostream& outs, const InternationalStudent& student) {
   outs << static_cast<Student>(student);
-  outs << "Country: " << student.country << '\n';
-  outs << student.toefl;
+  outs << " | Country: " << setw(10) << student.country;
+  outs << " | " << student.toefl;
   return outs;
 }
 
@@ -59,7 +60,11 @@ void sortByLocation(InternationalStudent* students[], int len) {
 }
 
 // removeLowToeflScores
+<<<<<<< HEAD
 // Drops student if their TOEFL scores does not meet the threshold
+=======
+//
+>>>>>>> origin/main
 void removeLowToeflScores(InternationalStudent* students[], int& len) {
   int i = 0;
   while (i < len) {
@@ -79,8 +84,13 @@ void removeLowToeflScores(InternationalStudent* students[], int& len) {
 }
 
 // sortByOverall
+<<<<<<< HEAD
 // Sorts students by Research Score first, then CGPA. If same CGPA, 
 // Country is used in ascending order (A - Z).
+=======
+// Sorts students by Research Score first, then CGPA. If same CGPA,
+// Country is used in ascending order.
+>>>>>>> origin/main
 void sortByOverall(InternationalStudent* students[], int& len) {
   removeLowToeflScores(students, len);
   sortByLocation(students, len);

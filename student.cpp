@@ -1,4 +1,5 @@
 #include "student.hpp"
+#include <iomanip>
 #include <iostream>
 
 Student::Student(string firstName, string lastName, float cgpa,
@@ -77,11 +78,11 @@ int compareLastName(const Student student1, const Student student2) {
 // Overloads << operator to output student information including: 
 // First Name, Last Name, CGPA, Research Score, Application ID.
 ostream& operator<<(ostream& outs, const Student& student) {
-  outs << "First Name: " << student.firstName << '\n';
-  outs << "Last Name: " << student.lastName << '\n';
-  outs << "CGPA: " << student.cgpa << '\n';
-  outs << "Research Score: " << student.researchScore << '\n';
-  outs << "Application ID: " << student.applicationID << '\n';
+  outs << setw(15) << left << student.firstName << ' ' << setw(15) << left
+       << student.lastName << " | "
+       << "CGPA: " << setw(4) << student.cgpa << " | "
+       << "Research Score: " << setw(3) << student.researchScore << " | "
+       << "Application ID: " << student.applicationID;
 
   return outs;
 }

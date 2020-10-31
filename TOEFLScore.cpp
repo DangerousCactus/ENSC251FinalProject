@@ -2,27 +2,22 @@
 
 ToeflScore::ToeflScore(int reading, int listening, int speaking, int writing)
     : reading(reading), listening(listening), speaking(speaking),
-      writing(writing) {
-  this->total = reading + listening + speaking + writing;
-}
+      writing(writing) {}
 
 ToeflScore::ToeflScore() {}
 
 // Sets
 void ToeflScore::setReading(int score) {
-  reading = score;
+  this->reading = score;
 }
 void ToeflScore::setlistening(int score) {
-  listening = score;
+  this->listening = score;
 }
 void ToeflScore::setSpeaking(int score) {
-  speaking = score;
+  this->speaking = score;
 }
 void ToeflScore::setWriting(int score) {
-  writing = score;
-}
-void ToeflScore::setTotal(int score) {
-  total = score;
+  this->writing = score;
 }
 
 // Gets
@@ -39,7 +34,7 @@ int ToeflScore::getWriting() const {
   return writing;
 }
 int ToeflScore::getTotal() const {
-  return total;
+  return reading + listening + speaking + writing;
 }
 
 // Overloads << operator to output TOEFL scores in the order:
@@ -47,8 +42,7 @@ int ToeflScore::getTotal() const {
 ostream& operator<<(ostream& outs, const ToeflScore& score) {
   outs << "TOEFL Scores:  Reading: " << score.reading
        << " | Listening: " << score.listening
-       << " | Speaking: " << score.speaking << " | Writing: " << score.writing
-       << '\n';
+       << " | Speaking: " << score.speaking << " | Writing: " << score.writing;
 
   return outs;
 }
