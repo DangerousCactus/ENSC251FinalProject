@@ -51,7 +51,7 @@ ostream& operator<<(ostream& outs, const InternationalStudent& student) {
 }
 
 // sortByLocation
-// Sorts students by location based on country in ascending order
+// Sorts students by location based on country in ascending order (A - Z).
 void sortByLocation(InternationalStudent* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
@@ -60,7 +60,8 @@ void sortByLocation(InternationalStudent* students[], int len) {
 }
 
 // removeLowToeflScores
-//
+// Drops student if their TOEFL scores does not meet the threshold
+
 void removeLowToeflScores(InternationalStudent* students[], int& len) {
   int i = 0;
   while (i < len) {
@@ -81,7 +82,8 @@ void removeLowToeflScores(InternationalStudent* students[], int& len) {
 
 // sortByOverall
 // Sorts students by Research Score first, then CGPA. If same CGPA,
-// Country is used in ascending order.
+// Country is used in ascending order (A - Z).
+
 void sortByOverall(InternationalStudent* students[], int& len) {
   removeLowToeflScores(students, len);
   sortByLocation(students, len);

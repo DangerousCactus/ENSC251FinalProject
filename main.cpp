@@ -12,7 +12,8 @@ const std::string YELLOW = "\033[33m";
 const std::string BOLD = "\033[1m";
 const std::string CLEAR = "\033[0m";
 
-//
+// forceIntInput
+// Helper function to reject invalid input and suggests possible correction
 void forceIntInput(std::istream& inps, std::string message, int& field,
                    int maxAllow) {
   bool fail = false;
@@ -162,6 +163,8 @@ int main() {
 
   int domOrInt = 0, sortType = 0;
 
+  // Menu while loop
+  // User chooses either Domestic or International student database
   while (true) {
     cout << string(50, '-') << '\n';
     cout << "Student Database\n";
@@ -169,6 +172,10 @@ int main() {
 
     cout << "1. Domestic" << endl;
     cout << "2. International" << endl;
+
+    // User chooses the sorting order of the previously selected student
+    // database
+    cout << "Sorting Order" << endl;
 
     forceIntInput(cin, "Choose International or Domestic student database: ",
                   domOrInt, 2);
@@ -228,6 +235,15 @@ int main() {
         cout << RED << "\nInvalid Input!" << BOLD << "\n\nPlease try again\n\n"
              << CLEAR << endl;
     }
+    // Loops through the array of pointers for the selected student database
+    // and outputs each student's information.
+    if (domOrInt == 1)
+      for (int i = 0; i < dom_stu_count; i++)
+        cout << *domesticStudents[i] << endl;
+    else
+      for (int i = 0; i < int_stu_count; i++)
+        cout << *internationalStudents[i] << endl;
+
     if (domOrInt == 1)
       for (int i = 0; i < dom_stu_count; i++)
         cout << *domesticStudents[i] << endl;

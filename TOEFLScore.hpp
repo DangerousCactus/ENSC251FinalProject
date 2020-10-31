@@ -14,7 +14,7 @@ class ToeflScore {
  public:
   ToeflScore(int reading, int listening, int speaking, int writing);
   ToeflScore();
-
+  // Sets
   void setReading(int score);
   void setlistening(int score);
   void setSpeaking(int score);
@@ -26,6 +26,8 @@ class ToeflScore {
   int getWriting() const;
   int getTotal() const;
 
+  // Overloads << operator to output TOEFL scores in the order:
+  // Reading, Lisenting, Speaking, Writing
   friend ostream& operator<<(ostream& outs, const ToeflScore& score);
 };
 

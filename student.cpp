@@ -43,7 +43,7 @@ void Student::setApplicationID(int applicationID) {
   this->applicationID = applicationID;
 }
 
-//
+// Compares two student's CGPAs
 int compareCGPA(const Student student1, const Student student2) {
   if (student1.cgpa < student2.cgpa)
     return -1;
@@ -51,7 +51,7 @@ int compareCGPA(const Student student1, const Student student2) {
     return student1.cgpa > student2.cgpa;
 }
 
-//
+// Compares two student's Research Scores
 int compareResearchScore(const Student student1, const Student student2) {
   if (student1.researchScore < student2.researchScore)
     return -1;
@@ -59,7 +59,7 @@ int compareResearchScore(const Student student1, const Student student2) {
     return student1.researchScore > student2.researchScore;
 }
 
-//
+// Compares two student's First Name
 int compareFirstName(const Student student1, const Student student2) {
   if (student1.firstName < student2.firstName)
     return -1;
@@ -67,7 +67,7 @@ int compareFirstName(const Student student1, const Student student2) {
     return student1.firstName > student2.firstName;
 }
 
-//
+// Compares two student's Last Name
 int compareLastName(const Student student1, const Student student2) {
   if (student1.lastName < student2.lastName)
     return -1;
@@ -75,7 +75,8 @@ int compareLastName(const Student student1, const Student student2) {
     return student1.lastName > student2.lastName;
 }
 
-//
+// Overloads << operator to output student information including:
+// First Name, Last Name, CGPA, Research Score, Application ID.
 ostream& operator<<(ostream& outs, const Student& student) {
   outs << setw(15) << left << student.firstName << ' ' << setw(15) << left
        << student.lastName << " | "
@@ -86,7 +87,7 @@ ostream& operator<<(ostream& outs, const Student& student) {
   return outs;
 }
 
-// Decending order
+// Sorts students by CGPA in Decending order
 void sortByCGPA(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
@@ -94,6 +95,7 @@ void sortByCGPA(Student* students[], int len) {
         swap(students[j], students[j + 1]);
 }
 
+// Sorts students by Research Score in Decending order
 void sortByResearchScore(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
@@ -101,7 +103,7 @@ void sortByResearchScore(Student* students[], int len) {
         swap(students[j], students[j + 1]);
 }
 
-// Alphabetical order (A -> Z)
+// Sorts students by First Name in Alphabetical order (A -> Z)
 void sortByFirstName(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
@@ -109,6 +111,7 @@ void sortByFirstName(Student* students[], int len) {
         swap(students[j], students[j + 1]);
 }
 
+// Sorts students by Last Name in Alphabetical order (A -> Z)
 void sortByLastName(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
@@ -116,6 +119,9 @@ void sortByLastName(Student* students[], int len) {
         swap(students[j], students[j + 1]);
 }
 
+// sortByOverall
+// Sorts students by Research Score first, then CGPA. If same CGPA,
+// Province or Country is used in ascending order (A - Z).
 void sortByOverall(Student* students[], int& len) {
   sortByCGPA(students, len);
   sortByResearchScore(students, len);
