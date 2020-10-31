@@ -29,14 +29,18 @@ class Student {
   void setcgpa(float cgpa);
   void setResearchScore(int researchScore);
   void setApplicationID(int applicationID);
-
+  
+  // Compares two student's CGPAs
   int friend compareCGPA(const Student student1, const Student student2);
-
+  
+  // Compares two student's Research Scores
   int friend compareResearchScore(const Student student1,
                                   const Student student2);
 
+  // Compares two student's First Name
   int friend compareFirstName(const Student student1, const Student student2);
 
+  // Compares two student's Last Name
   int friend compareLastName(const Student student1, const Student student2);
 
   // Overloads << operator to output student information including: 

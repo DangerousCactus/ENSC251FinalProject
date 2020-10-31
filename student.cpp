@@ -42,7 +42,7 @@ void Student::setApplicationID(int applicationID) {
   this->applicationID = applicationID;
 }
 
-//
+// Compares two student's CGPAs
 int compareCGPA(const Student student1, const Student student2) {
   if (student1.cgpa < student2.cgpa)
     return -1;
@@ -50,7 +50,7 @@ int compareCGPA(const Student student1, const Student student2) {
     return student1.cgpa > student2.cgpa;
 }
 
-//
+// Compares two student's Research Scores
 int compareResearchScore(const Student student1, const Student student2) {
   if (student1.researchScore < student2.researchScore)
     return -1;
@@ -58,7 +58,7 @@ int compareResearchScore(const Student student1, const Student student2) {
     return student1.researchScore > student2.researchScore;
 }
 
-//
+// Compares two student's First Name
 int compareFirstName(const Student student1, const Student student2) {
   if (student1.firstName < student2.firstName)
     return -1;
@@ -66,7 +66,7 @@ int compareFirstName(const Student student1, const Student student2) {
     return student1.firstName > student2.firstName;
 }
 
-//
+// Compares two student's Last Name
 int compareLastName(const Student student1, const Student student2) {
   if (student1.lastName < student2.lastName)
     return -1;
