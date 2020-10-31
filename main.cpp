@@ -230,7 +230,13 @@ int main() {
         break;
       case 7:
         cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLEAR;
+        for (int i = 0; i < dom_stu_count; i++)
+          delete domesticStudents[i];
+
+        for (int i = 0; i < int_stu_count; i++)
+          delete internationalStudents[i];
         return 0;
+        break;
       default:
         cout << RED << "\nInvalid Input!" << BOLD << "\n\nPlease try again\n\n"
              << CLEAR << endl;

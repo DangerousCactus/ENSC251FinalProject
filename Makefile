@@ -33,11 +33,11 @@ TOEFLScore.o: student.cpp
 clean:
 	rm -rf build main *.o *~
 
-#Zip the files (for GitHub CI)
+#GitHub CI functions below
 zip:
 	mkdir finalProject && cp -f ./*.* Makefile finalProject/ && zip -r finalProject.zip finalProject && rm -rf finalProject/
 
-#Test using gtest and CMaKE
+#Test using gtest and CMake
 gtest:
 	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -B build/ -G "Unix Makefiles" &&\
 	cmake --build build/ --config Debug --target all -- -j 10 
