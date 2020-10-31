@@ -2,11 +2,11 @@ name: C/C++ CI
 
 on:
   push:
-    branches: [ all ]
+    branches: [ CMakeUnitTests ]
   pull_request:
-    branches: [ all ]
+    branches: [ CMakeUnitTests ]
   workflow_dispatch:
-    branches: [ all ]
+    branches: [ CMakeUnitTests ]
 
 jobs:
   build:
