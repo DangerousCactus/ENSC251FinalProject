@@ -14,12 +14,14 @@ class ToeflScore {
  public:
   ToeflScore(int reading, int listening, int speaking, int writing);
   ToeflScore();
-  // Sets
+
+  // Setters
   void setReading(int score);
   void setlistening(int score);
   void setSpeaking(int score);
   void setWriting(int score);
 
+  // Getters
   int getReading() const;
   int getlistening() const;
   int getSpeaking() const;

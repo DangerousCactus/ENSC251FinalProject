@@ -26,7 +26,7 @@ InternationalStudent::InternationalStudent(string firstName, string lastName,
 
 InternationalStudent::InternationalStudent() : Student(){};
 
-// Gets
+// Getters
 string InternationalStudent::getCountry() const {
   return country;
 }
@@ -34,7 +34,7 @@ ToeflScore InternationalStudent::getToefl() const {
   return toefl;
 }
 
-// Sets
+// Setters
 void InternationalStudent::setCountry(string country) {
   this->country = country;
 }
@@ -61,7 +61,6 @@ void sortByLocation(InternationalStudent* students[], int len) {
 
 // removeLowToeflScores
 // Drops student if their TOEFL scores does not meet the threshold
-
 void removeLowToeflScores(InternationalStudent* students[], int& len) {
   int i = 0;
   while (i < len) {
@@ -83,7 +82,6 @@ void removeLowToeflScores(InternationalStudent* students[], int& len) {
 // sortByOverall
 // Sorts students by Research Score first, then CGPA. If same CGPA,
 // Country is used in ascending order (A - Z).
-
 void sortByOverall(InternationalStudent* students[], int& len) {
   removeLowToeflScores(students, len);
   sortByLocation(students, len);

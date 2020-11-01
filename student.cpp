@@ -43,7 +43,7 @@ void Student::setApplicationID(int applicationID) {
   this->applicationID = applicationID;
 }
 
-// Compares two student's CGPAs
+// Compares two students' CGPAs
 int compareCGPA(const Student student1, const Student student2) {
   if (student1.cgpa < student2.cgpa)
     return -1;
@@ -51,7 +51,7 @@ int compareCGPA(const Student student1, const Student student2) {
     return student1.cgpa > student2.cgpa;
 }
 
-// Compares two student's Research Scores
+// Compares two students' Research Scores
 int compareResearchScore(const Student student1, const Student student2) {
   if (student1.researchScore < student2.researchScore)
     return -1;
@@ -59,7 +59,7 @@ int compareResearchScore(const Student student1, const Student student2) {
     return student1.researchScore > student2.researchScore;
 }
 
-// Compares two student's First Name
+// Compares two students' First Names
 int compareFirstName(const Student student1, const Student student2) {
   if (student1.firstName < student2.firstName)
     return -1;
@@ -67,7 +67,7 @@ int compareFirstName(const Student student1, const Student student2) {
     return student1.firstName > student2.firstName;
 }
 
-// Compares two student's Last Name
+// Compares two students' Last Names
 int compareLastName(const Student student1, const Student student2) {
   if (student1.lastName < student2.lastName)
     return -1;
@@ -86,6 +86,11 @@ ostream& operator<<(ostream& outs, const Student& student) {
 
   return outs;
 }
+
+// Bubble sort is implemented below for sorting functions. Since bubble sort
+// will only move an element if it is strictly greater than its right most
+// neighbour, we can apply bubble sort in a reverse order to accomplish overall
+// sorting
 
 // Sorts students by CGPA in Decending order
 void sortByCGPA(Student* students[], int len) {

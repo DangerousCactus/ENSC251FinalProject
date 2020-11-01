@@ -1,8 +1,8 @@
 #ifndef INTERNATIONALSTUDENT_HPP
 #define INTERNATIONALSTUDENT_HPP
 
-#include "student.hpp"
 #include "TOEFLScore.hpp"
+#include "student.hpp"
 
 class InternationalStudent : public Student {
  private:
@@ -19,10 +19,12 @@ class InternationalStudent : public Student {
                        int reading, int listening, int speaking, int writing);
 
   InternationalStudent();
-  // Sets
+
+  // Setters
   void setCountry(string country);
   void setToefl(ToeflScore toefl);
-  // Gets
+
+  // Getters
   string getCountry() const;
   ToeflScore getToefl() const;
 
@@ -39,7 +41,7 @@ class InternationalStudent : public Student {
   friend void removeLowToeflScores(InternationalStudent* students[], int& len);
 };
 // sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA, 
+// Sorts students by Research Score first, then CGPA. If same CGPA,
 // Country is used in ascending order (A - Z).
 void sortByOverall(InternationalStudent* students[], int& len);
 #endif

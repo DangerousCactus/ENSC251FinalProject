@@ -15,9 +15,10 @@ class DomesticStudent : public Student {
 
   DomesticStudent();
 
-  // Gets
+  // Getters
   string getProvince() const;
-  // Sets
+  
+  // Setters
   void setProvince(string province);
   
   // Overloads the << operator to output the province

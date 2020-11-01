@@ -6,7 +6,7 @@ ToeflScore::ToeflScore(int reading, int listening, int speaking, int writing)
 
 ToeflScore::ToeflScore() {}
 
-// Sets
+// Setters
 void ToeflScore::setReading(int score) {
   this->reading = score;
 }
@@ -20,7 +20,7 @@ void ToeflScore::setWriting(int score) {
   this->writing = score;
 }
 
-// Gets
+// Getters
 int ToeflScore::getReading() const {
   return reading;
 }

@@ -10,12 +10,12 @@ DomesticStudent::DomesticStudent(string firstName, string lastName, float cgpa,
 
 DomesticStudent::DomesticStudent() : Student(){};
 
-// Gets
+// Getters
 string DomesticStudent::getProvince() const {
   return province;
 }
 
-// Sets
+// Setters
 void DomesticStudent::setProvince(string province) {
   this->province = province;
 }

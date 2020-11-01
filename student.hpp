@@ -17,22 +17,23 @@ class Student {
           int applicationID);
 
   Student();
-// Gets
+  // Getters
   string getFirstName() const;
   string getLastName() const;
   float getcgpa() const;
   int getResearchScore() const;
   int getApplicationID() const;
-// Sets
+  
+  // Setters
   void setFirstName(string name);
   void setLastName(string name);
   void setcgpa(float cgpa);
   void setResearchScore(int researchScore);
   void setApplicationID(int applicationID);
-  
+
   // Compares two student's CGPAs
   int friend compareCGPA(const Student student1, const Student student2);
-  
+
   // Compares two student's Research Scores
   int friend compareResearchScore(const Student student1,
                                   const Student student2);
@@ -43,7 +44,7 @@ class Student {
   // Compares two student's Last Name
   int friend compareLastName(const Student student1, const Student student2);
 
-  // Overloads << operator to output student information including: 
+  // Overloads << operator to output student information including:
   // First Name, Last Name, CGPA, Research Score, Application ID.
   friend ostream& operator<<(ostream& outs, const Student& student);
 };
@@ -61,7 +62,7 @@ void sortByFirstName(Student* students[], int len);
 void sortByLastName(Student* students[], int len);
 
 // sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA, 
+// Sorts students by Research Score first, then CGPA. If same CGPA,
 // Province or Country is used in ascending order (A - Z).
 void sortByOverall(Student* students[], int& len);
 
