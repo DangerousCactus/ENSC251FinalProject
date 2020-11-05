@@ -27,7 +27,7 @@ InternationalStudent::InternationalStudent(string firstName, string lastName,
 InternationalStudent::InternationalStudent() : Student(){};
 
 // Getters
-string InternationalStudent::getCountry() const {
+string InternationalStudent::getLocation() const {
   return country;
 }
 ToeflScore InternationalStudent::getToefl() const {

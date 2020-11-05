@@ -16,7 +16,7 @@ class DomesticStudent : public Student {
   DomesticStudent();
 
   // Getters
-  string getProvince() const;
+  virtual string getLocation() const;
   
   // Setters
   void setProvince(string province);

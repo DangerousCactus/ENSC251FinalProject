@@ -26,17 +26,17 @@ TEST(studentTest, studentGettersSetters) {
 
 TEST(studentTest, domesticStudentGettersSetters) {
   DomesticStudent dstudent("Bob", "Builder", 2.0, 95, 0, "Ontario");
-  EXPECT_EQ(dstudent.getProvince(), "Ontario");
+  EXPECT_EQ(dstudent.getLocation(), "Ontario");
 
   dstudent.setProvince("British Columbia");
-  EXPECT_EQ(dstudent.getProvince(), "British Columbia");
+  EXPECT_EQ(dstudent.getLocation(), "British Columbia");
 }
 
 TEST(studentTest, internationalTOEFLStudentGettersSetters) {
   ToeflScore t(10, 20, 25, 23);
   InternationalStudent istudent("Bob", "Builder", 2.0, 95, 0, "North Korea", t);
 
-  EXPECT_EQ(istudent.getCountry(), "North Korea");
+  EXPECT_EQ(istudent.getLocation(), "North Korea");
   EXPECT_EQ(istudent.getToefl().getReading(), 10);
   EXPECT_EQ(istudent.getToefl().getlistening(), 20);
   EXPECT_EQ(istudent.getToefl().getSpeaking(), 25);
@@ -50,7 +50,7 @@ TEST(studentTest, internationalTOEFLStudentGettersSetters) {
   t.setWriting(5);
   istudent.setToefl(t);
 
-  EXPECT_EQ(istudent.getCountry(), "France");
+  EXPECT_EQ(istudent.getLocation(), "France");
   EXPECT_EQ(istudent.getToefl().getReading(), 11);
   EXPECT_EQ(istudent.getToefl().getlistening(), 21);
   EXPECT_EQ(istudent.getToefl().getSpeaking(), 22);

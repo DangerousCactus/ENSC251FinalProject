@@ -120,8 +120,8 @@ TEST_F(sortingTest, sortingTestDom) {
 
   sortByLocation(domesticStudents, dom_stu_count);
   for (int i = 1; i < dom_stu_count; i++) {
-    EXPECT_LE(domesticStudents[i - 1]->getProvince(),
-              domesticStudents[i]->getProvince());
+    EXPECT_LE(domesticStudents[i - 1]->getLocation(),
+              domesticStudents[i]->getLocation());
   }
 
   sortByResearchScore((Student**)domesticStudents, dom_stu_count);
@@ -140,8 +140,8 @@ TEST_F(sortingTest, sortingTestDom) {
                 domesticStudents[i]->getcgpa());
       if (domesticStudents[i - 1]->getcgpa() ==
           domesticStudents[i]->getcgpa()) {
-        EXPECT_LE(domesticStudents[i - 1]->getProvince(),
-                  domesticStudents[i]->getProvince());
+        EXPECT_LE(domesticStudents[i - 1]->getLocation(),
+                  domesticStudents[i]->getLocation());
       }
     }
   }
@@ -168,8 +168,8 @@ TEST_F(sortingTest, sortingTestInt) {
 
   sortByLocation(internationalStudents, int_stu_count);
   for (int i = 1; i < int_stu_count; i++) {
-    EXPECT_LE(internationalStudents[i - 1]->getCountry(),
-              internationalStudents[i]->getCountry());
+    EXPECT_LE(internationalStudents[i - 1]->getLocation(),
+              internationalStudents[i]->getLocation());
   }
 
   sortByResearchScore((Student**)internationalStudents, int_stu_count);
@@ -204,8 +204,8 @@ TEST_F(sortingTest, sortingTestInt) {
                 internationalStudents[i]->getcgpa());
       if (internationalStudents[i - 1]->getcgpa() ==
           internationalStudents[i]->getcgpa()) {
-        EXPECT_LE(internationalStudents[i - 1]->getCountry(),
-                  internationalStudents[i]->getCountry());
+        EXPECT_LE(internationalStudents[i - 1]->getLocation(),
+                  internationalStudents[i]->getLocation());
       }
     }
   }

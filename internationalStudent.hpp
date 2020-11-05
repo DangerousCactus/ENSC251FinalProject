@@ -25,7 +25,7 @@ class InternationalStudent : public Student {
   void setToefl(ToeflScore toefl);
 
   // Getters
-  string getCountry() const;
+  virtual string getLocation() const;
   ToeflScore getToefl() const;
 
   // Overloads the << operator to output the country

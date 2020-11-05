@@ -40,9 +40,9 @@ int ToeflScore::getTotal() const {
 // Overloads << operator to output TOEFL scores in the order:
 // Reading, Lisenting, Speaking, Writing
 ostream& operator<<(ostream& outs, const ToeflScore& score) {
-  outs << "TOEFL Scores:  Reading: " << score.reading
-       << " | Listening: " << score.listening
-       << " | Speaking: " << score.speaking << " | Writing: " << score.writing;
+  outs << "TOEFL:  R: " << score.reading
+       << " | L: " << score.listening
+       << " | S: " << score.speaking << " | W: " << score.writing;
 
   return outs;
 }

@@ -11,7 +11,7 @@ DomesticStudent::DomesticStudent(string firstName, string lastName, float cgpa,
 DomesticStudent::DomesticStudent() : Student(){};
 
 // Getters
-string DomesticStudent::getProvince() const {
+string DomesticStudent::getLocation() const {
   return province;
 }
 

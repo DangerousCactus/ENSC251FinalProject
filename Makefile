@@ -31,7 +31,7 @@ TOEFLScore.o: student.cpp
 
 #remove built files
 clean:
-	rm -rf build main *.o *~
+	rm -rf main *.o *~
 
 #GitHub CI functions below
 #install gtest
