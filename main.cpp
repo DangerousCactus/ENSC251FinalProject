@@ -31,9 +31,8 @@ void forceIntInput(istream& inps, string message, int& field, int maxAllow) {
     if (field > 0 && field <= maxAllow)
       break;
 
-    cout << YELLOW << BOLD << "Please enter a valid selection. Try again:\n"
-         << CLEAR;
-
+    cout << YELLOW << BOLD << "Please enter a valid selection. Try again:\n";
+         
   } while (true);
 }
 
