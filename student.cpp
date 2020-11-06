@@ -27,7 +27,6 @@ int Student::getResearchScore() const {
 int Student::getApplicationID() const {
   return applicationID;
 }
-std::string Student::getLocation() const {}
 
 // Sets
 void Student::setFirstName(std::string name) {
@@ -47,7 +46,7 @@ void Student::setApplicationID(int applicationID) {
 }
 
 // Compares two students' CGPAs
-int compareCGPA(const Student student1, const Student student2) {
+int compareCGPA(const Student& student1, const Student& student2) {
   if (student1.cgpa < student2.cgpa)
     return -1;
   else
@@ -55,7 +54,7 @@ int compareCGPA(const Student student1, const Student student2) {
 }
 
 // Compares two students' Research Scores
-int compareResearchScore(const Student student1, const Student student2) {
+int compareResearchScore(const Student& student1, const Student& student2) {
   if (student1.researchScore < student2.researchScore)
     return -1;
   else
@@ -63,7 +62,7 @@ int compareResearchScore(const Student student1, const Student student2) {
 }
 
 // Compares two students' First Names
-int compareFirstName(const Student student1, const Student student2) {
+int compareFirstName(const Student& student1, const Student& student2) {
   if (student1.firstName < student2.firstName)
     return -1;
   else
@@ -71,7 +70,7 @@ int compareFirstName(const Student student1, const Student student2) {
 }
 
 // Compares two students' Last Names
-int compareLastName(const Student student1, const Student student2) {
+int compareLastName(const Student& student1, const Student& student2) {
   if (student1.lastName < student2.lastName)
     return -1;
   else
@@ -80,12 +79,12 @@ int compareLastName(const Student student1, const Student student2) {
 
 // Overloads << operator to output student information including:
 // First Name, Last Name, CGPA, Research Score, Application ID.
-std::ostream& operator<<(std::ostream& outs, const Student& student) {
-  outs << std::setw(15) << std::left << student.firstName << ' ' << std::setw(15) << std::left
-       << student.lastName << " | "
-       << "CGPA: " << std::setw(4) << student.cgpa << " | "
-       << "Research Score: " << std::setw(3) << student.researchScore << " | "
-       << "Application ID: " << student.applicationID;
+std::ostream& Student::print(std::ostream& outs) const{
+  outs << std::setw(15) << std::left << firstName << ' ' << std::setw(15)
+       << std::left << lastName << " | "
+       << "CGPA: " << std::setw(4) << cgpa << " | "
+       << "Research Score: " << std::setw(3) << researchScore << " | "
+       << "Application ID: " << applicationID;
 
   return outs;
 }

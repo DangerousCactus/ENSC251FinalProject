@@ -4,20 +4,22 @@
 #include <iomanip>
 #include <iostream>
 
-InternationalStudent::InternationalStudent(std::string firstName, std::string lastName,
-                                           float cgpa, int reseachScore,
-                                           int applicationID, std::string country,
+InternationalStudent::InternationalStudent(std::string firstName,
+                                           std::string lastName, float cgpa,
+                                           int reseachScore, int applicationID,
+                                           std::string country,
                                            ToeflScore toefl)
     : Student(firstName, lastName, cgpa, reseachScore, applicationID) {
   this->country = country;
   this->toefl = toefl;
 }
 
-InternationalStudent::InternationalStudent(std::string firstName, std::string lastName,
-                                           float cgpa, int reseachScore,
-                                           int applicationID, std::string country,
-                                           int reading, int listening,
-                                           int speaking, int writing)
+InternationalStudent::InternationalStudent(std::string firstName,
+                                           std::string lastName, float cgpa,
+                                           int reseachScore, int applicationID,
+                                           std::string country, int reading,
+                                           int listening, int speaking,
+                                           int writing)
     : Student(firstName, lastName, cgpa, reseachScore, applicationID) {
   this->country = country;
   this->toefl = ToeflScore(reading, listening, speaking, writing);
@@ -42,8 +44,9 @@ void InternationalStudent::setToefl(ToeflScore toefl) {
 }
 
 // Overloads the << operator to output the country
-std::ostream& operator<<(std::ostream& outs, const InternationalStudent& student) {
-  outs << static_cast<Student>(student);
+std::ostream& operator<<(std::ostream& outs,
+                         const InternationalStudent& student) {
+  student.print(outs);
   outs << " | Country: " << std::setw(10) << student.country;
   outs << " | " << student.toefl;
   return outs;

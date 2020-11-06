@@ -22,7 +22,7 @@ void DomesticStudent::setProvince(std::string province) {
 
 // Overloads the << operator to output the province
 std::ostream& operator<<(std::ostream& outs, const DomesticStudent& student) {
-  outs << static_cast<Student>(student);
+  student.print(outs);
   outs << " | Province: " << student.province;
 
   return outs;

@@ -5,6 +5,8 @@
 #include "../domesticStudent.hpp"
 #include "../internationalStudent.hpp"
 
+using namespace std;
+
 struct sortingTest : public ::testing::Test {
   DomesticStudent* domesticStudents[100];
   InternationalStudent* internationalStudents[100];
