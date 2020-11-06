@@ -1,8 +1,10 @@
 #include "student.hpp"
 #include <iomanip>
 #include <iostream>
+#include "domesticStudent.hpp"
+#include "internationalStudent.hpp"
 
-Student::Student(string firstName, string lastName, float cgpa,
+Student::Student(std::string firstName, std::string lastName, float cgpa,
                  int reseachScore, int applicationID)
     : firstName(firstName), lastName(lastName), cgpa(cgpa),
       researchScore(reseachScore), applicationID(applicationID) {}
@@ -10,10 +12,10 @@ Student::Student(string firstName, string lastName, float cgpa,
 Student::Student() {}
 
 // Gets
-string Student::getFirstName() const {
+std::string Student::getFirstName() const {
   return firstName;
 }
-string Student::getLastName() const {
+std::string Student::getLastName() const {
   return lastName;
 }
 float Student::getcgpa() const {
@@ -25,12 +27,13 @@ int Student::getResearchScore() const {
 int Student::getApplicationID() const {
   return applicationID;
 }
+std::string Student::getLocation() const {}
 
 // Sets
-void Student::setFirstName(string name) {
+void Student::setFirstName(std::string name) {
   firstName = name;
 }
-void Student::setLastName(string name) {
+void Student::setLastName(std::string name) {
   lastName = name;
 }
 void Student::setcgpa(float cgpa) {
@@ -77,27 +80,67 @@ int compareLastName(const Student student1, const Student student2) {
 
 // Overloads << operator to output student information including:
 // First Name, Last Name, CGPA, Research Score, Application ID.
-ostream& operator<<(ostream& outs, const Student& student) {
-  outs << setw(15) << left << student.firstName << ' ' << setw(15) << left
+std::ostream& operator<<(std::ostream& outs, const Student& student) {
+  outs << std::setw(15) << std::left << student.firstName << ' ' << std::setw(15) << std::left
        << student.lastName << " | "
-       << "CGPA: " << setw(4) << student.cgpa << " | "
-       << "Research Score: " << setw(3) << student.researchScore << " | "
+       << "CGPA: " << std::setw(4) << student.cgpa << " | "
+       << "Research Score: " << std::setw(3) << student.researchScore << " | "
        << "Application ID: " << student.applicationID;
 
   return outs;
 }
 
+bool operator<(const Student& student1, const Student& student2) {
+  if (student1.researchScore < student2.researchScore) {
+    return true;
+  } else if (student1.researchScore > student2.researchScore) {
+    return false;
+  } else {
+    if (student1.cgpa < student2.cgpa) {
+      return true;
+    } else if (student1.cgpa < student2.cgpa) {
+      return false;
+    } else {
+      if (student1.getLocation() < student2.getLocation()) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+}
+
+bool operator>(const Student& student2, const Student& student1) {
+  if (student1.researchScore < student2.researchScore) {
+    return true;
+  } else if (student1.researchScore > student2.researchScore) {
+    return false;
+  } else {
+    if (student1.cgpa < student2.cgpa) {
+      return true;
+    } else if (student1.cgpa < student2.cgpa) {
+      return false;
+    } else {
+      if (student1.getLocation() < student2.getLocation()) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+}
+
 // Bubble sort is implemented below for sorting functions. Since bubble sort
 // will only move an element if it is strictly greater than its right most
-// neighbour, we can apply bubble sort in a reverse order to accomplish overall
-// sorting
+// neighbour, we can apply bubble sort in a reverse order to accomplish
+// overall sorting
 
 // Sorts students by CGPA in Decending order
 void sortByCGPA(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (compareCGPA(*students[j], *students[j + 1]) < 0)
-        swap(students[j], students[j + 1]);
+        std::swap(students[j], students[j + 1]);
 }
 
 // Sorts students by Research Score in Decending order
@@ -105,7 +148,7 @@ void sortByResearchScore(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (compareResearchScore(*students[j], *students[j + 1]) < 0)
-        swap(students[j], students[j + 1]);
+        std::swap(students[j], students[j + 1]);
 }
 
 // Sorts students by First Name in Alphabetical order (A -> Z)
@@ -113,7 +156,7 @@ void sortByFirstName(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (compareFirstName(*students[j], *students[j + 1]) > 0)
-        swap(students[j], students[j + 1]);
+        std::swap(students[j], students[j + 1]);
 }
 
 // Sorts students by Last Name in Alphabetical order (A -> Z)
@@ -121,7 +164,7 @@ void sortByLastName(Student* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (compareLastName(*students[j], *students[j + 1]) > 0)
-        swap(students[j], students[j + 1]);
+        std::swap(students[j], students[j + 1]);
 }
 
 // sortByOverall

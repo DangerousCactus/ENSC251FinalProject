@@ -1,32 +1,31 @@
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
 
-using namespace std;  // use namespace std
-#include <string>     //you will have to use string in C++
+#include <string>     //you will have to use std::string in C++
 
 class Student {
  private:
-  string firstName;
-  string lastName;
+  std::string firstName;
+  std::string lastName;
   float cgpa;
   int researchScore;
   int applicationID;
 
  public:
-  Student(string firstName, string lastName, float cgpa, int reseachScore,
+  Student(std::string firstName, std::string lastName, float cgpa, int reseachScore,
           int applicationID);
 
   Student();
   // Getters
-  string getFirstName() const;
-  string getLastName() const;
+  std::string getFirstName() const;
+  std::string getLastName() const;
   float getcgpa() const;
   int getResearchScore() const;
   int getApplicationID() const;
-  
+
   // Setters
-  void setFirstName(string name);
-  void setLastName(string name);
+  void setFirstName(std::string name);
+  void setLastName(std::string name);
   void setcgpa(float cgpa);
   void setResearchScore(int researchScore);
   void setApplicationID(int applicationID);
@@ -44,9 +43,13 @@ class Student {
   // Compares two student's Last Name
   int friend compareLastName(const Student student1, const Student student2);
 
+  virtual std::string getLocation() const;
+
   // Overloads << operator to output student information including:
   // First Name, Last Name, CGPA, Research Score, Application ID.
-  friend ostream& operator<<(ostream& outs, const Student& student);
+  friend std::ostream& operator<<(std::ostream& outs, const Student& student);
+  friend bool operator<(const Student& student1, const Student& student2);
+  friend bool operator>(const Student& student1, const Student& student2);
 };
 
 // Sorts students by CGPA in Decending order

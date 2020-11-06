@@ -1,9 +1,9 @@
 #include "domesticStudent.hpp"
 #include <iostream>
 
-DomesticStudent::DomesticStudent(string firstName, string lastName, float cgpa,
-                                 int reseachScore, int applicationID,
-                                 string province)
+DomesticStudent::DomesticStudent(std::string firstName, std::string lastName,
+                                 float cgpa, int reseachScore,
+                                 int applicationID, std::string province)
     : Student(firstName, lastName, cgpa, reseachScore, applicationID) {
   this->province = province;
 }
@@ -11,17 +11,17 @@ DomesticStudent::DomesticStudent(string firstName, string lastName, float cgpa,
 DomesticStudent::DomesticStudent() : Student(){};
 
 // Getters
-string DomesticStudent::getLocation() const {
+std::string DomesticStudent::getLocation() const {
   return province;
 }
 
 // Setters
-void DomesticStudent::setProvince(string province) {
+void DomesticStudent::setProvince(std::string province) {
   this->province = province;
 }
 
 // Overloads the << operator to output the province
-ostream& operator<<(ostream& outs, const DomesticStudent& student) {
+std::ostream& operator<<(std::ostream& outs, const DomesticStudent& student) {
   outs << static_cast<Student>(student);
   outs << " | Province: " << student.province;
 
@@ -34,7 +34,7 @@ void sortByLocation(DomesticStudent* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (students[j + 1]->province < students[j]->province)
-        swap(students[j], students[j + 1]);
+        std::swap(students[j], students[j + 1]);
 }
 
 // sortByOverall

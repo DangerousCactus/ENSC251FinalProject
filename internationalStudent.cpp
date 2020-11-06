@@ -1,22 +1,21 @@
 #include "internationalStudent.hpp"
 #include "TOEFLScore.hpp"
 
-using namespace std;
 #include <iomanip>
 #include <iostream>
 
-InternationalStudent::InternationalStudent(string firstName, string lastName,
+InternationalStudent::InternationalStudent(std::string firstName, std::string lastName,
                                            float cgpa, int reseachScore,
-                                           int applicationID, string country,
+                                           int applicationID, std::string country,
                                            ToeflScore toefl)
     : Student(firstName, lastName, cgpa, reseachScore, applicationID) {
   this->country = country;
   this->toefl = toefl;
 }
 
-InternationalStudent::InternationalStudent(string firstName, string lastName,
+InternationalStudent::InternationalStudent(std::string firstName, std::string lastName,
                                            float cgpa, int reseachScore,
-                                           int applicationID, string country,
+                                           int applicationID, std::string country,
                                            int reading, int listening,
                                            int speaking, int writing)
     : Student(firstName, lastName, cgpa, reseachScore, applicationID) {
@@ -27,7 +26,7 @@ InternationalStudent::InternationalStudent(string firstName, string lastName,
 InternationalStudent::InternationalStudent() : Student(){};
 
 // Getters
-string InternationalStudent::getLocation() const {
+std::string InternationalStudent::getLocation() const {
   return country;
 }
 ToeflScore InternationalStudent::getToefl() const {
@@ -35,7 +34,7 @@ ToeflScore InternationalStudent::getToefl() const {
 }
 
 // Setters
-void InternationalStudent::setCountry(string country) {
+void InternationalStudent::setCountry(std::string country) {
   this->country = country;
 }
 void InternationalStudent::setToefl(ToeflScore toefl) {
@@ -43,9 +42,9 @@ void InternationalStudent::setToefl(ToeflScore toefl) {
 }
 
 // Overloads the << operator to output the country
-ostream& operator<<(ostream& outs, const InternationalStudent& student) {
+std::ostream& operator<<(std::ostream& outs, const InternationalStudent& student) {
   outs << static_cast<Student>(student);
-  outs << " | Country: " << setw(10) << student.country;
+  outs << " | Country: " << std::setw(10) << student.country;
   outs << " | " << student.toefl;
   return outs;
 }
@@ -56,7 +55,7 @@ void sortByLocation(InternationalStudent* students[], int len) {
   for (int i = 0; i < len - 1; i++)
     for (int j = 0; j < len - 1 - i; j++)
       if (students[j + 1]->country < students[j]->country)
-        swap(students[j], students[j + 1]);
+        std::swap(students[j], students[j + 1]);
 }
 
 // removeLowToeflScores
@@ -71,7 +70,7 @@ void removeLowToeflScores(InternationalStudent* students[], int& len) {
         students[i]->toefl.getTotal() < 93) {
       // cout << students[i]->firstName << students[i]->lastName <<
       // students[i]->toefl;
-      swap(students[i], students[len - 1]);
+      std::swap(students[i], students[len - 1]);
       len--;
     } else {
       i++;

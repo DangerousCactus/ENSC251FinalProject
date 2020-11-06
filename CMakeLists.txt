@@ -17,6 +17,7 @@ set(Headers
     domesticStudent.hpp
     internationalStudent.hpp
     TOEFLScore.hpp
+    StudentList.hpp
 )
 
 set(Sources
@@ -24,6 +25,7 @@ set(Sources
     domesticStudent.cpp
     internationalStudent.cpp
     TOEFLScore.cpp
+    StudentList.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})

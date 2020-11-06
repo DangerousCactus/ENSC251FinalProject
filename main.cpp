@@ -3,26 +3,27 @@
 #include <fstream>   //file processing
 #include <iostream>  //cin and cout
 #include <sstream>   //formatted string processing
+#include "StudentList.hpp"
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
 
-const string RED = "\033[31m";
-const string GREEN = "\033[32m";
-const string YELLOW = "\033[33m";
-const string BOLD = "\033[1m";
-const string CLEAR = "\033[0m";
+const std::string RED = "\033[31m";
+const std::string GREEN = "\033[32m";
+const std::string YELLOW = "\033[33m";
+const std::string BOLD = "\033[1m";
+const std::string CLEAR = "\033[0m";
 
 // forceIntInput
 // Helper function to reject invalid input and suggests possible correction
-void forceIntInput(istream& inps, string message, int& field, int maxAllow) {
+void forceIntInput(std::istream& inps, std::string message, int& field, int maxAllow) {
   do {
-    cout << message;
+    std::cout << message;
     inps >> field;
 
     if (inps.fail()) {
       inps.clear();
       inps.ignore(INT_MAX, '\n');
-      cout << YELLOW << BOLD << "Enter a number please. Try again:\n" << CLEAR;
+      std::cout << YELLOW << BOLD << "Enter a number please. Try again:\n" << CLEAR;
       continue;
     }
 
@@ -31,11 +32,55 @@ void forceIntInput(istream& inps, string message, int& field, int maxAllow) {
     if (field > 0 && field <= maxAllow)
       break;
 
-    cout << YELLOW << BOLD << "Please enter a valid selection. Try again:\n";
-         
+    std::cout << YELLOW << BOLD << "Please enter a valid selection. Try again:\n";
+
   } while (true);
 }
 
+int main() {
+  StudentList<DomesticStudent> sl;
+  std::string line;
+  std::ifstream domesticFile("domestic-stu.txt");
+
+  if (!domesticFile.is_open()) {
+    std::cout << "Unable to open file domestic-stu.txt" << std::endl;
+    return -1;
+  }
+
+  getline(domesticFile, line);  // Discard legend
+
+  int dom_stu_count = 0;
+  while (getline(domesticFile, line)) {
+    std::istringstream ss(line);
+
+    std::string firstName, lastName, province, s_cgpa, s_researchScore;
+    float cgpa;
+    int researchScore, applicationID;
+
+    getline(ss, firstName, ',');
+    getline(ss, lastName, ',');
+    getline(ss, province, ',');
+    getline(ss, s_cgpa, ',');
+
+    cgpa = atof(s_cgpa.c_str());
+    getline(ss, s_researchScore, ',');
+    researchScore = atoi(s_researchScore.c_str());
+
+    applicationID = 20200000 + dom_stu_count;
+    sl.addStudentNode(DomesticStudent(firstName, lastName, cgpa, researchScore,
+                                      applicationID, province));
+
+    dom_stu_count++;
+  }
+
+  domesticFile.close();
+  StudentList<DomesticStudent> sl2(sl);
+  StudentList<DomesticStudent> sl3 = sl;
+
+  sl.print();
+}
+
+/*
 int main() {
   DomesticStudent* domesticStudents[100];
   InternationalStudent* internationalStudents[100];
@@ -144,11 +189,6 @@ int main() {
 
   // End reading of files and loading of student data
 
-  // sortByOverall(internationalStudents, int_stu_count);
-  // for (int i = 0; i < int_stu_count; i++) {
-  //   cout << *internationalStudents[i] << endl;
-  // }
-
   int domOrInt = 0, sortType = 0;
   // By storing the pointers, we can just index stuLists instead of using if
   // statements
@@ -233,3 +273,4 @@ int main() {
         cout << *internationalStudents[i] << endl;
   }
 }
+*/

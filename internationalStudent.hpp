@@ -6,30 +6,30 @@
 
 class InternationalStudent : public Student {
  private:
-  string country;
+  std::string country;
   ToeflScore toefl;
 
  public:
-  InternationalStudent(string firstName, string lastName, float cgpa,
-                       int reseachScore, int applicationID, string country,
+  InternationalStudent(std::string firstName, std::string lastName, float cgpa,
+                       int reseachScore, int applicationID, std::string country,
                        ToeflScore toefl);
 
-  InternationalStudent(string firstName, string lastName, float cgpa,
-                       int reseachScore, int applicationID, string country,
+  InternationalStudent(std::string firstName, std::string lastName, float cgpa,
+                       int reseachScore, int applicationID, std::string country,
                        int reading, int listening, int speaking, int writing);
 
   InternationalStudent();
 
   // Setters
-  void setCountry(string country);
+  void setCountry(std::string country);
   void setToefl(ToeflScore toefl);
 
   // Getters
-  virtual string getLocation() const;
+  virtual std::string getLocation() const;
   ToeflScore getToefl() const;
 
   // Overloads the << operator to output the country
-  friend ostream& operator<<(ostream& outs,
+  friend std::ostream& operator<<(std::ostream& outs,
                              const InternationalStudent& student);
 
   // sortByLocation

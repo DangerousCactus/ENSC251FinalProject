@@ -1,28 +1,27 @@
 #ifndef DOMESTICSTUDENT_HPP
 #define DOMESTICSTUDENT_HPP
 
-using namespace std;  // use namespace std
 #include <string>
 #include "student.hpp"
 
 class DomesticStudent : public Student {
  private:
-  string province;
+  std::string province;
 
  public:
-  DomesticStudent(string firstName, string lastName, float cgpa,
-                  int reseachScore, int applicationID, string province);
+  DomesticStudent(std::string firstName, std::string lastName, float cgpa,
+                  int reseachScore, int applicationID, std::string province);
 
   DomesticStudent();
 
   // Getters
-  virtual string getLocation() const;
+  virtual std::string getLocation() const;
   
   // Setters
-  void setProvince(string province);
+  void setProvince(std::string province);
   
   // Overloads the << operator to output the province
-  friend ostream& operator<<(ostream& outs, const DomesticStudent& student);
+  friend std::ostream& operator<<(std::ostream& outs, const DomesticStudent& student);
 
   // sortByLocation
   // Sorts students by location based on province in ascending order

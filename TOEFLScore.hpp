@@ -1,7 +1,6 @@
 #ifndef TOEFLSCORE_HPP
 #define TOEFLSCORE_HPP
 
-using namespace std;
 #include <iostream>
 
 class ToeflScore {
@@ -30,7 +29,7 @@ class ToeflScore {
 
   // Overloads << operator to output TOEFL scores in the order:
   // Reading, Lisenting, Speaking, Writing
-  friend ostream& operator<<(ostream& outs, const ToeflScore& score);
+  friend std::ostream& operator<<(std::ostream& outs, const ToeflScore& score);
 };
 
 #endif
