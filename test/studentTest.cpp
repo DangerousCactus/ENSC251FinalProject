@@ -3,26 +3,26 @@
 #include "../internationalStudent.hpp"
 #include "../student.hpp"
 
-TEST(studentTest, studentGettersSetters) {
-  Student student("Bob", "Builder", 2.0, 95, 0);
-  EXPECT_EQ(student.getFirstName(), "Bob");
-  EXPECT_EQ(student.getLastName(), "Builder");
-  EXPECT_FLOAT_EQ(student.getcgpa(), 2.0);
-  EXPECT_EQ(student.getResearchScore(), 95);
-  EXPECT_EQ(student.getApplicationID(), 0);
+// TEST(studentTest, studentGettersSetters) {
+//   Student student("Bob", "Builder", 2.0, 95, 0);
+//   EXPECT_EQ(student.getFirstName(), "Bob");
+//   EXPECT_EQ(student.getLastName(), "Builder");
+//   EXPECT_FLOAT_EQ(student.getcgpa(), 2.0);
+//   EXPECT_EQ(student.getResearchScore(), 95);
+//   EXPECT_EQ(student.getApplicationID(), 0);
 
-  student.setFirstName("First");
-  student.setLastName("Last");
-  student.setcgpa(3.2);
-  student.setResearchScore(90);
-  student.setApplicationID(100);
+//   student.setFirstName("First");
+//   student.setLastName("Last");
+//   student.setcgpa(3.2);
+//   student.setResearchScore(90);
+//   student.setApplicationID(100);
 
-  EXPECT_EQ(student.getFirstName(), "First");
-  EXPECT_EQ(student.getLastName(), "Last");
-  EXPECT_FLOAT_EQ(student.getcgpa(), 3.2);
-  EXPECT_EQ(student.getResearchScore(), 90);
-  EXPECT_EQ(student.getApplicationID(), 100);
-}
+//   EXPECT_EQ(student.getFirstName(), "First");
+//   EXPECT_EQ(student.getLastName(), "Last");
+//   EXPECT_FLOAT_EQ(student.getcgpa(), 3.2);
+//   EXPECT_EQ(student.getResearchScore(), 90);
+//   EXPECT_EQ(student.getApplicationID(), 100);
+// }
 
 TEST(studentTest, domesticStudentGettersSetters) {
   DomesticStudent dstudent("Bob", "Builder", 2.0, 95, 0, "Ontario");
