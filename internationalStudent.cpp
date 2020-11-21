@@ -46,11 +46,10 @@ void InternationalStudent::setCountry(std::string country) {
 void InternationalStudent::setToefl(ToeflScore toefl) {
   this->toefl = toefl;
 }
-std::ostream& InternationalStudent::print(std::ostream& outs,
-                                          const InternationalStudent& student) {
-  Student::print(outs); //Call super
-  outs << " | Country: " << std::setw(10) << student.country;
-  outs << " | " << student.toefl;
+std::ostream& InternationalStudent::print(std::ostream& outs) const {
+  Student::print(outs);  // Call super
+  outs << " | Country: " << std::setw(10) << country;
+  outs << " | " << toefl;
   return outs;
 }
 

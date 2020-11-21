@@ -212,6 +212,23 @@ void StudentList<T>::searchFirstLast(std::string first, std::string last) {
 }
 
 template <typename T>
+void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA, int score) {
+  StudentNodePtr<T> currHead = head;
+  bool found = false;
+
+  while (currHead != nullptr) {
+    if (currHead->getStudent()->getCGPA() >= CGPA &&
+        currHead->getStudent()->getResearchScore() >= score) {
+      std::cout << *(currHead->getStudent()) << std::endl;
+      found = true;
+    }
+    currHead = currHead->getLink();
+  }
+  if (!found)
+    std::cout << "No matching records found.\n";
+}
+
+template <typename T>
 void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   StudentNodePtr<T> currHead = head;
   bool found = false;

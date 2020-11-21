@@ -80,8 +80,6 @@ int compareLastName(const Student& student1, const Student& student2) {
     return student1.lastName > student2.lastName;
 }
 
-// Overloads << operator to output student information including:
-// First Name, Last Name, CGPA, Research Score, Application ID.
 std::ostream& Student::print(std::ostream& outs) const {
   outs << std::setw(15) << std::left << firstName << ' ' << std::setw(15)
        << std::left << lastName << " | "
@@ -91,7 +89,8 @@ std::ostream& Student::print(std::ostream& outs) const {
 
   return outs;
 }
-
+// Overloads << operator to output student information including:
+// First Name, Last Name, CGPA, Research Score, Application ID.
 std::ostream& operator<<(std::ostream& outs, const Student& student) {
   return student.print(outs);
 }
@@ -107,7 +106,13 @@ bool operator<(const Student& student1, const Student& student2) {
     } else if (student1.CGPA > student2.CGPA) {
       return false;
     } else {
-      if (student1.getLocation() < student2.getLocation()) {
+      // Compare by location only if the students are either both domestic or
+      // both international.
+      if (student1.getLocation() < student2.getLocation() ||
+          (student1.getLocation().size() == 2 &&
+           student2.getLocation().size() != 2) ||
+          (student1.getLocation().size() != 2 &&
+           student2.getLocation().size() == 2)) {
         return false;
       } else {
         return true;
@@ -116,24 +121,8 @@ bool operator<(const Student& student1, const Student& student2) {
   }
 }
 
-bool operator>(const Student& student2, const Student& student1) {
-  if (student1.researchScore < student2.researchScore) {
-    return true;
-  } else if (student1.researchScore > student2.researchScore) {
-    return false;
-  } else {
-    if (student1.CGPA < student2.CGPA) {
-      return true;
-    } else if (student1.CGPA > student2.CGPA) {
-      return false;
-    } else {
-      if (student1.getLocation() < student2.getLocation()) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
+bool operator>(const Student& student1, const Student& student2) {
+  return student2 < student1;
 }
 
 // Bubble sort is implemented below for sorting functions. Since bubble sort

@@ -157,7 +157,9 @@ int main() {
     tempis = tempis->getLink();
   }
 
-  mergedList.print();
+  mergedList.searchCGPAandResearchScoreThreshold(9, 95);
+
+  //islist.print();
   // int domOrInt = 0, sortType = 0;
 
   // // Menu while loop

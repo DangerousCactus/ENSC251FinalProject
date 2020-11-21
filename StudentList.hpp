@@ -35,6 +35,7 @@ class StudentList {
   void searchCGPA(float cgpa);
   void searchFirstLast(std::string first, std::string last);
   void searchResearchScore(int score);
+  void searchCGPAandResearchScoreThreshold(float CGPA, int score);
 
   void print();
 };

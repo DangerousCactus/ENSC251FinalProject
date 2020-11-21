@@ -22,10 +22,9 @@ void DomesticStudent::setProvince(std::string province) {
   this->province = province;
 }
 
-std::ostream& DomesticStudent::print(std::ostream& outs,
-                                     const DomesticStudent& student) {
+std::ostream& DomesticStudent::print(std::ostream& outs) const {
   Student::print(outs);  // Call super
-  outs << " | Province: " << student.province;
+  outs << " | Province: " << province;
   return outs;
 }
 
