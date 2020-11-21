@@ -3,45 +3,58 @@
 #include "StudentList.hpp"
 
 template <typename T>
-void deleteSubList(StudentNodePtr<T> toDelete) {
-  if (toDelete == nullptr)
-    return;
-  deleteSubList(toDelete->link);
-  delete toDelete;
-}
-
-template <typename T>
-StudentNodePtr<T> copySubList(StudentNodePtr<T> toCopy,
-                              StudentNodePtr<T> currHead,
-                              StudentNodePtr<T>& tail) {
-  if (toCopy == nullptr) {
-    tail = currHead;
-    return nullptr;
-  } else {
-    StudentNodePtr<T> newNode = new StudentNode<T>;
-    newNode->student = toCopy->student;
-    newNode->link = copySubList(toCopy->link, newNode, tail);
-    return newNode;
-  }
-}
-
-template <typename T>
 StudentList<T>::StudentList() {}
 
 template <typename T>
 StudentList<T>::StudentList(const StudentList& studentList) {
-  head = copySubList(studentList.head, (StudentNodePtr<T>)nullptr, tail);
+  StudentNodePtr<T> currOldHead = studentList.head;
+
+  head = new StudentNode<T>(*currOldHead);
+  StudentNodePtr<T> currNewHead = head;
+
+  currOldHead = currOldHead->getLink();
+
+  while (currOldHead != nullptr) {
+    currNewHead->setLink(new StudentNode<T>(*(currOldHead->getStudent())));
+    currNewHead = currNewHead->getLink();
+    currOldHead = currOldHead->getLink();
+  }
+
+  tail = currNewHead;
 }
 
 template <typename T>
-StudentList<T>& StudentList<T>::operator=(const StudentList studentList) {
-  deleteSubList(head);
-  head = copySubList(studentList.head, nullptr, tail);
+StudentList<T>& StudentList<T>::operator=(const StudentList<T> studentList) {
+  StudentNodePtr<T> currHead = head;
+  while (currHead != nullptr) {
+    StudentNodePtr<T> temp = currHead;
+    currHead = currHead->getLink();
+    delete temp;
+  }
+
+  StudentNodePtr<T> currOldHead = studentList.head;
+  StudentNodePtr<T> currNewHead = head;
+
+  currNewHead = new StudentNode<T>(currOldHead);
+  currOldHead = currOldHead->getLink();
+
+  while (currOldHead != nullptr) {
+    currNewHead->setLink(new StudentNode<T>(currOldHead->getLink()));
+    currNewHead = currNewHead->getLink();
+    currOldHead = currOldHead->getLink();
+  }
+
+  return this;
 }
 
 template <typename T>
 StudentList<T>::~StudentList() {
-  deleteSubList(head);
+  StudentNodePtr<T> currHead = head;
+  while (currHead != nullptr) {
+    StudentNodePtr<T> temp = currHead;
+    currHead = currHead->getLink();
+    delete temp;
+  }
 }
 
 template <typename T>
@@ -56,38 +69,47 @@ StudentNodePtr<T> StudentList<T>::getTail() {
 
 template <typename T>
 void StudentList<T>::addStudentNode(T student) {
-  StudentNodePtr<T> newNode = new StudentNode<T>;
   StudentNodePtr<T> currParent = head;
+  StudentNodePtr<T> newNode = new StudentNode<T>(student);
 
   if (currParent == nullptr) {
     head = newNode;
     tail = newNode;
-    newNode->student = student;
   } else {
-    while (currParent->student > student) {
-      if (currParent->link == nullptr) {
-        currParent->link = newNode;
-        newNode->student = student;
-        tail = newNode;
-        return;
-      }
-      currParent = currParent->link;
-    }
-    T temp = currParent->student;
-    currParent->student = student;
-    newNode->student = temp;
-
-    newNode->link = currParent->link;
-    currParent->link = newNode;
+    tail->setLink(newNode);
+    tail = newNode;
   }
+
+  // TODO: ORDERING
+  // if (currParent == nullptr) {
+  //   head = newNode;
+  //   tail = newNode;
+  // } else {
+  //   while (*(currParent->getStudent()) > *student) {
+  //     if (currParent->getLink() == nullptr) {
+  //       currParent->setLink(newNode);
+  //       tail = newNode;
+  //       return;
+  //     } else if (*(currParent->getStudent()) < *student) {
+  //       T* tempStudent = newNode->getStudent();
+  //       newNode->setStudent(currParent->getStudent());
+  //       currParent->setStudent(tempStudent);
+  //       newNode->setLink(currParent->getLink());
+  //       currParent->setLink(newNode);
+  //       return;
+  //     } else {
+  //       currParent = currParent->getLink();
+  //     }
+  //   }
+  // }
 }
 
 template <typename T>
 void StudentList<T>::print() {
   StudentNodePtr<T> currHead = head;
   while (currHead != nullptr) {
-    std::cout << currHead->student << std::endl;
-    currHead = currHead->link;
+    std::cout << *(currHead->getStudent()) << std::endl;
+    currHead = currHead->getLink();
   }
 }
 

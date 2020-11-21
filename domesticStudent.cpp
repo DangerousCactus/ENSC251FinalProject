@@ -14,7 +14,9 @@ DomesticStudent::DomesticStudent() : Student(){};
 std::string DomesticStudent::getLocation() const {
   return province;
 }
-
+std::string DomesticStudent::getProvince() const {
+  return province;
+}
 // Setters
 void DomesticStudent::setProvince(std::string province) {
   this->province = province;

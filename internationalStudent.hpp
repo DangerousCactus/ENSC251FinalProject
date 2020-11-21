@@ -26,6 +26,7 @@ class InternationalStudent : public Student {
 
   // Getters
   virtual std::string getLocation() const;
+  std::string getCountry() const;
   ToeflScore getToefl() const;
 
   // Overloads the << operator to output the country

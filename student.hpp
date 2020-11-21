@@ -49,6 +49,7 @@ class Student {
   std::ostream& print(std::ostream& outs) const;
   friend bool operator<(const Student& student1, const Student& student2);
   friend bool operator>(const Student& student1, const Student& student2);
+  friend std::ostream& operator<<(std::ostream& outs, const Student& student);
 };
 
 // Sorts students by CGPA in Decending order

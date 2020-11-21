@@ -16,7 +16,8 @@ class DomesticStudent : public Student {
 
   // Getters
   virtual std::string getLocation() const;
-  
+  std::string getProvince() const;
+    
   // Setters
   void setProvince(std::string province);
   

@@ -28,6 +28,10 @@ InternationalStudent::InternationalStudent(std::string firstName,
 InternationalStudent::InternationalStudent() : Student(){};
 
 // Getters
+
+std::string InternationalStudent::getCountry() const {
+  return country;
+}
 std::string InternationalStudent::getLocation() const {
   return country;
 }

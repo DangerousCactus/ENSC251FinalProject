@@ -6,8 +6,8 @@ run: main
 	./main
 
 #link main.o and student.o to executable main
-main: main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o StudentList.o
-	g++ -g -o main main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o StudentList.o
+main: main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o StudentList.o StudentNode.o
+	g++ -g -o main main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o StudentList.o StudentNode.o
 
 #compile the main.cpp to main.o
 main.o: main.cpp
@@ -32,6 +32,10 @@ TOEFLScore.o: student.cpp
 #compile the StudentList.cpp to StudentList.o
 StudentList.o: StudentList.cpp
 	g++ -g -c StudentList.cpp
+
+#compile the StudentNode.cpp to StudentNode.o
+StudentNode.o: StudentNode.cpp
+	g++ -g -c StudentNode.cpp
 
 #remove built files
 clean:

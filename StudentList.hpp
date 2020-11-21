@@ -1,12 +1,8 @@
 #ifndef STUDENTLIST_HPP
 #define STUDENTLIST_HPP
 #include <iostream>
-
-template <typename T>
-struct StudentNode {
-  T student;
-  StudentNode* link = nullptr;
-};
+#include "StudentNode.hpp"
+#include "student.hpp"
 
 template <typename T>
 using StudentNodePtr = StudentNode<T>*;

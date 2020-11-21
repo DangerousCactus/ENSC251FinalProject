@@ -79,7 +79,7 @@ int compareLastName(const Student& student1, const Student& student2) {
 
 // Overloads << operator to output student information including:
 // First Name, Last Name, CGPA, Research Score, Application ID.
-std::ostream& Student::print(std::ostream& outs) const{
+std::ostream& Student::print(std::ostream& outs) const {
   outs << std::setw(15) << std::left << firstName << ' ' << std::setw(15)
        << std::left << lastName << " | "
        << "CGPA: " << std::setw(4) << cgpa << " | "
@@ -87,6 +87,10 @@ std::ostream& Student::print(std::ostream& outs) const{
        << "Application ID: " << applicationID;
 
   return outs;
+}
+
+std::ostream& operator<<(std::ostream& outs, const Student& student){
+  return student.print(outs);
 }
 
 bool operator<(const Student& student1, const Student& student2) {
