@@ -17,12 +17,13 @@ class DomesticStudent : public Student {
   // Getters
   virtual std::string getLocation() const;
   std::string getProvince() const;
-    
+
   // Setters
   void setProvince(std::string province);
-  
+
   // Overloads the << operator to output the province
-  friend std::ostream& operator<<(std::ostream& outs, const DomesticStudent& student);
+  friend std::ostream& operator<<(std::ostream& outs,
+                                  const DomesticStudent& student);
 
   // sortByLocation
   // Sorts students by location based on province in ascending order
@@ -30,7 +31,7 @@ class DomesticStudent : public Student {
 };
 
 // sortByOverall
-// Sorts students by Research Score first, then CGPA, and Province in 
+// Sorts students by Research Score first, then CGPA, and Province in
 // ascending order.
 void sortByOverall(DomesticStudent* students[], int len);
 #endif

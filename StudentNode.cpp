@@ -12,13 +12,13 @@ StudentNode<T>::StudentNode(T student) {
 
 template <typename T>
 StudentNode<T>::StudentNode(const StudentNode& studentNode) {
-    this->student = new T(*(studentNode.student));
+  this->student = new T(*(studentNode.student));
 }
 
 template <typename T>
 StudentNode<T>& StudentNode<T>::operator=(const StudentNode<T> studentNode) {
-    this->student = T(*studentNode.getStudent());
-    return this;
+  this->student = T(*studentNode.getStudent());
+  return this;
 }
 
 template <typename T>

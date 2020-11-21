@@ -89,7 +89,7 @@ std::ostream& Student::print(std::ostream& outs) const {
   return outs;
 }
 
-std::ostream& operator<<(std::ostream& outs, const Student& student){
+std::ostream& operator<<(std::ostream& outs, const Student& student) {
   return student.print(outs);
 }
 

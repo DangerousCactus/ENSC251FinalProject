@@ -31,7 +31,7 @@ class InternationalStudent : public Student {
 
   // Overloads the << operator to output the country
   friend std::ostream& operator<<(std::ostream& outs,
-                             const InternationalStudent& student);
+                                  const InternationalStudent& student);
 
   // sortByLocation
   // Sorts students by location based on country in ascending order (A - Z).

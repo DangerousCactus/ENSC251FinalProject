@@ -72,36 +72,35 @@ void StudentList<T>::addStudentNode(T student) {
   StudentNodePtr<T> currParent = head;
   StudentNodePtr<T> newNode = new StudentNode<T>(student);
 
-  if (currParent == nullptr) {
-    head = newNode;
-    tail = newNode;
-  } else {
-    tail->setLink(newNode);
-    tail = newNode;
-  }
-
-  // TODO: ORDERING
   // if (currParent == nullptr) {
   //   head = newNode;
   //   tail = newNode;
   // } else {
-  //   while (*(currParent->getStudent()) > *student) {
-  //     if (currParent->getLink() == nullptr) {
-  //       currParent->setLink(newNode);
-  //       tail = newNode;
-  //       return;
-  //     } else if (*(currParent->getStudent()) < *student) {
-  //       T* tempStudent = newNode->getStudent();
-  //       newNode->setStudent(currParent->getStudent());
-  //       currParent->setStudent(tempStudent);
-  //       newNode->setLink(currParent->getLink());
-  //       currParent->setLink(newNode);
-  //       return;
-  //     } else {
-  //       currParent = currParent->getLink();
-  //     }
-  //   }
+  //   tail->setLink(newNode);
+  //   tail = newNode;
   // }
+
+  if (currParent == nullptr) {
+    head = newNode;
+    tail = newNode;
+    return;
+  } else {
+    while (*(currParent->getStudent()) > student) {
+      if (currParent->getLink() == nullptr) {
+        currParent->setLink(newNode);
+        tail = newNode;
+        return;
+      } else {
+        currParent = currParent->getLink();
+      }
+    }
+    T* tempStudent = newNode->getStudent();
+    newNode->setStudent(currParent->getStudent());
+    currParent->setStudent(tempStudent);
+    newNode->setLink(currParent->getLink());
+    currParent->setLink(newNode);
+    return;
+  }
 }
 
 template <typename T>

@@ -15,7 +15,8 @@ const std::string CLEAR = "\033[0m";
 
 // forceIntInput
 // Helper function to reject invalid input and suggests possible correction
-void forceIntInput(std::istream& inps, std::string message, int& field, int maxAllow) {
+void forceIntInput(std::istream& inps, std::string message, int& field,
+                   int maxAllow) {
   do {
     std::cout << message;
     inps >> field;
@@ -23,7 +24,8 @@ void forceIntInput(std::istream& inps, std::string message, int& field, int maxA
     if (inps.fail()) {
       inps.clear();
       inps.ignore(INT_MAX, '\n');
-      std::cout << YELLOW << BOLD << "Enter a number please. Try again:\n" << CLEAR;
+      std::cout << YELLOW << BOLD << "Enter a number please. Try again:\n"
+                << CLEAR;
       continue;
     }
 
@@ -32,7 +34,8 @@ void forceIntInput(std::istream& inps, std::string message, int& field, int maxA
     if (field > 0 && field <= maxAllow)
       break;
 
-    std::cout << YELLOW << BOLD << "Please enter a valid selection. Try again:\n";
+    std::cout << YELLOW << BOLD
+              << "Please enter a valid selection. Try again:\n";
 
   } while (true);
 }
