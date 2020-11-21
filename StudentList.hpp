@@ -23,7 +23,12 @@ class StudentList {
   StudentNodePtr<T> getHead();
   StudentNodePtr<T> getTail();
 
+  void setHead(StudentNodePtr<T> head);
+  void setTail(StudentNodePtr<T> tail);
+
   void addStudentNode(T student);
+  void deleteStudentNode(StudentNodePtr<T> studentNode);
+
   void print();
 };
 

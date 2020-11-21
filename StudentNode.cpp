@@ -17,7 +17,7 @@ StudentNode<T>::StudentNode(const StudentNode& studentNode) {
 
 template <typename T>
 StudentNode<T>& StudentNode<T>::operator=(const StudentNode<T> studentNode) {
-  this->student = T(*studentNode.getStudent());
+  this->student = T(*studentNode.student);
   return this;
 }
 

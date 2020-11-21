@@ -101,7 +101,7 @@ bool operator<(const Student& student1, const Student& student2) {
   } else {
     if (student1.cgpa < student2.cgpa) {
       return true;
-    } else if (student1.cgpa < student2.cgpa) {
+    } else if (student1.cgpa > student2.cgpa) {
       return false;
     } else {
       if (student1.getLocation() < student2.getLocation()) {
@@ -121,7 +121,7 @@ bool operator>(const Student& student2, const Student& student1) {
   } else {
     if (student1.cgpa < student2.cgpa) {
       return true;
-    } else if (student1.cgpa < student2.cgpa) {
+    } else if (student1.cgpa > student2.cgpa) {
       return false;
     } else {
       if (student1.getLocation() < student2.getLocation()) {
