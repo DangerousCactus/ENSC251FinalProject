@@ -22,11 +22,10 @@ void DomesticStudent::setProvince(std::string province) {
   this->province = province;
 }
 
-// Overloads the << operator to output the province
-std::ostream& operator<<(std::ostream& outs, const DomesticStudent& student) {
-  student.print(outs);
+std::ostream& DomesticStudent::print(std::ostream& outs,
+                                     const DomesticStudent& student) {
+  Student::print(outs);  // Call super
   outs << " | Province: " << student.province;
-
   return outs;
 }
 

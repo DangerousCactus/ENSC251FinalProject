@@ -7,7 +7,7 @@ class Student {
  private:
   std::string firstName;
   std::string lastName;
-  float cgpa;
+  float CGPA;
   int researchScore;
   int applicationID;
 
@@ -19,15 +19,15 @@ class Student {
   // Getters
   std::string getFirstName() const;
   std::string getLastName() const;
-  float getcgpa() const;
+  float getCGPA() const;
   int getResearchScore() const;
   int getApplicationID() const;
-  virtual std::string getLocation() const = 0;
+  virtual std::string getLocation() const;
 
   // Setters
   void setFirstName(std::string name);
   void setLastName(std::string name);
-  void setcgpa(float cgpa);
+  void setCGPA(float CGPA);
   void setResearchScore(int researchScore);
   void setApplicationID(int applicationID);
 
@@ -46,7 +46,7 @@ class Student {
 
   // Overloads << operator to output student information including:
   // First Name, Last Name, CGPA, Research Score, Application ID.
-  std::ostream& print(std::ostream& outs) const;
+  virtual std::ostream& print(std::ostream& outs) const;
   friend bool operator<(const Student& student1, const Student& student2);
   friend bool operator>(const Student& student1, const Student& student2);
   friend std::ostream& operator<<(std::ostream& outs, const Student& student);

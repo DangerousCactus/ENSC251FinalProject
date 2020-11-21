@@ -6,8 +6,8 @@ template <typename T>
 StudentNode<T>::StudentNode() {}
 
 template <typename T>
-StudentNode<T>::StudentNode(T student) {
-  this->student = new T(student);
+StudentNode<T>::StudentNode(T* student) {
+  this->student = student;
 }
 
 template <typename T>

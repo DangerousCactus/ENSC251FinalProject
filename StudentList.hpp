@@ -26,8 +26,15 @@ class StudentList {
   void setHead(StudentNodePtr<T> head);
   void setTail(StudentNodePtr<T> tail);
 
-  void addStudentNode(T student);
+  void addStudentNode(T* student);
   void deleteStudentNode(StudentNodePtr<T> studentNode);
+  void deleteFirstLast(std::string first, std::string last);
+  void deleteHeadTail();
+
+  void searchAppID(int id);
+  void searchCGPA(float cgpa);
+  void searchFirstLast(std::string first, std::string last);
+  void searchResearchScore(int score);
 
   void print();
 };

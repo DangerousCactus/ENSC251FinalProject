@@ -4,9 +4,9 @@
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
 
-Student::Student(std::string firstName, std::string lastName, float cgpa,
+Student::Student(std::string firstName, std::string lastName, float CGPA,
                  int reseachScore, int applicationID)
-    : firstName(firstName), lastName(lastName), cgpa(cgpa),
+    : firstName(firstName), lastName(lastName), CGPA(CGPA),
       researchScore(reseachScore), applicationID(applicationID) {}
 
 Student::Student() {}
@@ -18,14 +18,17 @@ std::string Student::getFirstName() const {
 std::string Student::getLastName() const {
   return lastName;
 }
-float Student::getcgpa() const {
-  return cgpa;
+float Student::getCGPA() const {
+  return CGPA;
 }
 int Student::getResearchScore() const {
   return researchScore;
 }
 int Student::getApplicationID() const {
   return applicationID;
+}
+std::string Student::getLocation() const {
+  return "";
 }
 
 // Sets
@@ -35,8 +38,8 @@ void Student::setFirstName(std::string name) {
 void Student::setLastName(std::string name) {
   lastName = name;
 }
-void Student::setcgpa(float cgpa) {
-  this->cgpa = cgpa;
+void Student::setCGPA(float CGPA) {
+  this->CGPA = CGPA;
 }
 void Student::setResearchScore(int researchScore) {
   this->researchScore = researchScore;
@@ -47,10 +50,10 @@ void Student::setApplicationID(int applicationID) {
 
 // Compares two students' CGPAs
 int compareCGPA(const Student& student1, const Student& student2) {
-  if (student1.cgpa < student2.cgpa)
+  if (student1.CGPA < student2.CGPA)
     return -1;
   else
-    return student1.cgpa > student2.cgpa;
+    return student1.CGPA > student2.CGPA;
 }
 
 // Compares two students' Research Scores
@@ -82,7 +85,7 @@ int compareLastName(const Student& student1, const Student& student2) {
 std::ostream& Student::print(std::ostream& outs) const {
   outs << std::setw(15) << std::left << firstName << ' ' << std::setw(15)
        << std::left << lastName << " | "
-       << "CGPA: " << std::setw(4) << cgpa << " | "
+       << "CGPA: " << std::setw(4) << CGPA << " | "
        << "Research Score: " << std::setw(3) << researchScore << " | "
        << "Application ID: " << applicationID;
 
@@ -99,9 +102,9 @@ bool operator<(const Student& student1, const Student& student2) {
   } else if (student1.researchScore > student2.researchScore) {
     return false;
   } else {
-    if (student1.cgpa < student2.cgpa) {
+    if (student1.CGPA < student2.CGPA) {
       return true;
-    } else if (student1.cgpa > student2.cgpa) {
+    } else if (student1.CGPA > student2.CGPA) {
       return false;
     } else {
       if (student1.getLocation() < student2.getLocation()) {
@@ -119,9 +122,9 @@ bool operator>(const Student& student2, const Student& student1) {
   } else if (student1.researchScore > student2.researchScore) {
     return false;
   } else {
-    if (student1.cgpa < student2.cgpa) {
+    if (student1.CGPA < student2.CGPA) {
       return true;
-    } else if (student1.cgpa > student2.cgpa) {
+    } else if (student1.CGPA > student2.CGPA) {
       return false;
     } else {
       if (student1.getLocation() < student2.getLocation()) {

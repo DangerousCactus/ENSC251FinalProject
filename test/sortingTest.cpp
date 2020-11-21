@@ -104,8 +104,8 @@ struct sortingTest : public ::testing::Test {
 TEST_F(sortingTest, sortingTestDom) {
   sortByCGPA((Student**)domesticStudents, dom_stu_count);
   for (int i = 1; i < dom_stu_count; i++) {
-    EXPECT_GE(domesticStudents[i - 1]->getcgpa(),
-              domesticStudents[i]->getcgpa());
+    EXPECT_GE(domesticStudents[i - 1]->getCGPA(),
+              domesticStudents[i]->getCGPA());
   }
 
   sortByFirstName((Student**)domesticStudents, dom_stu_count);
@@ -138,10 +138,10 @@ TEST_F(sortingTest, sortingTestDom) {
               domesticStudents[i]->getResearchScore());
     if (domesticStudents[i - 1]->getResearchScore() ==
         domesticStudents[i]->getResearchScore()) {
-      EXPECT_GE(domesticStudents[i - 1]->getcgpa(),
-                domesticStudents[i]->getcgpa());
-      if (domesticStudents[i - 1]->getcgpa() ==
-          domesticStudents[i]->getcgpa()) {
+      EXPECT_GE(domesticStudents[i - 1]->getCGPA(),
+                domesticStudents[i]->getCGPA());
+      if (domesticStudents[i - 1]->getCGPA() ==
+          domesticStudents[i]->getCGPA()) {
         EXPECT_LE(domesticStudents[i - 1]->getLocation(),
                   domesticStudents[i]->getLocation());
       }
@@ -152,8 +152,8 @@ TEST_F(sortingTest, sortingTestDom) {
 TEST_F(sortingTest, sortingTestInt) {
   sortByCGPA((Student**)internationalStudents, int_stu_count);
   for (int i = 1; i < int_stu_count; i++) {
-    EXPECT_GE(internationalStudents[i - 1]->getcgpa(),
-              internationalStudents[i]->getcgpa());
+    EXPECT_GE(internationalStudents[i - 1]->getCGPA(),
+              internationalStudents[i]->getCGPA());
   }
 
   sortByFirstName((Student**)internationalStudents, int_stu_count);
@@ -202,10 +202,10 @@ TEST_F(sortingTest, sortingTestInt) {
               internationalStudents[i]->getResearchScore());
     if (internationalStudents[i - 1]->getResearchScore() ==
         internationalStudents[i]->getResearchScore()) {
-      EXPECT_GE(internationalStudents[i - 1]->getcgpa(),
-                internationalStudents[i]->getcgpa());
-      if (internationalStudents[i - 1]->getcgpa() ==
-          internationalStudents[i]->getcgpa()) {
+      EXPECT_GE(internationalStudents[i - 1]->getCGPA(),
+                internationalStudents[i]->getCGPA());
+      if (internationalStudents[i - 1]->getCGPA() ==
+          internationalStudents[i]->getCGPA()) {
         EXPECT_LE(internationalStudents[i - 1]->getLocation(),
                   internationalStudents[i]->getLocation());
       }

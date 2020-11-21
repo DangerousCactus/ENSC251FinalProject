@@ -71,7 +71,7 @@ int main() {
     researchScore = atoi(s_researchScore.c_str());
 
     applicationID = 20200000 + dom_stu_count;
-    dslist.addStudentNode(DomesticStudent(
+    dslist.addStudentNode(new DomesticStudent(
         firstName, lastName, cgpa, researchScore, applicationID, province));
 
     dom_stu_count++;
@@ -124,7 +124,7 @@ int main() {
     writing = atoi(s_writing.c_str());
 
     applicationID = 20200000 + dom_stu_count + int_stu_count;
-    islist.addStudentNode(InternationalStudent(
+    islist.addStudentNode(new InternationalStudent(
         firstName, lastName, cgpa, researchScore, applicationID, country,
         reading, listening, speaking, writing));
 
@@ -135,10 +135,29 @@ int main() {
 
   // End reading of files and loading of student data
 
-  dslist.print();
-  deleteHeadTail(dslist);
-  dslist.print();
-  searchFirstLast(dslist, "Grace", "Brooks");
+  StudentList<Student> mergedList;
+
+  StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
+  while (tempds != nullptr) {
+    mergedList.addStudentNode(new DomesticStudent(*(tempds->getStudent())));
+    tempds = tempds->getLink();
+  }
+
+  StudentNodePtr<InternationalStudent> tempis = islist.getHead();
+  while (tempis != nullptr) {
+    ToeflScore tempToefl = tempis->getStudent()->getToefl();
+
+    // If the TOEFL score meets the conditions, add it into the merged list
+    if (tempToefl.getlistening() >= 20 && tempToefl.getReading() >= 20 &&
+        tempToefl.getWriting() >= 20 && tempToefl.getSpeaking() >= 20 &&
+        tempToefl.getTotal() >= 93) {
+      mergedList.addStudentNode(
+          new InternationalStudent(*(tempis->getStudent())));
+    }
+    tempis = tempis->getLink();
+  }
+
+  mergedList.print();
   // int domOrInt = 0, sortType = 0;
 
   // // Menu while loop

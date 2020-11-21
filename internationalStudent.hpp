@@ -29,9 +29,7 @@ class InternationalStudent : public Student {
   std::string getCountry() const;
   ToeflScore getToefl() const;
 
-  // Overloads the << operator to output the country
-  friend std::ostream& operator<<(std::ostream& outs,
-                                  const InternationalStudent& student);
+  virtual std::ostream& print(std::ostream& outs, const InternationalStudent& student);
 
   // sortByLocation
   // Sorts students by location based on country in ascending order (A - Z).

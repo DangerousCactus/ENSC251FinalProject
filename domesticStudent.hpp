@@ -21,9 +21,7 @@ class DomesticStudent : public Student {
   // Setters
   void setProvince(std::string province);
 
-  // Overloads the << operator to output the province
-  friend std::ostream& operator<<(std::ostream& outs,
-                                  const DomesticStudent& student);
+  virtual std::ostream& print(std::ostream& outs, const DomesticStudent& student);
 
   // sortByLocation
   // Sorts students by location based on province in ascending order

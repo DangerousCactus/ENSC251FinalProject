@@ -46,11 +46,9 @@ void InternationalStudent::setCountry(std::string country) {
 void InternationalStudent::setToefl(ToeflScore toefl) {
   this->toefl = toefl;
 }
-
-// Overloads the << operator to output the country
-std::ostream& operator<<(std::ostream& outs,
-                         const InternationalStudent& student) {
-  student.print(outs);
+std::ostream& InternationalStudent::print(std::ostream& outs,
+                                          const InternationalStudent& student) {
+  Student::print(outs); //Call super
   outs << " | Country: " << std::setw(10) << student.country;
   outs << " | " << student.toefl;
   return outs;

@@ -15,7 +15,7 @@ StudentList<T>::StudentList(const StudentList& studentList) {
   currOldHead = currOldHead->getLink();
 
   while (currOldHead != nullptr) {
-    currNewHead->setLink(new StudentNode<T>(*(currOldHead->getStudent())));
+    currNewHead->setLink(new StudentNode<T>(*currOldHead));
     currNewHead = currNewHead->getLink();
     currOldHead = currOldHead->getLink();
   }
@@ -78,7 +78,7 @@ void StudentList<T>::setTail(StudentNodePtr<T> tail) {
 }
 
 template <typename T>
-void StudentList<T>::addStudentNode(T student) {
+void StudentList<T>::addStudentNode(T* student) {
   StudentNodePtr<T> currParent = head;
   StudentNodePtr<T> newNode = new StudentNode<T>(student);
 
@@ -87,7 +87,7 @@ void StudentList<T>::addStudentNode(T student) {
     tail = newNode;
     return;
   } else {
-    while (*(currParent->getStudent()) > student) {
+    while (!(*(currParent->getStudent()) < *student)) {
       if (currParent->getLink() == nullptr) {
         currParent->setLink(newNode);
         tail = newNode;
@@ -147,8 +147,8 @@ void StudentList<T>::print() {
 }
 
 template <typename T>
-void searchAppID(StudentList<T> studentList, int id) {
-  StudentNodePtr<T> currHead = studentList.getHead();
+void StudentList<T>::searchAppID(int id) {
+  StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getApplicationID() == id) {
@@ -162,8 +162,8 @@ void searchAppID(StudentList<T> studentList, int id) {
 }
 
 template <typename T>
-void searchCGPA(StudentList<T> studentList, float cgpa) {
-  StudentNodePtr<T> currHead = studentList.getHead();
+void StudentList<T>::searchCGPA(float cgpa) {
+  StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getcgpa() == cgpa) {
@@ -177,8 +177,8 @@ void searchCGPA(StudentList<T> studentList, float cgpa) {
 }
 
 template <typename T>
-void searchResearchScore(StudentList<T> studentList, int score) {
-  StudentNodePtr<T> currHead = studentList.getHead();
+void StudentList<T>::searchResearchScore(int score) {
+  StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getResearchScore() == score) {
@@ -192,9 +192,8 @@ void searchResearchScore(StudentList<T> studentList, int score) {
 }
 
 template <typename T>
-void searchFirstLast(StudentList<T> studentList, std::string first,
-                     std::string last) {
-  StudentNodePtr<T> currHead = studentList.getHead();
+void StudentList<T>::searchFirstLast(std::string first, std::string last) {
+  StudentNodePtr<T> currHead = head;
   bool found = false;
   T temp;
   temp.setFirstName(first);
@@ -213,9 +212,8 @@ void searchFirstLast(StudentList<T> studentList, std::string first,
 }
 
 template <typename T>
-void deleteFirstLast(StudentList<T> studentList, std::string first,
-                     std::string last) {
-  StudentNodePtr<T> currHead = studentList.getHead();
+void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
+  StudentNodePtr<T> currHead = head;
   bool found = false;
   T temp;
   temp.setFirstName(first);
@@ -234,35 +232,8 @@ void deleteFirstLast(StudentList<T> studentList, std::string first,
 }
 
 template <typename T>
-void deleteHeadTail(StudentList<T>& studentList) {
-  studentList.deleteStudentNode(studentList.getHead());
-  studentList.deleteStudentNode(studentList.getTail());
-
-  // if (studentList.getHead() == nullptr) {
-  //   return;
-  // } else if (studentList.getHead()->getLink() == nullptr) {
-  //   delete studentList.getHead();
-  //   studentList.setHead(nullptr);
-  //   studentList.setTail(nullptr);
-  // } else {
-  //   StudentNodePtr<T> temp = studentList.getHead();
-  //   studentList.setHead(studentList.getHead()->getLink());
-  //   delete temp;
-
-  //   if (studentList.getTail() == studentList.getHead()) {
-  //     delete studentList.getHead();
-  //     studentList.setHead(nullptr);
-  //     studentList.setTail(nullptr);
-  //     return;
-  //   }
-  //   delete studentList.getTail();
-
-  //   temp = studentList.getHead();
-  //   while (temp->getLink() != studentList.getTail())
-  //     temp = temp->getLink();
-
-  //   studentList.setTail(temp);
-  //   temp->setLink(nullptr);
-  // }
+void StudentList<T>::deleteHeadTail() {
+  deleteStudentNode(head);
+  deleteStudentNode(tail);
 }
 #endif
