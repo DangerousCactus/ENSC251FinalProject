@@ -23,13 +23,6 @@ class DomesticStudent : public Student {
 
   virtual std::ostream& print(std::ostream& outs) const;
 
-  // sortByLocation
-  // Sorts students by location based on province in ascending order
-  friend void sortByLocation(DomesticStudent* students[], int len);
 };
 
-// sortByOverall
-// Sorts students by Research Score first, then CGPA, and Province in
-// ascending order.
-void sortByOverall(DomesticStudent* students[], int len);
 #endif

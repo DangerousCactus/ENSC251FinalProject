@@ -27,20 +27,3 @@ std::ostream& DomesticStudent::print(std::ostream& outs) const {
   outs << " | Province: " << province;
   return outs;
 }
-
-// sortByLocation
-// Sorts students by location based on province in ascending order
-void sortByLocation(DomesticStudent* students[], int len) {
-  for (int i = 0; i < len - 1; i++)
-    for (int j = 0; j < len - 1 - i; j++)
-      if (students[j + 1]->province < students[j]->province)
-        std::swap(students[j], students[j + 1]);
-}
-
-// sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA,
-// Province is used in ascending order.
-void sortByOverall(DomesticStudent* students[], int len) {
-  sortByLocation(students, len);
-  sortByOverall((Student**)students, len);
-}
