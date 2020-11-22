@@ -1,6 +1,7 @@
 #ifndef STUDENTLIST_CPP
 #define STUDENTLIST_CPP
 #include "StudentList.hpp"
+#include "StringHelper.hpp"
 
 template <typename T>
 StudentList<T>::StudentList() {}
@@ -8,14 +9,25 @@ StudentList<T>::StudentList() {}
 template <typename T>
 StudentList<T>::StudentList(const StudentList& studentList) {
   StudentNodePtr<T> currOldHead = studentList.head;
+  try {
+    head = new StudentNode<T>(*currOldHead);
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
 
-  head = new StudentNode<T>(*currOldHead);
   StudentNodePtr<T> currNewHead = head;
 
   currOldHead = currOldHead->getLink();
 
   while (currOldHead != nullptr) {
-    currNewHead->setLink(new StudentNode<T>(*currOldHead));
+    try {
+      currNewHead->setLink(new StudentNode<T>(*currOldHead));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
+
     currNewHead = currNewHead->getLink();
     currOldHead = currOldHead->getLink();
   }
@@ -35,11 +47,23 @@ StudentList<T>& StudentList<T>::operator=(const StudentList<T> studentList) {
   StudentNodePtr<T> currOldHead = studentList.head;
   StudentNodePtr<T> currNewHead = head;
 
-  currNewHead = new StudentNode<T>(currOldHead);
+  try {
+    currNewHead = new StudentNode<T>(currOldHead);
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
+
   currOldHead = currOldHead->getLink();
 
   while (currOldHead != nullptr) {
-    currNewHead->setLink(new StudentNode<T>(currOldHead->getLink()));
+    try {
+      currNewHead->setLink(new StudentNode<T>(currOldHead->getLink()));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
+
     currNewHead = currNewHead->getLink();
     currOldHead = currOldHead->getLink();
   }
@@ -80,7 +104,13 @@ void StudentList<T>::setTail(StudentNodePtr<T> tail) {
 template <typename T>
 void StudentList<T>::addStudentNode(T* student) {
   StudentNodePtr<T> currParent = head;
-  StudentNodePtr<T> newNode = new StudentNode<T>(student);
+  StudentNodePtr<T> newNode;
+  try {
+    newNode = new StudentNode<T>(student);
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
 
   if (currParent == nullptr) {
     head = newNode;
@@ -212,7 +242,8 @@ void StudentList<T>::searchFirstLast(std::string first, std::string last) {
 }
 
 template <typename T>
-void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA, int score) {
+void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
+                                                         int score) {
   StudentNodePtr<T> currHead = head;
   bool found = false;
 
@@ -233,16 +264,19 @@ void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   T temp;
-  temp.setFirstName(first);
-  temp.setLastName(last);
+  temp.setFirstName(StringHelper::toUpper(first));
+  temp.setLastName(StringHelper::toUpper(last));
 
   while (currHead != nullptr) {
-    if (currHead->getStudent()->getFirstName() == first &&
-        currHead->getStudent()->getLastName() == last) {
-      deleteStudentNode(currHead);
+    if (compareFirstName(*(currHead->getStudent()), temp) == 0 &&
+        compareLastName(*(currHead->getStudent()), temp) == 0) {
+      StudentNodePtr<T> temp = currHead;
+      currHead = currHead->getLink();
+      deleteStudentNode(temp);
       found = true;
+    } else {
+      currHead = currHead->getLink();
     }
-    currHead = currHead->getLink();
   }
   if (!found)
     std::cout << "No matching records found.\n";

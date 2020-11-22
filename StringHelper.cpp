@@ -24,7 +24,7 @@ bool isProvince(std::string province) {
 bool isCountry(std::string country) {
   std::string tempCountry = toUpper(country);
   for (int i = 0; i < sizeof(COUNTRIES) / sizeof(COUNTRIES[0]); i++)
-    if (tempCountry == COUNTRIES[i])
+    if (tempCountry == toUpper(COUNTRIES[i]))
       return true;
 
   return false;
@@ -56,6 +56,15 @@ bool isAnagramOf(std::string str1, std::string str2) {
       return false;
 
   return true;
+}
+
+std::string anagramOfCountry(std::string country) {
+  std::string tempCountry = toUpper(country);
+  for (int i = 0; i < sizeof(COUNTRIES) / sizeof(COUNTRIES[0]); i++)
+    if (isAnagramOf(tempCountry, toUpper(COUNTRIES[i])))
+      return COUNTRIES[i];
+
+  return "";
 }
 
 }  // namespace StringHelper

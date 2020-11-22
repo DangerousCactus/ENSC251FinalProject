@@ -79,9 +79,21 @@ int main() {
       exit(-1);
     }
 
+    if (!StringHelper::isProvince(province)) {
+      std::cout << RED << "ERROR: " << province << " is not a valid province.\n"
+                << CLEAR;
+      exit(-1);
+    }
+
     applicationID = 20200000 + dom_stu_count;
-    dslist.addStudentNode(new DomesticStudent(
-        firstName, lastName, cgpa, researchScore, applicationID, province));
+    
+    try {
+      dslist.addStudentNode(new DomesticStudent(
+          firstName, lastName, cgpa, researchScore, applicationID, province));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
 
     dom_stu_count++;
   }
@@ -133,10 +145,29 @@ int main() {
       exit(-1);
     }
 
+    if (!StringHelper::isCountry(country)) {
+      std::string anagram = StringHelper::anagramOfCountry(country);
+      if (anagram != "") {
+        std::cout << YELLOW << "Detected typo in " << CLEAR << country << YELLOW
+                  << ". Autocorrecting to " << anagram << ".\n"
+                  << CLEAR;
+      } else {
+        std::cout << RED << "ERROR: " << country << " is not a valid country.\n"
+                  << CLEAR;
+        exit(-1);
+      }
+    }
+
     applicationID = 20200000 + dom_stu_count + int_stu_count;
-    islist.addStudentNode(new InternationalStudent(
-        firstName, lastName, cgpa, researchScore, applicationID, country,
-        reading, listening, speaking, writing));
+    try {
+      islist.addStudentNode(new InternationalStudent(
+          firstName, lastName, cgpa, researchScore, applicationID, country,
+          reading, listening, speaking, writing));
+
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
 
     int_stu_count++;
   }
@@ -149,7 +180,13 @@ int main() {
 
   StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
   while (tempds != nullptr) {
-    mergedList.addStudentNode(new DomesticStudent(*(tempds->getStudent())));
+    try {
+      mergedList.addStudentNode(new DomesticStudent(*(tempds->getStudent())));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
+
     tempds = tempds->getLink();
   }
 
@@ -161,15 +198,19 @@ int main() {
     if (tempToefl.getlistening() >= 20 && tempToefl.getReading() >= 20 &&
         tempToefl.getWriting() >= 20 && tempToefl.getSpeaking() >= 20 &&
         tempToefl.getTotal() >= 93) {
-      mergedList.addStudentNode(
-          new InternationalStudent(*(tempis->getStudent())));
+      try {
+        mergedList.addStudentNode(
+            new InternationalStudent(*(tempis->getStudent())));
+      } catch (std::bad_alloc) {
+        std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+        exit(-1);
+      }
     }
     tempis = tempis->getLink();
   }
 
   // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
 
-  // dslist.print();
   // dslist.searchFirstLast("MaRy", "WHItE");
 
   // int domOrInt = 0, sortType = 0;

@@ -1,6 +1,7 @@
 #ifndef STUDENTNODE_CPP
 #define STUDENTNODE_CPP
 #include "StudentNode.hpp"
+#include <iostream>
 
 template <typename T>
 StudentNode<T>::StudentNode() {}
@@ -12,7 +13,12 @@ StudentNode<T>::StudentNode(T* student) {
 
 template <typename T>
 StudentNode<T>::StudentNode(const StudentNode& studentNode) {
-  this->student = new T(*(studentNode.student));
+  try {
+    this->student = new T(*(studentNode.student));
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
 }
 
 template <typename T>
