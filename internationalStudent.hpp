@@ -30,17 +30,6 @@ class InternationalStudent : public Student {
   ToeflScore getToefl() const;
 
   virtual std::ostream& print(std::ostream& outs) const;
-
-  // sortByLocation
-  // Sorts students by location based on country in ascending order (A - Z).
-  friend void sortByLocation(InternationalStudent* students[], int len);
-
-  // removeLowToeflScores
-  // Drops student if their TOEFL scores does not meet the threshold
-  friend void removeLowToeflScores(InternationalStudent* students[], int& len);
 };
-// sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA,
-// Country is used in ascending order (A - Z).
-void sortByOverall(InternationalStudent* students[], int& len);
+
 #endif
