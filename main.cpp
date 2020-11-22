@@ -3,6 +3,7 @@
 #include <fstream>   //file processing
 #include <iostream>  //cin and cout
 #include <sstream>   //formatted string processing
+#include "StringHelper.hpp"
 #include "StudentList.hpp"
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
@@ -168,7 +169,9 @@ int main() {
 
   // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
 
-  dslist.print();
+  // dslist.print();
+  // dslist.searchFirstLast("MaRy", "WHItE");
+
   // int domOrInt = 0, sortType = 0;
 
   // // Menu while loop

@@ -1,6 +1,7 @@
 #include "student.hpp"
 #include <iomanip>
 #include <iostream>
+#include "StringHelper.hpp"
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
 
@@ -65,19 +66,27 @@ int compareResearchScore(const Student& student1, const Student& student2) {
 }
 
 // Compares two students' First Names
+// Case insensitive
 int compareFirstName(const Student& student1, const Student& student2) {
-  if (student1.firstName < student2.firstName)
+  std::string name1 = StringHelper::toUpper(student1.firstName);
+  std::string name2 = StringHelper::toUpper(student2.firstName);
+
+  if (name1 < name2)
     return -1;
   else
-    return student1.firstName > student2.firstName;
+    return name1 > name2;
 }
 
 // Compares two students' Last Names
+// Case insensitive
 int compareLastName(const Student& student1, const Student& student2) {
-  if (student1.lastName < student2.lastName)
+  std::string name1 = StringHelper::toUpper(student1.firstName);
+  std::string name2 = StringHelper::toUpper(student2.firstName);
+
+  if (name1 < name2)
     return -1;
   else
-    return student1.lastName > student2.lastName;
+    return name1 > name2;
 }
 
 std::ostream& Student::print(std::ostream& outs) const {
@@ -108,7 +117,8 @@ bool operator<(const Student& student1, const Student& student2) {
     } else {
       // Compare by location only if the students are either both domestic or
       // both international.
-      if (student1.getLocation() < student2.getLocation() ||
+      if (StringHelper::toUpper(student1.getLocation()) <
+              StringHelper::toUpper(student2.getLocation()) ||
           (student1.getLocation().size() == 2 &&
            student2.getLocation().size() != 2) ||
           (student1.getLocation().size() != 2 &&
@@ -123,49 +133,4 @@ bool operator<(const Student& student1, const Student& student2) {
 
 bool operator>(const Student& student1, const Student& student2) {
   return student2 < student1;
-}
-
-// Bubble sort is implemented below for sorting functions. Since bubble sort
-// will only move an element if it is strictly greater than its right most
-// neighbour, we can apply bubble sort in a reverse order to accomplish
-// overall sorting
-
-// Sorts students by CGPA in Decending order
-void sortByCGPA(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++)
-    for (int j = 0; j < len - 1 - i; j++)
-      if (compareCGPA(*students[j], *students[j + 1]) < 0)
-        std::swap(students[j], students[j + 1]);
-}
-
-// Sorts students by Research Score in Decending order
-void sortByResearchScore(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++)
-    for (int j = 0; j < len - 1 - i; j++)
-      if (compareResearchScore(*students[j], *students[j + 1]) < 0)
-        std::swap(students[j], students[j + 1]);
-}
-
-// Sorts students by First Name in Alphabetical order (A -> Z)
-void sortByFirstName(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++)
-    for (int j = 0; j < len - 1 - i; j++)
-      if (compareFirstName(*students[j], *students[j + 1]) > 0)
-        std::swap(students[j], students[j + 1]);
-}
-
-// Sorts students by Last Name in Alphabetical order (A -> Z)
-void sortByLastName(Student* students[], int len) {
-  for (int i = 0; i < len - 1; i++)
-    for (int j = 0; j < len - 1 - i; j++)
-      if (compareLastName(*students[j], *students[j + 1]) > 0)
-        std::swap(students[j], students[j + 1]);
-}
-
-// sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA,
-// Province or Country is used in ascending order (A - Z).
-void sortByOverall(Student* students[], int& len) {
-  sortByCGPA(students, len);
-  sortByResearchScore(students, len);
 }

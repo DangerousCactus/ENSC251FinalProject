@@ -52,21 +52,4 @@ class Student {
   friend std::ostream& operator<<(std::ostream& outs, const Student& student);
 };
 
-// Sorts students by CGPA in Decending order
-void sortByCGPA(Student* students[], int len);
-
-// Sorts students by Research Score in Decending order
-void sortByResearchScore(Student* students[], int len);
-
-// Sorts students by First Name in Alphabetical order (A -> Z)
-void sortByFirstName(Student* students[], int len);
-
-// Sorts students by Last Name in Alphabetical order (A -> Z)
-void sortByLastName(Student* students[], int len);
-
-// sortByOverall
-// Sorts students by Research Score first, then CGPA. If same CGPA,
-// Province or Country is used in ascending order (A - Z).
-void sortByOverall(Student* students[], int& len);
-
 #endif
