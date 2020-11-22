@@ -64,11 +64,19 @@ int main() {
     getline(ss, firstName, ',');
     getline(ss, lastName, ',');
     getline(ss, province, ',');
-    getline(ss, s_cgpa, ',');
 
+    getline(ss, s_cgpa, ',');
     cgpa = atof(s_cgpa.c_str());
+
     getline(ss, s_researchScore, ',');
     researchScore = atoi(s_researchScore.c_str());
+
+    if (ss.fail()) {
+      std::cout << RED
+                << "ERROR: domestic-stu.txt does not have all required fields\n"
+                << CLEAR;
+      exit(-1);
+    }
 
     applicationID = 20200000 + dom_stu_count;
     dslist.addStudentNode(new DomesticStudent(
@@ -94,20 +102,13 @@ int main() {
     float cgpa;
     int researchScore, reading, listening, speaking, writing, applicationID;
 
-    // get firstName separated by comma
     getline(ss, firstName, ',');
-
-    // get lastName separated by comma
     getline(ss, lastName, ',');
-
-    // get province separated by comma
     getline(ss, country, ',');
 
-    // get cpga separated by comma, and convert string to float
     getline(ss, s_cgpa, ',');
     cgpa = atof(s_cgpa.c_str());
 
-    // get researchScore separated by comma, and convert it to int
     getline(ss, s_researchScore, ',');
     researchScore = atoi(s_researchScore.c_str());
 
@@ -122,6 +123,14 @@ int main() {
 
     getline(ss, s_writing, ',');
     writing = atoi(s_writing.c_str());
+
+    if (ss.fail()) {
+      std::cout
+          << RED
+          << "ERROR: international-stu.txt does not have all required fields\n"
+          << CLEAR;
+      exit(-1);
+    }
 
     applicationID = 20200000 + dom_stu_count + int_stu_count;
     islist.addStudentNode(new InternationalStudent(
@@ -157,9 +166,9 @@ int main() {
     tempis = tempis->getLink();
   }
 
-  mergedList.searchCGPAandResearchScoreThreshold(9, 95);
+  // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
 
-  //islist.print();
+  dslist.print();
   // int domOrInt = 0, sortType = 0;
 
   // // Menu while loop
