@@ -37,6 +37,11 @@ int ToeflScore::getTotal() const {
   return reading + listening + speaking + writing;
 }
 
+bool ToeflScore::meetsRequirements() const {
+  return listening >= 20 && reading >= 20 && writing >= 20 && speaking >= 20 &&
+         getTotal() >= 93;
+}
+
 // Overloads << operator to output TOEFL scores in the order:
 // Reading, Lisenting, Speaking, Writing
 std::ostream& operator<<(std::ostream& outs, const ToeflScore& score) {

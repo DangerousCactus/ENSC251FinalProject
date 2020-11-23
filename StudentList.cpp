@@ -82,22 +82,22 @@ StudentList<T>::~StudentList() {
 }
 
 template <typename T>
-StudentNodePtr<T> StudentList<T>::getHead() {
+StudentNodePtr<T> StudentList<T>::getHead() const {
   return head;
 }
 
 template <typename T>
-StudentNodePtr<T> StudentList<T>::getTail() {
+StudentNodePtr<T> StudentList<T>::getTail() const {
   return tail;
 }
 
 template <typename T>
-void StudentList<T>::setHead(StudentNodePtr<T> head) {
+void StudentList<T>::setHead(const StudentNodePtr<T> head) {
   this->head = head;
 }
 
 template <typename T>
-void StudentList<T>::setTail(StudentNodePtr<T> tail) {
+void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
   this->tail = tail;
 }
 
@@ -177,7 +177,7 @@ void StudentList<T>::print() {
 }
 
 template <typename T>
-void StudentList<T>::searchAppID(int id) {
+void StudentList<T>::searchAppID(int id) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
@@ -192,7 +192,7 @@ void StudentList<T>::searchAppID(int id) {
 }
 
 template <typename T>
-void StudentList<T>::searchCGPA(float cgpa) {
+void StudentList<T>::searchCGPA(float cgpa) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
@@ -207,7 +207,7 @@ void StudentList<T>::searchCGPA(float cgpa) {
 }
 
 template <typename T>
-void StudentList<T>::searchResearchScore(int score) {
+void StudentList<T>::searchResearchScore(int score) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
@@ -222,7 +222,8 @@ void StudentList<T>::searchResearchScore(int score) {
 }
 
 template <typename T>
-void StudentList<T>::searchFirstLast(std::string first, std::string last) {
+void StudentList<T>::searchFirstLast(std::string first,
+                                     std::string last) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   T temp;
@@ -243,7 +244,7 @@ void StudentList<T>::searchFirstLast(std::string first, std::string last) {
 
 template <typename T>
 void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
-                                                         int score) {
+                                                         int score) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
 

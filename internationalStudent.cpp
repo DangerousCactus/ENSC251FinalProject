@@ -43,7 +43,7 @@ ToeflScore InternationalStudent::getToefl() const {
 void InternationalStudent::setCountry(std::string country) {
   this->country = country;
 }
-void InternationalStudent::setToefl(ToeflScore toefl) {
+void InternationalStudent::setToefl(const ToeflScore& toefl) {
   this->toefl = toefl;
 }
 std::ostream& InternationalStudent::print(std::ostream& outs) const {

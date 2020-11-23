@@ -44,6 +44,7 @@ void forceIntInput(std::istream& inps, std::string message, int& field,
 int main() {
   StudentList<DomesticStudent> dslist;
   StudentList<InternationalStudent> islist;
+
   std::string line;
   std::ifstream domesticFile("domestic-stu.txt");
 
@@ -52,6 +53,7 @@ int main() {
     return -1;
   }
 
+  std::cout << GREEN << "Reading data from domestic-stu.txt...\n" << CLEAR;
   getline(domesticFile, line);  // Discard legend
 
   int dom_stu_count = 0;
@@ -72,7 +74,8 @@ int main() {
     getline(ss, s_researchScore, ',');
     researchScore = atoi(s_researchScore.c_str());
 
-    if (ss.fail()) {
+    if (ss.fail() || firstName == "" || lastName == "" || province == "" ||
+        s_cgpa == "" || s_researchScore == "") {
       std::cout << RED
                 << "ERROR: domestic-stu.txt does not have all required fields\n"
                 << CLEAR;
@@ -86,7 +89,7 @@ int main() {
     }
 
     applicationID = 20200000 + dom_stu_count;
-    
+
     try {
       dslist.addStudentNode(new DomesticStudent(
           firstName, lastName, cgpa, researchScore, applicationID, province));
@@ -99,12 +102,14 @@ int main() {
   }
 
   domesticFile.close();
-
+  std::cout << GREEN << "Reading data from domestic-stu.txt succeeded.\n"
+            << CLEAR;
   std::ifstream internationalFile("international-stu.txt");
   if (!internationalFile.is_open()) {
     std::cout << "Unable to open file international-stu.txt" << std::endl;
     return -1;
   }
+  std::cout << GREEN << "Reading data from international-stu.txt...\n" << CLEAR;
   getline(internationalFile, line);
   int int_stu_count = 0;
   while (getline(internationalFile, line)) {
@@ -137,7 +142,9 @@ int main() {
     getline(ss, s_writing, ',');
     writing = atoi(s_writing.c_str());
 
-    if (ss.fail()) {
+    if (ss.fail() || firstName == "" || lastName == "" || country == "" ||
+        s_cgpa == "" || s_researchScore == "" || s_reading == "" ||
+        s_writing == "" || s_speaking == "" || s_listening == "") {
       std::cout
           << RED
           << "ERROR: international-stu.txt does not have all required fields\n"
@@ -173,7 +180,8 @@ int main() {
   }
   // close your file
   internationalFile.close();
-
+  std::cout << GREEN << "Reading data from international-stu.txt succeeded.\n"
+            << CLEAR;
   // End reading of files and loading of student data
 
   StudentList<Student> mergedList;
@@ -195,9 +203,7 @@ int main() {
     ToeflScore tempToefl = tempis->getStudent()->getToefl();
 
     // If the TOEFL score meets the conditions, add it into the merged list
-    if (tempToefl.getlistening() >= 20 && tempToefl.getReading() >= 20 &&
-        tempToefl.getWriting() >= 20 && tempToefl.getSpeaking() >= 20 &&
-        tempToefl.getTotal() >= 93) {
+    if (tempToefl.meetsRequirements()) {
       try {
         mergedList.addStudentNode(
             new InternationalStudent(*(tempis->getStudent())));
@@ -209,8 +215,11 @@ int main() {
     tempis = tempis->getLink();
   }
 
+  StudentList<DomesticStudent> dscopy = dslist;
+  dscopy.print();
   // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
-
+  // dslist.print();
+  // mergedList.print();
   // dslist.searchFirstLast("MaRy", "WHItE");
 
   // int domOrInt = 0, sortType = 0;

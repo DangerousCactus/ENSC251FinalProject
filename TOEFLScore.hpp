@@ -27,6 +27,9 @@ class ToeflScore {
   int getWriting() const;
   int getTotal() const;
 
+  // Checks if the score meets standards
+  bool meetsRequirements() const;
+
   // Overloads << operator to output TOEFL scores in the order:
   // Reading, Lisenting, Speaking, Writing
   friend std::ostream& operator<<(std::ostream& outs, const ToeflScore& score);

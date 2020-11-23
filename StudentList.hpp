@@ -20,22 +20,22 @@ class StudentList {
   StudentList& operator=(const StudentList studentList);
   ~StudentList();
 
-  StudentNodePtr<T> getHead();
-  StudentNodePtr<T> getTail();
+  StudentNodePtr<T> getHead() const;
+  StudentNodePtr<T> getTail() const;
 
-  void setHead(StudentNodePtr<T> head);
-  void setTail(StudentNodePtr<T> tail);
+  void setHead(const StudentNodePtr<T> head);
+  void setTail(const StudentNodePtr<T> tail);
 
   void addStudentNode(T* student);
   void deleteStudentNode(StudentNodePtr<T> studentNode);
   void deleteFirstLast(std::string first, std::string last);
   void deleteHeadTail();
 
-  void searchAppID(int id);
-  void searchCGPA(float cgpa);
-  void searchFirstLast(std::string first, std::string last);
-  void searchResearchScore(int score);
-  void searchCGPAandResearchScoreThreshold(float CGPA, int score);
+  void searchAppID(int id) const;
+  void searchCGPA(float cgpa) const;
+  void searchFirstLast(std::string first, std::string last) const;
+  void searchResearchScore(int score) const;
+  void searchCGPAandResearchScoreThreshold(float CGPA, int score) const;
 
   void print();
 };

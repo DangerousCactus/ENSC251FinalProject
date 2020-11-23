@@ -22,7 +22,7 @@ class InternationalStudent : public Student {
 
   // Setters
   void setCountry(std::string country);
-  void setToefl(ToeflScore toefl);
+  void setToefl(const ToeflScore& toefl);
 
   // Getters
   virtual std::string getLocation() const;
