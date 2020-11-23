@@ -4,6 +4,7 @@ set(This tests)
 
 set(Sources
     studentTest.cpp
+    studentListTest.cpp
 )
 
 add_executable(${This} ${Sources})

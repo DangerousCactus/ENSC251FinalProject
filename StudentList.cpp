@@ -180,7 +180,7 @@ void StudentList<T>::searchCGPA(float cgpa) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
-    if (currHead->getStudent()->getcgpa() == cgpa) {
+    if (currHead->getStudent()->getCGPA() == cgpa) {
       std::cout << *(currHead->getStudent()) << std::endl;
       found = true;
     }

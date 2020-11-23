@@ -92,7 +92,8 @@ int compareLastName(const Student& student1, const Student& student2) {
 std::ostream& Student::print(std::ostream& outs) const {
   outs << std::setw(15) << std::left << firstName << ' ' << std::setw(15)
        << std::left << lastName << " | "
-       << "CGPA: " << std::setw(4) << CGPA << " | "
+       << "CGPA: " << std::setw(4) << std::setprecision(2) << std::fixed << CGPA
+       << " | "
        << "Research Score: " << std::setw(3) << researchScore << " | "
        << "Application ID: " << applicationID;
 
@@ -117,7 +118,7 @@ bool operator<(const Student& student1, const Student& student2) {
     } else {
       // Compare by location only if the students are either both domestic or
       // both international.
-      if (StringHelper::toUpper(student1.getLocation()) <
+      if (StringHelper::toUpper(student1.getLocation()) <=
               StringHelper::toUpper(student2.getLocation()) ||
           (student1.getLocation().size() == 2 &&
            student2.getLocation().size() != 2) ||

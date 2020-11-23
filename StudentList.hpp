@@ -27,7 +27,6 @@ class StudentList {
   void setTail(const StudentNodePtr<T> tail);
 
   void addStudentNode(const T& student);
-  void deleteStudentNode(StudentNodePtr<T> studentNode);
   void deleteFirstLast(std::string first, std::string last);
   void deleteHeadTail();
 
@@ -41,6 +40,7 @@ class StudentList {
 
  private:
   void deleteList();
+  void deleteStudentNode(StudentNodePtr<T> studentNode);
   void copySubList(StudentNodePtr<T> node);
 };
 

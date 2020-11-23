@@ -153,6 +153,7 @@ int main() {
         std::cout << YELLOW << "Detected typo in " << CLEAR << country << YELLOW
                   << ". Autocorrecting to " << anagram << ".\n"
                   << CLEAR;
+        country = anagram;
       } else {
         std::cout << RED << "ERROR: " << country << " is not a valid country.\n"
                   << CLEAR;
@@ -174,7 +175,7 @@ int main() {
             << CLEAR << std::endl;
 
   // End reading of files and loading of student data
-
+  islist.print();
   // StudentList<Student> mergedList;
 
   // StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
