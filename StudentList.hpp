@@ -26,7 +26,7 @@ class StudentList {
   void setHead(const StudentNodePtr<T> head);
   void setTail(const StudentNodePtr<T> tail);
 
-  void addStudentNode(T* student);
+  void addStudentNode(const T& student);
   void deleteStudentNode(StudentNodePtr<T> studentNode);
   void deleteFirstLast(std::string first, std::string last);
   void deleteHeadTail();
@@ -38,6 +38,10 @@ class StudentList {
   void searchCGPAandResearchScoreThreshold(float CGPA, int score) const;
 
   void print();
+
+ private:
+  void deleteList();
+  void copySubList(StudentNodePtr<T> node);
 };
 
 #include "StudentList.cpp"

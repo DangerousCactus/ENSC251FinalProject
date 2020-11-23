@@ -9,7 +9,7 @@ class StudentNode {
 
  public:
   StudentNode();
-  StudentNode(T* student);
+  StudentNode(T student);
 
   StudentNode(const StudentNode& studentNode);
   StudentNode& operator=(const StudentNode studentNode);

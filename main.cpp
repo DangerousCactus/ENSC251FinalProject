@@ -90,13 +90,8 @@ int main() {
 
     applicationID = 20200000 + dom_stu_count;
 
-    try {
-      dslist.addStudentNode(new DomesticStudent(
-          firstName, lastName, cgpa, researchScore, applicationID, province));
-    } catch (std::bad_alloc) {
-      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-      exit(-1);
-    }
+    dslist.addStudentNode(DomesticStudent(
+        firstName, lastName, cgpa, researchScore, applicationID, province));
 
     dom_stu_count++;
   }
@@ -166,57 +161,52 @@ int main() {
     }
 
     applicationID = 20200000 + dom_stu_count + int_stu_count;
-    try {
-      islist.addStudentNode(new InternationalStudent(
-          firstName, lastName, cgpa, researchScore, applicationID, country,
-          reading, listening, speaking, writing));
 
-    } catch (std::bad_alloc) {
-      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-      exit(-1);
-    }
+    islist.addStudentNode(InternationalStudent(
+        firstName, lastName, cgpa, researchScore, applicationID, country,
+        reading, listening, speaking, writing));
 
     int_stu_count++;
   }
   // close your file
   internationalFile.close();
-  std::cout << GREEN << "Reading data from international-stu.txt succeeded.\n"
-            << CLEAR;
+  std::cout << GREEN << "Reading data from international-stu.txt succeeded."
+            << CLEAR << std::endl;
+
   // End reading of files and loading of student data
 
-  StudentList<Student> mergedList;
+  // StudentList<Student> mergedList;
 
-  StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
-  while (tempds != nullptr) {
-    try {
-      mergedList.addStudentNode(new DomesticStudent(*(tempds->getStudent())));
-    } catch (std::bad_alloc) {
-      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-      exit(-1);
-    }
+  // StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
+  // while (tempds != nullptr) {
+  //   try {
+  //     mergedList.addStudentNode(new
+  //     DomesticStudent(*(tempds->getStudent())));
+  //   } catch (std::bad_alloc) {
+  //     std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+  //     exit(-1);
+  //   }
 
-    tempds = tempds->getLink();
-  }
+  //   tempds = tempds->getLink();
+  // }
 
-  StudentNodePtr<InternationalStudent> tempis = islist.getHead();
-  while (tempis != nullptr) {
-    ToeflScore tempToefl = tempis->getStudent()->getToefl();
+  // StudentNodePtr<InternationalStudent> tempis = islist.getHead();
+  // while (tempis != nullptr) {
+  //   ToeflScore tempToefl = tempis->getStudent()->getToefl();
 
-    // If the TOEFL score meets the conditions, add it into the merged list
-    if (tempToefl.meetsRequirements()) {
-      try {
-        mergedList.addStudentNode(
-            new InternationalStudent(*(tempis->getStudent())));
-      } catch (std::bad_alloc) {
-        std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-        exit(-1);
-      }
-    }
-    tempis = tempis->getLink();
-  }
+  //   // If the TOEFL score meets the conditions, add it into the merged list
+  //   if (tempToefl.meetsRequirements()) {
+  //     try {
+  //       mergedList.addStudentNode(
+  //           new InternationalStudent(*(tempis->getStudent())));
+  //     } catch (std::bad_alloc) {
+  //       std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+  //       exit(-1);
+  //     }
+  //   }
+  //   tempis = tempis->getLink();
+  // }
 
-  StudentList<DomesticStudent> dscopy = dslist;
-  dscopy.print();
   // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
   // dslist.print();
   // mergedList.print();

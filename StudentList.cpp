@@ -8,7 +8,39 @@ StudentList<T>::StudentList() {}
 
 template <typename T>
 StudentList<T>::StudentList(const StudentList& studentList) {
-  StudentNodePtr<T> currOldHead = studentList.head;
+  this->copySubList(studentList.head);
+}
+
+template <typename T>
+StudentList<T>& StudentList<T>::operator=(const StudentList<T> studentList) {
+  this->deleteList();
+  this->copySubList(studentList.head);
+  return this;
+}
+
+template <typename T>
+StudentList<T>::~StudentList() {
+  this->deleteList();
+}
+
+template <typename T>
+void StudentList<T>::deleteList() {
+  StudentNodePtr<T> currHead = head;
+  while (currHead != nullptr) {
+    StudentNodePtr<T> temp = currHead;
+    currHead = currHead->getLink();
+    delete temp;
+  }
+  head = nullptr;
+  tail = nullptr;
+}
+
+template <typename T>
+void StudentList<T>::copySubList(StudentNodePtr<T> node) {
+  StudentNodePtr<T> currOldHead = node;
+  if (currOldHead == nullptr)
+    return;
+
   try {
     head = new StudentNode<T>(*currOldHead);
   } catch (std::bad_alloc) {
@@ -17,12 +49,11 @@ StudentList<T>::StudentList(const StudentList& studentList) {
   }
 
   StudentNodePtr<T> currNewHead = head;
-
   currOldHead = currOldHead->getLink();
 
   while (currOldHead != nullptr) {
     try {
-      currNewHead->setLink(new StudentNode<T>(*currOldHead));
+      currNewHead->setLink(new StudentNode<T>(*(currOldHead)));
     } catch (std::bad_alloc) {
       std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
       exit(-1);
@@ -31,54 +62,7 @@ StudentList<T>::StudentList(const StudentList& studentList) {
     currNewHead = currNewHead->getLink();
     currOldHead = currOldHead->getLink();
   }
-
   tail = currNewHead;
-}
-
-template <typename T>
-StudentList<T>& StudentList<T>::operator=(const StudentList<T> studentList) {
-  StudentNodePtr<T> currHead = head;
-  while (currHead != nullptr) {
-    StudentNodePtr<T> temp = currHead;
-    currHead = currHead->getLink();
-    delete temp;
-  }
-
-  StudentNodePtr<T> currOldHead = studentList.head;
-  StudentNodePtr<T> currNewHead = head;
-
-  try {
-    currNewHead = new StudentNode<T>(currOldHead);
-  } catch (std::bad_alloc) {
-    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-    exit(-1);
-  }
-
-  currOldHead = currOldHead->getLink();
-
-  while (currOldHead != nullptr) {
-    try {
-      currNewHead->setLink(new StudentNode<T>(currOldHead->getLink()));
-    } catch (std::bad_alloc) {
-      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-      exit(-1);
-    }
-
-    currNewHead = currNewHead->getLink();
-    currOldHead = currOldHead->getLink();
-  }
-
-  return this;
-}
-
-template <typename T>
-StudentList<T>::~StudentList() {
-  StudentNodePtr<T> currHead = head;
-  while (currHead != nullptr) {
-    StudentNodePtr<T> temp = currHead;
-    currHead = currHead->getLink();
-    delete temp;
-  }
 }
 
 template <typename T>
@@ -102,7 +86,7 @@ void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
 }
 
 template <typename T>
-void StudentList<T>::addStudentNode(T* student) {
+void StudentList<T>::addStudentNode(const T& student) {
   StudentNodePtr<T> currParent = head;
   StudentNodePtr<T> newNode;
   try {
@@ -117,7 +101,7 @@ void StudentList<T>::addStudentNode(T* student) {
     tail = newNode;
     return;
   } else {
-    while (!(*(currParent->getStudent()) < *student)) {
+    while (!(*(currParent->getStudent()) < student)) {
       if (currParent->getLink() == nullptr) {
         currParent->setLink(newNode);
         tail = newNode;
