@@ -26,7 +26,8 @@ class StudentList {
   void setHead(const StudentNodePtr<T> head);
   void setTail(const StudentNodePtr<T> tail);
 
-  void addStudentNode(const T& student);
+  void addStudentNode(T student);
+  void addStudentNode(T* student);
   void deleteFirstLast(std::string first, std::string last);
   void deleteHeadTail();
 

@@ -7,13 +7,8 @@ template <typename T>
 StudentNode<T>::StudentNode() {}
 
 template <typename T>
-StudentNode<T>::StudentNode(T student) {
-  try {
-    this->student = new T(student);
-  } catch (std::bad_alloc) {
-    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-    exit(-1);
-  }
+StudentNode<T>::StudentNode(T* student) {
+  this->student = student;
 }
 
 template <typename T>

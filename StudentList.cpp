@@ -86,7 +86,21 @@ void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
 }
 
 template <typename T>
-void StudentList<T>::addStudentNode(const T& student) {
+void StudentList<T>::addStudentNode(T student) {
+  StudentNodePtr<T> currParent = head;
+  T* newStudent;
+  try {
+    newStudent = new T(student);
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
+
+  addStudentNode(newStudent);
+}
+
+template <typename T>
+void StudentList<T>::addStudentNode(T* student) {
   StudentNodePtr<T> currParent = head;
   StudentNodePtr<T> newNode;
   try {
@@ -101,7 +115,7 @@ void StudentList<T>::addStudentNode(const T& student) {
     tail = newNode;
     return;
   } else {
-    while (!(*(currParent->getStudent()) < student)) {
+    while (!(*(currParent->getStudent()) < *student)) {
       if (currParent->getLink() == nullptr) {
         currParent->setLink(newNode);
         tail = newNode;

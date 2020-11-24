@@ -175,42 +175,35 @@ int main() {
             << CLEAR << std::endl;
 
   // End reading of files and loading of student data
-  islist.print();
-  // StudentList<Student> mergedList;
+  // islist.print();
+  StudentList<Student> mergedList;
 
-  // StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
-  // while (tempds != nullptr) {
-  //   try {
-  //     mergedList.addStudentNode(new
-  //     DomesticStudent(*(tempds->getStudent())));
-  //   } catch (std::bad_alloc) {
-  //     std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-  //     exit(-1);
-  //   }
+  try {
+    StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
+    while (tempds != nullptr) {
+      mergedList.addStudentNode(new DomesticStudent(*(tempds->getStudent())));
+      tempds = tempds->getLink();
+    }
 
-  //   tempds = tempds->getLink();
-  // }
+    StudentNodePtr<InternationalStudent> tempis = islist.getHead();
+    while (tempis != nullptr) {
+      ToeflScore tempToefl = tempis->getStudent()->getToefl();
 
-  // StudentNodePtr<InternationalStudent> tempis = islist.getHead();
-  // while (tempis != nullptr) {
-  //   ToeflScore tempToefl = tempis->getStudent()->getToefl();
-
-  //   // If the TOEFL score meets the conditions, add it into the merged list
-  //   if (tempToefl.meetsRequirements()) {
-  //     try {
-  //       mergedList.addStudentNode(
-  //           new InternationalStudent(*(tempis->getStudent())));
-  //     } catch (std::bad_alloc) {
-  //       std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-  //       exit(-1);
-  //     }
-  //   }
-  //   tempis = tempis->getLink();
-  // }
+      // If the TOEFL score meets the conditions, add it into the merged list
+      if (tempToefl.meetsRequirements()) {
+        mergedList.addStudentNode(
+            new InternationalStudent(*(tempis->getStudent())));
+      }
+      tempis = tempis->getLink();
+    }
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
+  mergedList.print();
 
   // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
   // dslist.print();
-  // mergedList.print();
   // dslist.searchFirstLast("MaRy", "WHItE");
 
   // int domOrInt = 0, sortType = 0;
