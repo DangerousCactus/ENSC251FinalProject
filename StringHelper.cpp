@@ -6,7 +6,9 @@ namespace StringHelper {
 
 std::string toUpper(std::string str) {
   std::string temp;
+  // Iterate over the string
   for (std::string::const_iterator i = str.begin(); i != str.end(); i++)
+    // Capitalize the character and save it
     temp.push_back(toupper(*i));
 
   return temp;
@@ -14,6 +16,7 @@ std::string toUpper(std::string str) {
 
 bool isProvince(std::string province) {
   std::string tempProvince = toUpper(province);
+  // Iterate over the list of known provinces
   for (int i = 0; i < sizeof(PROVINCES) / sizeof(PROVINCES[0]); i++)
     if (tempProvince == PROVINCES[i])
       return true;
@@ -23,6 +26,7 @@ bool isProvince(std::string province) {
 
 bool isCountry(std::string country) {
   std::string tempCountry = toUpper(country);
+  // Iterate over the list of known countries
   for (int i = 0; i < sizeof(COUNTRIES) / sizeof(COUNTRIES[0]); i++)
     if (tempCountry == toUpper(COUNTRIES[i]))
       return true;
@@ -32,6 +36,7 @@ bool isCountry(std::string country) {
 
 bool isValidMenuOption(std::string option) {
   std::string tempCountry = toUpper(option);
+  // Iterate over the list of known menu options
   for (int i = 0; i < sizeof(MENU_OPTIONS) / sizeof(MENU_OPTIONS[0]); i++)
     if (tempCountry == MENU_OPTIONS[i])
       return true;
@@ -39,8 +44,8 @@ bool isValidMenuOption(std::string option) {
   return false;
 }
 
-// Both strings must be alphabetical only
 bool isAnagramOf(std::string str1, std::string str2) {
+  // Keep track of the frequency of each letter
   int letterCount1[26] = {0};
   int letterCount2[26] = {0};
   if (str1.length() != str2.length())
@@ -51,6 +56,7 @@ bool isAnagramOf(std::string str1, std::string str2) {
     letterCount2[toupper(str2[i]) - 'A'] += 1;
   }
 
+  // If the letter counts match, then we have a valid anagram
   for (int i = 0; i < 26; i++)
     if (letterCount1[i] != letterCount2[i])
       return false;

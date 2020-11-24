@@ -28,7 +28,6 @@ InternationalStudent::InternationalStudent(std::string firstName,
 InternationalStudent::InternationalStudent() : Student(){};
 
 // Getters
-
 std::string InternationalStudent::getCountry() const {
   return country;
 }
@@ -46,9 +45,10 @@ void InternationalStudent::setCountry(std::string country) {
 void InternationalStudent::setToefl(const ToeflScore& toefl) {
   this->toefl = toefl;
 }
+
 std::ostream& InternationalStudent::print(std::ostream& outs) const {
   Student::print(outs);  // Call super
-  outs << " | Country: " << std::setw(10) << country;
+  outs << " | Country: " << std::setw(6) << country;
   outs << " | " << toefl;
   return outs;
 }

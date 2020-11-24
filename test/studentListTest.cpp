@@ -137,6 +137,8 @@ struct sortingTest : public ::testing::Test {
   }
 };
 
+// The following are helper functions to assist in checking program vailidity
+
 template <typename T>
 bool isListSorted(StudentList<T> studentList) {
   StudentNodePtr<T> head = studentList.getHead();
@@ -256,7 +258,7 @@ TEST_F(sortingTest, listSearchTestAppCGPAResearch) {
   dslist.searchAppID(20200099);
   output = testing::internal::GetCapturedStdout();
 
-  EXPECT_TRUE(doAllFieldsHaveValue(output, "Application ID: ", "20200099"));
+  EXPECT_TRUE(doAllFieldsHaveValue(output, "App ID: ", "20200099"));
 
   // Illegal Case - AppID
   testing::internal::CaptureStdout();
@@ -284,7 +286,7 @@ TEST_F(sortingTest, listSearchTestAppCGPAResearch) {
   dslist.searchResearchScore(99);
   output = testing::internal::GetCapturedStdout();
 
-  EXPECT_TRUE(doAllFieldsHaveValue(output, "Research Score: ", "99"));
+  EXPECT_TRUE(doAllFieldsHaveValue(output, "Research: ", "99"));
 
   // Illegal Case - ResearchScore
   testing::internal::CaptureStdout();
@@ -381,7 +383,7 @@ TEST_F(sortingTest, listMergeTest) {
   std::string output = testing::internal::GetCapturedStdout();
 
   EXPECT_TRUE(doAllFieldsHaveAtLeastValue(output, "CGPA: ", 3.50));
-  EXPECT_TRUE(doAllFieldsHaveAtLeastValue(output, "Research Score: ", 90));
+  EXPECT_TRUE(doAllFieldsHaveAtLeastValue(output, "Research: ", 90));
 
-  //mergedList.print();
+  // mergedList.print();
 }

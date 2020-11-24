@@ -27,7 +27,8 @@ class ToeflScore {
   int getWriting() const;
   int getTotal() const;
 
-  // Checks if the score meets standards
+  // Checks if the score meets the following standards:
+  // R, L, S, W >= 20; R+S+L+W >= 93
   bool meetsRequirements() const;
 
   // Overloads << operator to output TOEFL scores in the order:

@@ -1,6 +1,7 @@
 #include "student.hpp"
 #include <iomanip>
 #include <iostream>
+#include <typeinfo>
 #include "StringHelper.hpp"
 #include "domesticStudent.hpp"
 #include "internationalStudent.hpp"
@@ -94,8 +95,8 @@ std::ostream& Student::print(std::ostream& outs) const {
        << std::left << lastName << " | "
        << "CGPA: " << std::setw(4) << std::setprecision(2) << std::fixed << CGPA
        << " | "
-       << "Research Score: " << std::setw(3) << researchScore << " | "
-       << "Application ID: " << applicationID;
+       << "Research: " << std::setw(3) << researchScore << " | "
+       << "App ID: " << applicationID;
 
   return outs;
 }
@@ -105,6 +106,7 @@ std::ostream& operator<<(std::ostream& outs, const Student& student) {
   return student.print(outs);
 }
 
+// Override the comparison operators so we can easily check rankings for sorting
 bool operator<(const Student& student1, const Student& student2) {
   if (student1.researchScore < student2.researchScore) {
     return true;
@@ -116,14 +118,10 @@ bool operator<(const Student& student1, const Student& student2) {
     } else if (student1.CGPA > student2.CGPA) {
       return false;
     } else {
-      // Compare by location only if the students are either both domestic or
-      // both international.
+      // Compare by location only if the students are of the same type
       if (StringHelper::toUpper(student1.getLocation()) <=
               StringHelper::toUpper(student2.getLocation()) ||
-          (student1.getLocation().size() == 2 &&
-           student2.getLocation().size() != 2) ||
-          (student1.getLocation().size() != 2 &&
-           student2.getLocation().size() == 2)) {
+          typeid(student1) != typeid(student2)) {
         return false;
       } else {
         return true;
