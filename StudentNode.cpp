@@ -13,7 +13,7 @@ StudentNode<T>::StudentNode(T* student) {
 
 template <typename T>
 StudentNode<T>::StudentNode(const StudentNode& studentNode)
-    : StudentNode(*(studentNode.student)) {}
+    : StudentNode(new T(*(studentNode.student))) {}
 
 template <typename T>
 StudentNode<T>& StudentNode<T>::operator=(const StudentNode<T> studentNode) {
