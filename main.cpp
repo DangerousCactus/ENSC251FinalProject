@@ -228,7 +228,9 @@ int main() {
     std::cout << "Choose a list to interact with:" << std::endl;
     std::cout << "(D)omestic" << std::endl;
     std::cout << "(I)nternational" << std::endl;
-    std::cout << "(M)erged Domestic and International" << std::endl;
+    std::cout << "(M)erged Domestic and International (this copies both lists "
+                 "then merges them)"
+              << std::endl;
     std::cout << "(Q)uit this program" << std::endl;
 
     std::cin >> listChoice;

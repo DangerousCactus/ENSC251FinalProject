@@ -308,7 +308,7 @@ TEST_F(sortingTest, listSearchTestFirstLast) {
   testing::internal::CaptureStdout();
   dslist.searchFirstLast("Luke", "Bennett");
   output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(output.substr(0, 30).compare("Luke            Bennett       "), 0);
+  EXPECT_EQ(output.substr(81, 30).compare("Luke            Bennett       "), 0);
 
   // Illegal Case
   testing::internal::CaptureStdout();
