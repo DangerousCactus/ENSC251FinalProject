@@ -2,6 +2,7 @@
 #define STUDENTNODE_CPP
 #include "StudentNode.hpp"
 #include <iostream>
+#include <typeinfo>
 
 template <typename T>
 StudentNode<T>::StudentNode() {}
@@ -12,13 +13,18 @@ StudentNode<T>::StudentNode(T* student) {
 }
 
 template <typename T>
-StudentNode<T>::StudentNode(const StudentNode& studentNode)
-    : StudentNode(new T(*studentNode.student)) {}
+StudentNode<T>::StudentNode(const StudentNode& studentNode) {
+  typeof(studentNode.student) tempStudent = new typeof(*studentNode.student);
+  *tempStudent = *studentNode.student;
+  this->student = tempStudent;
+}
 
 template <typename T>
 StudentNode<T>& StudentNode<T>::operator=(const StudentNode<T> studentNode) {
   delete this->student;
-  this->student = new T(*studentNode.student);
+  typeof(studentNode.student) tempStudent = new typeof(*studentNode.student);
+  *tempStudent = *studentNode.student;
+  this->student = tempStudent;
   return this;
 }
 

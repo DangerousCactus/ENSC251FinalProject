@@ -200,7 +200,9 @@ int main() {
     std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
     exit(-1);
   }
-  mergedList.print();
+  //mergedList.print();
+  StudentList<Student> temp = mergedList.searchCGPAandResearchScoreThreshold(3.5, 90);
+  temp.print();
 
   // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
   // dslist.print();

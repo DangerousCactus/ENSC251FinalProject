@@ -164,30 +164,40 @@ bool doesStudentExist(StudentList<T> studentList, T student) {
   return false;
 }
 
-bool doAllFieldsHaveValue(std::string toParse, std::string field,
-                          std::string value) {
-  int currIndex = 0;
-  currIndex = toParse.find(field, 0);
-  while (currIndex != -1) {
-    if (toParse.substr(currIndex + field.length(), value.length())
-            .compare(value) != 0)
+template <typename T>
+bool doAllCGPAFieldsHaveValue(StudentList<T> studentList, float value) {
+  StudentNodePtr<T> top = studentList.getHead();
+  while (top != nullptr) {
+    if (top->getStudent()->getCGPA() != value)
       return false;
-    currIndex = toParse.find(field, currIndex + 1);
+
+    top = top->getLink();
   }
+
   return true;
 }
-
-bool doAllFieldsHaveAtLeastValue(std::string toParse, std::string field,
-                                 float value) {
-  int currIndex = 0;
-  currIndex = toParse.find(field, 0);
-  while (currIndex != -1) {
-    float testValue =
-        atof(toParse.substr(currIndex + field.length(), 4).c_str());
-    if (value > testValue)
+template <typename T>
+bool doAllResearchScoreFieldsHaveValue(StudentList<T> studentList, int value) {
+  StudentNodePtr<T> top = studentList.getHead();
+  while (top != nullptr) {
+    if (top->getStudent()->getResearchScore() != value)
       return false;
-    currIndex = toParse.find(field, currIndex + 1);
+
+    top = top->getLink();
   }
+
+  return true;
+}
+template <typename T>
+bool doAllApplicationIDFieldsHaveValue(StudentList<T> studentList, int value) {
+  StudentNodePtr<T> top = studentList.getHead();
+  while (top != nullptr) {
+    if (top->getStudent()->getApplicationID() != value)
+      return false;
+
+    top = top->getLink();
+  }
+
   return true;
 }
 
@@ -249,51 +259,33 @@ DomesticStudent (and InternationalStudent) linked list based on the user input
 information “application id”, or “cgpa”, or “researchScore”.
 */
 TEST_F(sortingTest, listSearchTestAppCGPAResearch) {
-  std::string output;
   DomesticStudent lastDomStu =
       DomesticStudent("Claire", "Griffin", 3.45, 95, 20200099, "NS");
+  StudentList<DomesticStudent> temp;
 
   // Normal Case - AppID
-  testing::internal::CaptureStdout();
-  dslist.searchAppID(20200099);
-  output = testing::internal::GetCapturedStdout();
-
-  EXPECT_TRUE(doAllFieldsHaveValue(output, "App ID: ", "20200099"));
+  temp = dslist.searchAppID(20200099);
+  EXPECT_TRUE(doAllApplicationIDFieldsHaveValue(temp, 20200099));
 
   // Illegal Case - AppID
-  testing::internal::CaptureStdout();
-  dslist.searchAppID(0);  // Inexistent ID
-  output = testing::internal::GetCapturedStdout();
-
-  EXPECT_TRUE(output == "No matching records found.\n");
+  temp = dslist.searchAppID(0);  // Inexistent ID
+  EXPECT_TRUE(temp.isEmpty());
 
   // Normal Case - CGPA
-  testing::internal::CaptureStdout();
-  dslist.searchCGPA(3.45);
-  output = testing::internal::GetCapturedStdout();
-
-  EXPECT_TRUE(doAllFieldsHaveValue(output, "CGPA: ", "3.45"));
+  temp = dslist.searchCGPA(3.45);
+  EXPECT_TRUE(doAllCGPAFieldsHaveValue(temp, 3.45));
 
   // Illegal Case - CGPA
-  testing::internal::CaptureStdout();
-  dslist.searchCGPA(-1);  // Inexistent CGPA
-  output = testing::internal::GetCapturedStdout();
-
-  EXPECT_TRUE(output == "No matching records found.\n");
+  temp = dslist.searchCGPA(-1);  // Inexistent CGPA
+  EXPECT_TRUE(temp.isEmpty());
 
   // Normal Case - Research Score
-  testing::internal::CaptureStdout();
-  dslist.searchResearchScore(99);
-  output = testing::internal::GetCapturedStdout();
-
-  EXPECT_TRUE(doAllFieldsHaveValue(output, "Research: ", "99"));
+  temp = dslist.searchResearchScore(99);
+  EXPECT_TRUE(doAllResearchScoreFieldsHaveValue(temp, 99));
 
   // Illegal Case - ResearchScore
-  testing::internal::CaptureStdout();
-  dslist.searchResearchScore(-1);  // Inexistent Research SCore
-  output = testing::internal::GetCapturedStdout();
-
-  EXPECT_TRUE(output == "No matching records found.\n");
+  temp = dslist.searchResearchScore(-1);  // Inexistent Research SCore
+  EXPECT_TRUE(temp.isEmpty());
 }
 
 /*
@@ -302,19 +294,16 @@ DomesticStudent (and InternationalStudent) linked list based on the user input
 information “firstName and lastName”.
 */
 TEST_F(sortingTest, listSearchTestFirstLast) {
-  std::string output;
+  StudentList<DomesticStudent> temp;
 
   // Normal Case
-  testing::internal::CaptureStdout();
-  dslist.searchFirstLast("Luke", "Bennett");
-  output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(output.substr(0, 30).compare("Luke            Bennett       "), 0);
+  temp = dslist.searchFirstLast("Luke", "Bennett");
+  EXPECT_TRUE(temp.getHead()->getStudent()->getFirstName() == "Luke");
+  EXPECT_TRUE(temp.getHead()->getStudent()->getLastName() == "Bennett");
 
   // Illegal Case
-  testing::internal::CaptureStdout();
-  dslist.searchFirstLast("Non", "Existent");
-  output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(output.substr(0, 30).compare("No matching records found.\n"), 0);
+  temp = dslist.searchFirstLast("Non", "Existent");
+  EXPECT_TRUE(temp.isEmpty());
 }
 
 /*
@@ -359,8 +348,11 @@ LIST MERGE SEARCH
 7. Search existing Student objects in the merged linked list based on the user
 input information “cgpa_threshold and researchScore_threshold”.
 */
+
 TEST_F(sortingTest, listMergeTest) {
   StudentList<Student> mergedList;
+  StudentList<Student> temp;
+
   StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
   while (tempds != nullptr) {
     mergedList.addStudentNode(DomesticStudent(*(tempds->getStudent())));
@@ -378,12 +370,16 @@ TEST_F(sortingTest, listMergeTest) {
     tempis = tempis->getLink();
   }
 
-  testing::internal::CaptureStdout();
-  mergedList.searchCGPAandResearchScoreThreshold(3.5, 90);
-  std::string output = testing::internal::GetCapturedStdout();
+  temp = mergedList.searchCGPAandResearchScoreThreshold(3.5, 90);
 
-  EXPECT_TRUE(doAllFieldsHaveAtLeastValue(output, "CGPA: ", 3.50));
-  EXPECT_TRUE(doAllFieldsHaveAtLeastValue(output, "Research: ", 90));
+  StudentNodePtr<Student> head = temp.getHead();
+  while (head != nullptr) {
+    EXPECT_GE(head->getStudent()->getCGPA(), 3.5);
+    EXPECT_GE(head->getStudent()->getResearchScore(), 90);
+    head = head->getLink();
+  }
+
+  temp.print();
 
   // mergedList.print();
 }

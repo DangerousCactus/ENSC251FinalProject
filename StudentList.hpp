@@ -35,22 +35,28 @@ class StudentList {
   void addStudentNode(T student);
   // Add a student to the list by passing a pointer to the student object.
   void addStudentNode(T* student);
+  // Add a student to the list by copying an existing StudentNode (deep copy)
+  void addStudentNode(StudentNode<T> studentNode);
 
   // Delete a student from the list based on first and last name
   void deleteFirstLast(std::string first, std::string last);
   // Delete both the head and tail of the student list in one delete function
   void deleteHeadTail();
 
+  // Returns whether the list is empty or not
+  bool isEmpty();
+
   /*Search students in the list based on multiple fields*/
 
-  void searchAppID(int id) const;
-  void searchCGPA(float cgpa) const;
-  void searchFirstLast(std::string first, std::string last) const;
-  void searchResearchScore(int score) const;
+  StudentList<T> searchAppID(int id) const;
+  StudentList<T> searchCGPA(float cgpa) const;
+  StudentList<T> searchFirstLast(std::string first, std::string last) const;
+  StudentList<T> searchResearchScore(int score) const;
 
   // Prints out all students which have a CGPA and Research Score that are both
   // greater than or equal to the given threshold
-  void searchCGPAandResearchScoreThreshold(float CGPA, int score) const;
+  StudentList<T> searchCGPAandResearchScoreThreshold(float CGPA,
+                                                     int score) const;
 
   // Print out all the objects in the list by calling the (virtual) print
   // function of each object
@@ -59,10 +65,13 @@ class StudentList {
  private:
   // Internal recursive/iterative functions used for initialization and
   // destruction of the StudentList
-  
+
   void deleteList();
   void deleteStudentNode(StudentNodePtr<T> studentNode);
   void copySubList(StudentNodePtr<T> node);
+
+  // Places the node in the list in sorted order
+  void placeNodeInList(StudentNodePtr<T> studentNode);
 };
 
 #include "StudentList.cpp"

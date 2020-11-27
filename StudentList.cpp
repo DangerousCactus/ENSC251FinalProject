@@ -15,7 +15,7 @@ template <typename T>
 StudentList<T>& StudentList<T>::operator=(const StudentList<T> studentList) {
   this->deleteList();
   this->copySubList(studentList.head);
-  return this;
+  return *this;
 }
 
 template <typename T>
@@ -92,11 +92,16 @@ void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
   this->tail = tail;
 }
 
+template <typename T>
+bool StudentList<T>::isEmpty() {
+  return head == nullptr;
+}
+
 // Allocate memory for the student and then place the student into the list
 template <typename T>
 void StudentList<T>::addStudentNode(T student) {
-  StudentNodePtr<T> currParent = head;
   T* newStudent;
+
   try {
     newStudent = new T(student);
   } catch (std::bad_alloc) {
@@ -111,7 +116,6 @@ void StudentList<T>::addStudentNode(T student) {
 // sorted order
 template <typename T>
 void StudentList<T>::addStudentNode(T* student) {
-  StudentNodePtr<T> currParent = head;
   StudentNodePtr<T> newNode;
 
   try {  // Create the studentNode
@@ -120,31 +124,51 @@ void StudentList<T>::addStudentNode(T* student) {
     std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
     exit(-1);
   }
+  placeNodeInList(newNode);
+}
 
+template <typename T>
+void StudentList<T>::addStudentNode(StudentNode<T> studentNode) {
+  StudentNodePtr<T> newNode;
+
+  try {  // Create the studentNode
+    newNode = new StudentNode<T>(studentNode);
+  } catch (std::bad_alloc) {
+    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+    exit(-1);
+  }
+
+  placeNodeInList(newNode);
+}
+
+template <typename T>
+void StudentList<T>::placeNodeInList(StudentNodePtr<T> studentNode) {
+  StudentNodePtr<T> currParent = head;
   if (currParent == nullptr) {  // If the list is empty
-    head = newNode;
-    tail = newNode;
+    head = studentNode;
+    tail = studentNode;
     return;
   } else {  // Sort in non-increasing order
-    while (!(*currParent->getStudent() < *student)) {
-        if (currParent->getLink() == nullptr) {  // If we've reached the end
-          currParent->setLink(newNode);
-          tail = newNode;
-          return;
-        } else {
-          currParent = currParent->getLink();
-        }
+    while (!(*currParent->getStudent() < *studentNode->getStudent())) {
+      if (currParent->getLink() == nullptr) {  // If we've reached the end
+        currParent->setLink(studentNode);
+        tail = studentNode;
+        return;
+      } else {
+        currParent = currParent->getLink();
       }
+    }
 
     // Place the node into the list
-    newNode->setStudent(currParent->getStudent());
-    currParent->setStudent(student);
-    newNode->setLink(currParent->getLink());
-    currParent->setLink(newNode);
+    T* temp = studentNode->getStudent();
+    studentNode->setStudent(currParent->getStudent());
+    currParent->setStudent(temp);
+    studentNode->setLink(currParent->getLink());
+    currParent->setLink(studentNode);
 
     // If we just added to the end of the list, update the tail
-    if (newNode->getLink() == nullptr)
-      tail = newNode;
+    if (studentNode->getLink() == nullptr)
+      tail = studentNode;
 
     return;
   }
@@ -196,53 +220,57 @@ void StudentList<T>::print() {
 // The following functions search the list based on various criteria
 
 template <typename T>
-void StudentList<T>::searchAppID(int id) const {
+StudentList<T> StudentList<T>::searchAppID(int id) const {
+  StudentList<T> output;
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getApplicationID() == id) {
-      std::cout << *currHead->getStudent() << std::endl;
+      output.addStudentNode(*currHead->getStudent());
       found = true;
     }
     currHead = currHead->getLink();
   }
-  if (!found)
-    std::cout << "No matching records found.\n";
+
+  return output;
 }
 
 template <typename T>
-void StudentList<T>::searchCGPA(float cgpa) const {
+StudentList<T> StudentList<T>::searchCGPA(float cgpa) const {
+  StudentList<T> output;
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getCGPA() == cgpa) {
-      std::cout << *currHead->getStudent() << std::endl;
+      output.addStudentNode(*currHead->getStudent());
       found = true;
     }
     currHead = currHead->getLink();
   }
-  if (!found)
-    std::cout << "No matching records found.\n";
+
+  return output;
 }
 
 template <typename T>
-void StudentList<T>::searchResearchScore(int score) const {
+StudentList<T> StudentList<T>::searchResearchScore(int score) const {
+  StudentList<T> output;
   StudentNodePtr<T> currHead = head;
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getResearchScore() == score) {
-      std::cout << *currHead->getStudent() << std::endl;
+      output.addStudentNode(*currHead->getStudent());
       found = true;
     }
     currHead = currHead->getLink();
   }
-  if (!found)
-    std::cout << "No matching records found.\n";
+
+  return output;
 }
 
 template <typename T>
-void StudentList<T>::searchFirstLast(std::string first,
-                                     std::string last) const {
+StudentList<T> StudentList<T>::searchFirstLast(std::string first,
+                                               std::string last) const {
+  StudentList<T> output;
   StudentNodePtr<T> currHead = head;
   bool found = false;
   T temp;
@@ -252,32 +280,33 @@ void StudentList<T>::searchFirstLast(std::string first,
   while (currHead != nullptr) {
     if (compareFirstName(*currHead->getStudent(), temp) == 0 &&
         compareLastName(*currHead->getStudent(), temp) == 0) {
-      std::cout << *currHead->getStudent() << std::endl;
+      output.addStudentNode(*currHead->getStudent());
       found = true;
     }
     currHead = currHead->getLink();
   }
-  if (!found)
-    std::cout << "No matching records found.\n";
+
+  return output;
 }
 
 // Print out all students that meet the CGPA and Research Score threshold
 template <typename T>
-void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
-                                                         int score) const {
+StudentList<T> StudentList<T>::searchCGPAandResearchScoreThreshold(
+    float CGPA, int score) const {
+  StudentList<T> output;
   StudentNodePtr<T> currHead = head;
   bool found = false;
 
   while (currHead != nullptr) {
     if (currHead->getStudent()->getCGPA() >= CGPA &&
         currHead->getStudent()->getResearchScore() >= score) {
-      std::cout << *currHead->getStudent() << std::endl;
+      output.addStudentNode(StudentNode<T>(*currHead));
       found = true;
     }
     currHead = currHead->getLink();
   }
-  if (!found)
-    std::cout << "No matching records found.\n";
+
+  return output;
 }
 
 // Delete all objects in the list which have the specified first and last name
