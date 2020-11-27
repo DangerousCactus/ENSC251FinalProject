@@ -212,7 +212,7 @@ void StudentList<T>::searchAppID(int id) const {
     currHead = currHead->getLink();
   }
   if (!found)
-    std::cout << "No matching records found.\n";
+    std::cout << "\033[31mNo matching records found.\033[0m\n";
 }
 
 template <typename T>
@@ -227,7 +227,7 @@ void StudentList<T>::searchCGPA(float cgpa) const {
     currHead = currHead->getLink();
   }
   if (!found)
-    std::cout << "No matching records found.\n";
+    std::cout << "\033[31mNo matching records found.\033[0m\n";
 }
 
 template <typename T>
@@ -242,7 +242,7 @@ void StudentList<T>::searchResearchScore(int score) const {
     currHead = currHead->getLink();
   }
   if (!found)
-    std::cout << "No matching records found.\n";
+    std::cout << "\033[31mNo matching records found.\033[0m\n";
 }
 
 template <typename T>
@@ -263,7 +263,7 @@ void StudentList<T>::searchFirstLast(std::string first,
     currHead = currHead->getLink();
   }
   if (!found)
-    std::cout << "No matching records found.\n";
+    std::cout << "\033[31mNo matching records found.\033[0m\n";
 }
 
 // Print out all students that meet the CGPA and Research Score threshold
@@ -282,7 +282,7 @@ void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
     currHead = currHead->getLink();
   }
   if (!found)
-    std::cout << "No matching records found.\n";
+    std::cout << "\033[31mNo matching records found.\033[0m\n";
 }
 
 // Delete all objects in the list which have the specified first and last name
@@ -295,8 +295,8 @@ void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   temp.setLastName(StringHelper::toUpper(last));
 
   while (currHead != nullptr) {
-    if (compareFirstName(*(currHead->getStudent()), temp) == 0 &&
-        compareLastName(*(currHead->getStudent()), temp) == 0) {
+    if (compareFirstName(*currHead->getStudent(), temp) == 0 &&
+        compareLastName(*currHead->getStudent(), temp) == 0) {
       StudentNodePtr<T> temp = currHead;
       currHead = currHead->getLink();
       deleteStudentNode(temp);
@@ -305,14 +305,20 @@ void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
       currHead = currHead->getLink();
     }
   }
-  if (!found)
-    std::cout << "No matching records found.\n";
+  if (found)
+    std::cout << "\033[32mDeleted specified students.\033[0m\n";
+  else
+    std::cout << "\033[31mNo matching records found.\033[0m\n";
 }
 
 // Delete the head and tail of the list
 template <typename T>
 void StudentList<T>::deleteHeadTail() {
-  deleteStudentNode(head);
-  deleteStudentNode(tail);
+  if (head == nullptr)
+    std::cout << "\033[31mList is empty - cannot delete\033[0m\n";
+  else {
+    deleteStudentNode(head);
+    deleteStudentNode(tail);
+  }
 }
 #endif

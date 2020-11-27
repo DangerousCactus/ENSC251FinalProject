@@ -12,10 +12,8 @@ const std::string RED = "\033[31m";
 const std::string GREEN = "\033[32m";
 const std::string YELLOW = "\033[33m";
 const std::string BOLD = "\033[1m";
-const std::string CLEAR = "\033[0m";
+const std::string CLR = "\033[0m";
 
-// forceIntInput
-// Helper function to reject invalid input and suggests possible correction
 void forceIntInput(std::istream& inps, std::string message, int& field,
                    int maxAllow) {
   do {
@@ -26,17 +24,18 @@ void forceIntInput(std::istream& inps, std::string message, int& field,
       inps.clear();
       inps.ignore(INT_MAX, '\n');
       std::cout << YELLOW << BOLD << "Enter a number please. Try again:\n"
-                << CLEAR;
+                << CLR;
       continue;
     }
 
     inps.ignore(INT_MAX, '\n');
 
-    if (field > 0 && field <= maxAllow)
+    if (field >= 0 && field <= maxAllow)
       break;
 
     std::cout << YELLOW << BOLD
-              << "Please enter a valid selection. Try again:\n";
+              << "Please enter a valid selection. Try again:\n"
+              << CLR;
 
   } while (true);
 }
@@ -44,6 +43,9 @@ void forceIntInput(std::istream& inps, std::string message, int& field,
 int main() {
   StudentList<Student> dslist;
   StudentList<Student> islist;
+
+  int dom_stu_count = 0;
+  int int_stu_count = 0;
 
   std::string line;
   std::ifstream domesticFile("domestic-stu.txt");
@@ -53,10 +55,9 @@ int main() {
     return -1;
   }
 
-  std::cout << GREEN << "Reading data from domestic-stu.txt...\n" << CLEAR;
+  std::cout << GREEN << "Reading data from domestic-stu.txt...\n" << CLR;
   getline(domesticFile, line);  // Discard legend
 
-  int dom_stu_count = 0;
   while (getline(domesticFile, line)) {
     std::istringstream ss(line);
 
@@ -78,13 +79,13 @@ int main() {
         s_cgpa == "" || s_researchScore == "") {
       std::cout << RED
                 << "ERROR: domestic-stu.txt does not have all required fields\n"
-                << CLEAR;
+                << CLR;
       exit(-1);
     }
 
     if (!StringHelper::isProvince(province)) {
       std::cout << RED << "ERROR: " << province << " is not a valid province.\n"
-                << CLEAR;
+                << CLR;
       exit(-1);
     }
 
@@ -102,15 +103,14 @@ int main() {
 
   domesticFile.close();
   std::cout << GREEN << "Reading data from domestic-stu.txt succeeded.\n"
-            << CLEAR;
+            << CLR;
   std::ifstream internationalFile("international-stu.txt");
   if (!internationalFile.is_open()) {
     std::cout << "Unable to open file international-stu.txt" << std::endl;
     return -1;
   }
-  std::cout << GREEN << "Reading data from international-stu.txt...\n" << CLEAR;
+  std::cout << GREEN << "Reading data from international-stu.txt...\n" << CLR;
   getline(internationalFile, line);
-  int int_stu_count = 0;
   while (getline(internationalFile, line)) {
     std::istringstream ss(line);
 
@@ -147,20 +147,20 @@ int main() {
       std::cout
           << RED
           << "ERROR: international-stu.txt does not have all required fields\n"
-          << CLEAR;
+          << CLR;
       exit(-1);
     }
 
     if (!StringHelper::isCountry(country)) {
       std::string anagram = StringHelper::anagramOfCountry(country);
       if (anagram != "") {
-        std::cout << YELLOW << "Detected typo in " << CLEAR << country << YELLOW
+        std::cout << YELLOW << "Detected typo in " << CLR << country << YELLOW
                   << ". Autocorrecting to " << anagram << ".\n"
-                  << CLEAR;
+                  << CLR;
         country = anagram;
       } else {
         std::cout << RED << "ERROR: " << country << " is not a valid country.\n"
-                  << CLEAR;
+                  << CLR;
         exit(-1);
       }
     }
@@ -180,63 +180,19 @@ int main() {
   // close your file
   internationalFile.close();
   std::cout << GREEN << "Reading data from international-stu.txt succeeded."
-            << CLEAR << std::endl;
+            << CLR << std::endl;
 
   // End reading of files and loading of student data
-  // islist.print();
-  StudentList<Student> mergedList;
-  try {
-    StudentNodePtr<Student> tempds = dslist.getHead();
-    while (tempds != nullptr) {
-      DomesticStudent* tempStudent =
-          dynamic_cast<DomesticStudent*>(tempds->getStudent());
-      mergedList.addStudentNode(new DomesticStudent(*tempStudent));
-      tempds = tempds->getLink();
-    }
-
-    StudentNodePtr<Student> tempis = islist.getHead();
-    while (tempis != nullptr) {
-      InternationalStudent* tempStudent =
-          dynamic_cast<InternationalStudent*>(tempis->getStudent());
-
-      // If the TOEFL score meets the conditions, add it into the merged list
-      if (tempStudent->getToefl().meetsRequirements()) {
-        mergedList.addStudentNode(new InternationalStudent(*tempStudent));
-      }
-      tempis = tempis->getLink();
-    }
-  } catch (std::bad_alloc) {
-    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-    exit(-1);
-  }
-  mergedList.print();
-  // mergedList.print();
 
   /*
-  Which List?
-
-  DO
-  Domestic
-  International
-  Merged
-  Exit
-
-    DO
-    Option?
-    Search Student
-      APPID
-      CGPA
-      ResearchScore
-      First & Last Name
-      Hybrid Threshold
-    Create Student
-      Data Points based on List ID
-    Delete Student by First and Last name
-    Delete Head & Tail Nodes
-    WHILE
-  WHILE
+  Search Student
+    APPID
+    CGPA
+    ResearchScore
+    First & Last Name
+    Hybrid Threshold
   */
-
+  StudentList<Student> mergedList;
   StudentList<Student>* studentLists[] = {&dslist, &islist, &mergedList};
   std::string studentListNames[] = {"Domestic", "International",
                                     "Merged Domestic and International"};
@@ -267,28 +223,57 @@ int main() {
                StringHelper::isAnagramOf(listChoice, "international")) {
       listID = 1;
     } else if (StringHelper::toUpper(listChoice) == "M" ||
-               StringHelper::isAnagramOf(listChoice, "domestic")) {
+               StringHelper::isAnagramOf(listChoice, "merged")) {
       listID = 2;
+
+      // Merge the lists
+      try {
+        StudentNodePtr<Student> tempds = dslist.getHead();
+        while (tempds != nullptr) {
+          DomesticStudent* tempStudent =
+              dynamic_cast<DomesticStudent*>(tempds->getStudent());
+          mergedList.addStudentNode(new DomesticStudent(*tempStudent));
+          tempds = tempds->getLink();
+        }
+
+        StudentNodePtr<Student> tempis = islist.getHead();
+        while (tempis != nullptr) {
+          InternationalStudent* tempStudent =
+              dynamic_cast<InternationalStudent*>(tempis->getStudent());
+
+          // If the TOEFL score meets the conditions, add it into the merged
+          // list
+          if (tempStudent->getToefl().meetsRequirements()) {
+            mergedList.addStudentNode(new InternationalStudent(*tempStudent));
+          }
+          tempis = tempis->getLink();
+        }
+      } catch (std::bad_alloc) {
+        std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+        exit(-1);
+      }
+
     } else if (StringHelper::toUpper(listChoice) == "Q" ||
                StringHelper::isAnagramOf(listChoice, "quit")) {
-      std::cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLEAR;
+      std::cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLR;
       return 0;
     } else {
       std::cout << RED << listChoice << " is not a valid option." << std::endl;
       std::cout << YELLOW << "Please choose one of the lists to get started"
-                << CLEAR << std::endl;
+                << CLR << std::endl;
 
       continue;
     }
 
     while (true) {
       std::cout << "\nChoose a task to perform on the "
-                << studentListNames[listID] << "list:" << std::endl;
+                << studentListNames[listID] << " student list:" << std::endl;
       std::cout << "(S)earch Student" << std::endl;
-      std::cout << "(C)reate Student" << std::endl;
+      std::cout << ((listID == 2) ? "" : "(C)reate Student\n");
       std::cout << "(R)emove Student by First and Last name" << std::endl;
       std::cout << "(D)elete Head & Tail Nodes" << std::endl;
       std::cout << "(P)rint List" << std::endl;
+      std::cout << "(B)ack to previous menu" << std::endl;
 
       std::cin >> taskChoice;
 
@@ -297,20 +282,104 @@ int main() {
         // Search Options
       } else if (StringHelper::toUpper(taskChoice) == "C" ||
                  StringHelper::isAnagramOf(taskChoice, "create")) {
+        if (listID == 2)
+          continue;
+
+        std::string firstName, lastName, location;
+        float CGPA = -1;
+        int researchScore = -1;
+        std::cout << "Enter first name: ";
+        std::cin >> firstName;
+        std::cout << "Enter last name: ";
+        std::cin >> lastName;
+        do {
+          std::cout << "Enter CGPA: ";
+          std::cin >> CGPA;
+          if (CGPA <= 0 || CGPA > 4.33 || std::cin.fail()) {
+            std::cout << YELLOW << "Please enter a number between 0 and 4.33\n"
+                      << CLR;
+            std::cin.clear();
+            std::cin.ignore(INT_MAX, '\n');
+            CGPA = -1;
+          }
+        } while (CGPA <= 0 || CGPA > 4.33);
+        forceIntInput(std::cin, "Enter Research Score: ", researchScore, 100);
+
+        if (listID == 0) {
+          do {
+            std::cout << "Enter Province Code (AB, BC,...):";
+            std::cin >> location;
+            if (!StringHelper::isProvince(location))
+              std::cout << RED << "That is not a valid province code.\n" << CLR;
+
+          } while (!StringHelper::isProvince(location));
+
+        } else if (listID == 1) {
+          do {
+            std::cout << "Enter Country";
+            std::cin >> location;
+            if (!StringHelper::isCountry(location))
+              std::cout << RED << "That is not a valid country code.\n" << CLR;
+
+          } while (!StringHelper::isCountry(location));
+        }
+
+
+        if (listID == 0) {
+          try {
+            studentLists[listID]->addStudentNode(new DomesticStudent(
+                firstName, lastName, CGPA, researchScore,
+                20202020 + int_stu_count + dom_stu_count++, location));
+          } catch (std::bad_alloc) {
+            std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+            exit(-1);
+          }
+
+        } else {
+          int r, l, s, w;
+          forceIntInput(std::cin, "Enter TOEFL Reading Score (max 30): ", r,
+                        30);
+          forceIntInput(std::cin, "Enter TOEFL Listening Score (max 30): ", l,
+                        30);
+          forceIntInput(std::cin, "Enter TOEFL Speaking Score (max 30): ", s,
+                        30);
+          forceIntInput(std::cin, "Enter TOEFL Writing Score (max 30): ", w,
+                        30);
+          try {
+            studentLists[listID]->addStudentNode(new InternationalStudent(
+                firstName, lastName, CGPA, researchScore,
+                20202020 + dom_stu_count + int_stu_count++, location, r, l, s,
+                w));
+          } catch (std::bad_alloc) {
+            std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+            exit(-1);
+          }
+        }
+
       } else if (StringHelper::toUpper(taskChoice) == "R" ||
                  StringHelper::isAnagramOf(taskChoice, "remove")) {
+        std::string firstName, lastName;
+        std::cout << "Enter first name: ";
+        std::cin >> firstName;
+        std::cout << "Enter last name: ";
+        std::cin >> lastName;
+        studentLists[listID]->deleteFirstLast(firstName, lastName);
+
       } else if (StringHelper::toUpper(taskChoice) == "D" ||
                  StringHelper::isAnagramOf(taskChoice, "delete")) {
         studentLists[listID]->deleteHeadTail();
       } else if (StringHelper::toUpper(taskChoice) == "P" ||
                  StringHelper::isAnagramOf(taskChoice, "print")) {
         studentLists[listID]->print();
+      } else if (StringHelper::toUpper(taskChoice) == "B" ||
+                 StringHelper::isAnagramOf(taskChoice, "back")) {
+        break;
       } else {
         std::cout << RED << taskChoice << " is not a valid option."
                   << std::endl;
         std::cout << YELLOW
                   << "Please choose one of following tasks to get started"
-                  << CLEAR << std::endl;
+                  << CLR << std::endl;
         std::cout
             << "Search: Search for a student based on a variety of criteria\n"
             << "Create: Add a student to the list\n"
