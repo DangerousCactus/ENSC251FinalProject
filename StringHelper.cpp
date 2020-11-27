@@ -49,20 +49,23 @@ bool isAnagramOf(std::string str1, std::string str2) {
   int diff = 0;
   int letterCount1[26] = {0};
   int letterCount2[26] = {0};
-  if (str1.length() != str2.length())
+
+  // Ensure that the length of the strings differ by atmost 1
+  if (abs(str1.length() - str2.length()) > 1)
     return false;
 
-  for (int i = 0; i < str1.length(); i++) {
+  for (int i = 0; i < str1.length(); i++)
     letterCount1[toupper(str1[i]) - 'A'] += 1;
+
+  for (int i = 0; i < str2.length(); i++)
     letterCount2[toupper(str2[i]) - 'A'] += 1;
-  }
 
   // If the letter counts match, then we have a valid anagram
   for (int i = 0; i < 26; i++)
     if (letterCount1[i] != letterCount2[i])
       diff++;
 
-  return diff <= AUTOCORRECT_TOLERANCE;
+  return diff <= AUTOCORRECT_TOLERANCE + abs(str1.length() - str2.length());
 }
 
 std::string anagramOfCountry(std::string country) {

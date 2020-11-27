@@ -11,35 +11,35 @@ main: main.o student.o internationalStudent.o domesticStudent.o TOEFLScore.o Stu
 
 #compile the main.cpp to main.o
 main.o: main.cpp
-	g++ -g -c main.cpp
+	g++ -std=c++11 -g -c main.cpp
 
 #compile the student.cpp to student.o
 student.o: student.cpp
-	g++ -g -c student.cpp
+	g++ -std=c++11 -g -c student.cpp
 
 #compile the internationalStudent.cpp to internationalStudent.o
 internationalStudent.o: student.cpp
-	g++ -g -c internationalStudent.cpp
+	g++ -std=c++11 -g -c internationalStudent.cpp
 
 #compile the domesticStudent.cpp to domesticStudent.o
 domesticStudent.o: student.cpp
-	g++ -g -c domesticStudent.cpp
+	g++ -std=c++11 -g -c domesticStudent.cpp
 
 #compile the TOEFLScore.cpp to TOEFLScore.o
 TOEFLScore.o: student.cpp
-	g++ -g -c TOEFLScore.cpp
+	g++ -std=c++11 -g -c TOEFLScore.cpp
 
 #compile the StudentList.cpp to StudentList.o
 StudentList.o: StudentList.cpp
-	g++ -g -c StudentList.cpp
+	g++ -std=c++11 -g -c StudentList.cpp
 
 #compile the StudentNode.cpp to StudentNode.o
 StudentNode.o: StudentNode.cpp
-	g++ -g -c StudentNode.cpp
+	g++ -std=c++11 -g -c StudentNode.cpp
 	
 #compile the StudentNode.cpp to StudentNode.o
 StringHelper.o: StringHelper.cpp
-	g++ -g -c StringHelper.cpp
+	g++ -std=c++11 -g -c StringHelper.cpp
 
 #remove built files
 clean:

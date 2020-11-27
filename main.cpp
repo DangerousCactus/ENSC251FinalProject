@@ -42,8 +42,8 @@ void forceIntInput(std::istream& inps, std::string message, int& field,
 }
 
 int main() {
-  StudentList<DomesticStudent> dslist;
-  StudentList<InternationalStudent> islist;
+  StudentList<Student> dslist;
+  StudentList<Student> islist;
 
   std::string line;
   std::ifstream domesticFile("domestic-stu.txt");
@@ -89,9 +89,13 @@ int main() {
     }
 
     applicationID = 20200000 + dom_stu_count;
-
-    dslist.addStudentNode(DomesticStudent(
-        firstName, lastName, cgpa, researchScore, applicationID, province));
+    try {
+      dslist.addStudentNode(new DomesticStudent(
+          firstName, lastName, cgpa, researchScore, applicationID, province));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
 
     dom_stu_count++;
   }
@@ -162,10 +166,14 @@ int main() {
     }
 
     applicationID = 20200000 + dom_stu_count + int_stu_count;
-
-    islist.addStudentNode(InternationalStudent(
-        firstName, lastName, cgpa, researchScore, applicationID, country,
-        reading, listening, speaking, writing));
+    try {
+      islist.addStudentNode(new InternationalStudent(
+          firstName, lastName, cgpa, researchScore, applicationID, country,
+          reading, listening, speaking, writing));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
 
     int_stu_count++;
   }
@@ -177,22 +185,23 @@ int main() {
   // End reading of files and loading of student data
   // islist.print();
   StudentList<Student> mergedList;
-
   try {
-    StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
+    StudentNodePtr<Student> tempds = dslist.getHead();
     while (tempds != nullptr) {
-      mergedList.addStudentNode(new DomesticStudent(*(tempds->getStudent())));
+      DomesticStudent* tempStudent =
+          dynamic_cast<DomesticStudent*>(tempds->getStudent());
+      mergedList.addStudentNode(new DomesticStudent(*tempStudent));
       tempds = tempds->getLink();
     }
 
-    StudentNodePtr<InternationalStudent> tempis = islist.getHead();
+    StudentNodePtr<Student> tempis = islist.getHead();
     while (tempis != nullptr) {
-      ToeflScore tempToefl = tempis->getStudent()->getToefl();
+      InternationalStudent* tempStudent =
+          dynamic_cast<InternationalStudent*>(tempis->getStudent());
 
       // If the TOEFL score meets the conditions, add it into the merged list
-      if (tempToefl.meetsRequirements()) {
-        mergedList.addStudentNode(
-            new InternationalStudent(*(tempis->getStudent())));
+      if (tempStudent->getToefl().meetsRequirements()) {
+        mergedList.addStudentNode(new InternationalStudent(*tempStudent));
       }
       tempis = tempis->getLink();
     }
@@ -201,51 +210,116 @@ int main() {
     exit(-1);
   }
   mergedList.print();
+  // mergedList.print();
 
-  // mergedList.searchCGPAandResearchScoreThreshold(3, 95);
-  // dslist.print();
-  // dslist.searchFirstLast("MaRy", "WHItE");
+  /*
+  Which List?
 
-  // int domOrInt = 0, sortType = 0;
+  DO
+  Domestic
+  International
+  Merged
+  Exit
 
-  // // Menu while loop
-  // // User chooses either Domestic or International student database
-  // while (true) {
-  //   std::cout << std::string(50, '-') << '\n';
-  //   std::cout << "Student Database\n";
-  //   std::cout << std::string(50, '-') << '\n';
+    DO
+    Option?
+    Search Student
+      APPID
+      CGPA
+      ResearchScore
+      First & Last Name
+      Hybrid Threshold
+    Create Student
+      Data Points based on List ID
+    Delete Student by First and Last name
+    Delete Head & Tail Nodes
+    WHILE
+  WHILE
+  */
 
-  //   std::cout << "Choose an option below to sort:" << std::endl;
-  //   std::cout << "1. Domestic" << std::endl;
-  //   std::cout << "2. International" << std::endl;
-  //   std::cout << "3. Merged Domestic and International" << std::endl;
-  //   std::cout << "4. Quit" << std::endl;
+  StudentList<Student>* studentLists[] = {&dslist, &islist, &mergedList};
+  std::string studentListNames[] = {"Domestic", "International",
+                                    "Merged Domestic and International"};
 
-  //   // User chooses the sorting order of the previously selected student
-  //   // database
+  std::string listChoice;
+  std::string taskChoice;
+  int listID;
 
-  //   forceIntInput(std::cin, "> ", domOrInt, 4);
+  // Menu while loop
+  // User chooses either Domestic or International student database
+  while (true) {
+    std::cout << std::string(50, '-') << '\n';
+    std::cout << "Student Database\n";
+    std::cout << std::string(50, '-') << '\n';
 
-  //   // Quit the program
-  //   if (domOrInt == 4) {
-  //     std::cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLEAR;
-  //     return 0;
-  //   }
+    std::cout << "Choose a list to interact with:" << std::endl;
+    std::cout << "(D)omestic" << std::endl;
+    std::cout << "(I)nternational" << std::endl;
+    std::cout << "(M)erged Domestic and International" << std::endl;
+    std::cout << "(Q)uit this program" << std::endl;
 
-  //   std::cout << "\nChoose a task:" << std::endl;
-  //   std::cout << "1. Search Student" << std::endl;
-  //   std::cout << "2. Create Student" << std::endl;
-  //   std::cout << "3. Delete Student" << std::endl;
+    std::cin >> listChoice;
 
-  //   forceIntInput(std::cin, "> ", sortType, 3);
+    if (StringHelper::toUpper(listChoice) == "D" ||
+        StringHelper::isAnagramOf(listChoice, "domestic")) {
+      listID = 0;
+    } else if (StringHelper::toUpper(listChoice) == "I" ||
+               StringHelper::isAnagramOf(listChoice, "international")) {
+      listID = 1;
+    } else if (StringHelper::toUpper(listChoice) == "M" ||
+               StringHelper::isAnagramOf(listChoice, "domestic")) {
+      listID = 2;
+    } else if (StringHelper::toUpper(listChoice) == "Q" ||
+               StringHelper::isAnagramOf(listChoice, "quit")) {
+      std::cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLEAR;
+      return 0;
+    } else {
+      std::cout << RED << listChoice << " is not a valid option." << std::endl;
+      std::cout << YELLOW << "Please choose one of the lists to get started"
+                << CLEAR << std::endl;
 
-  //   switch (sortType) {
-  //     case 1:
-  //       break;
-  //     default:
-  //       std::cout << RED << "\nInvalid Input!" << BOLD << "\n\nPlease try
-  //       again\n\n"
-  //            << CLEAR << std::endl;
-  //   }
-  // }
+      continue;
+    }
+
+    while (true) {
+      std::cout << "\nChoose a task to perform on the "
+                << studentListNames[listID] << "list:" << std::endl;
+      std::cout << "(S)earch Student" << std::endl;
+      std::cout << "(C)reate Student" << std::endl;
+      std::cout << "(R)emove Student by First and Last name" << std::endl;
+      std::cout << "(D)elete Head & Tail Nodes" << std::endl;
+      std::cout << "(P)rint List" << std::endl;
+
+      std::cin >> taskChoice;
+
+      if (StringHelper::toUpper(taskChoice) == "S" ||
+          StringHelper::isAnagramOf(taskChoice, "search")) {
+        // Search Options
+      } else if (StringHelper::toUpper(taskChoice) == "C" ||
+                 StringHelper::isAnagramOf(taskChoice, "create")) {
+      } else if (StringHelper::toUpper(taskChoice) == "R" ||
+                 StringHelper::isAnagramOf(taskChoice, "remove")) {
+      } else if (StringHelper::toUpper(taskChoice) == "D" ||
+                 StringHelper::isAnagramOf(taskChoice, "delete")) {
+        studentLists[listID]->deleteHeadTail();
+      } else if (StringHelper::toUpper(taskChoice) == "P" ||
+                 StringHelper::isAnagramOf(taskChoice, "print")) {
+        studentLists[listID]->print();
+      } else {
+        std::cout << RED << taskChoice << " is not a valid option."
+                  << std::endl;
+        std::cout << YELLOW
+                  << "Please choose one of following tasks to get started"
+                  << CLEAR << std::endl;
+        std::cout
+            << "Search: Search for a student based on a variety of criteria\n"
+            << "Create: Add a student to the list\n"
+            << "Remove: Remove a student from the list if the provided first "
+               "and last names match\n"
+            << "Delete: Remove the topmost and bottommost student from the "
+               "list\n"
+            << "Print: Print the current list\n";
+      }
+    }
+  }
 }

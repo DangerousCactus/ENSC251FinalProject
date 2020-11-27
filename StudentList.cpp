@@ -127,14 +127,14 @@ void StudentList<T>::addStudentNode(T* student) {
     return;
   } else {  // Sort in non-increasing order
     while (!(*currParent->getStudent() < *student)) {
-        if (currParent->getLink() == nullptr) {  // If we've reached the end
-          currParent->setLink(newNode);
-          tail = newNode;
-          return;
-        } else {
-          currParent = currParent->getLink();
-        }
+      if (currParent->getLink() == nullptr) {  // If we've reached the end
+        currParent->setLink(newNode);
+        tail = newNode;
+        return;
+      } else {
+        currParent = currParent->getLink();
       }
+    }
 
     // Place the node into the list
     newNode->setStudent(currParent->getStudent());
@@ -190,6 +190,11 @@ void StudentList<T>::print() {
   while (currHead != nullptr) {
     std::cout << *currHead->getStudent() << std::endl;
     currHead = currHead->getLink();
+  }
+  if (head == nullptr) {
+    std::cout << "\033[31m"
+              << "The list is empty."
+              << "\033[0m" << std::endl;
   }
 }
 
