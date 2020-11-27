@@ -43,11 +43,12 @@ StringHelper.o: StringHelper.cpp
 
 #remove built files
 clean:
-	rm -rf main *.o *~
+	rm -rf main *.o *~ build/
 
 #GitHub CI
 #make the tests and run them
 runtest:
-	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -B build/ -G "Unix Makefiles" &&\
-	cmake --build build/ --config Debug --target all -- -j 10 &&\
-	cd build/test && ./tests
+	mkdir -p build && cd build &&\
+	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -S ../ -G "Unix Makefiles" &&\
+	cd .. && cmake --build build/ --config Debug --target all -- -j 10 &&\
+	cd build/test/ && ./tests && cd ../..
