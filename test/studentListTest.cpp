@@ -265,7 +265,7 @@ TEST_F(sortingTest, listSearchTestAppCGPAResearch) {
   dslist.searchAppID(0);  // Inexistent ID
   output = testing::internal::GetCapturedStdout();
 
-  EXPECT_TRUE(output == "No matching records found.\n");
+  EXPECT_TRUE(output == "\033[31mNo matching records found.\033[0m\n");
 
   // Normal Case - CGPA
   testing::internal::CaptureStdout();
@@ -279,7 +279,7 @@ TEST_F(sortingTest, listSearchTestAppCGPAResearch) {
   dslist.searchCGPA(-1);  // Inexistent CGPA
   output = testing::internal::GetCapturedStdout();
 
-  EXPECT_TRUE(output == "No matching records found.\n");
+  EXPECT_TRUE(output == "\033[31mNo matching records found.\033[0m\n");
 
   // Normal Case - Research Score
   testing::internal::CaptureStdout();
@@ -293,7 +293,7 @@ TEST_F(sortingTest, listSearchTestAppCGPAResearch) {
   dslist.searchResearchScore(-1);  // Inexistent Research SCore
   output = testing::internal::GetCapturedStdout();
 
-  EXPECT_TRUE(output == "No matching records found.\n");
+  EXPECT_TRUE(output == "\033[31mNo matching records found.\033[0m\n");
 }
 
 /*
@@ -314,7 +314,7 @@ TEST_F(sortingTest, listSearchTestFirstLast) {
   testing::internal::CaptureStdout();
   dslist.searchFirstLast("Non", "Existent");
   output = testing::internal::GetCapturedStdout();
-  EXPECT_EQ(output.substr(0, 30).compare("No matching records found.\n"), 0);
+  EXPECT_TRUE(output == "\033[31mNo matching records found.\033[0m\n");
 }
 
 /*

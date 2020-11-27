@@ -37,7 +37,7 @@ class StudentList {
   void addStudentNode(T* student);
 
   // Delete a student from the list based on first and last name
-  void deleteFirstLast(std::string first, std::string last);
+  bool deleteFirstLast(std::string first, std::string last);
   // Delete both the head and tail of the student list in one delete function
   void deleteHeadTail();
 

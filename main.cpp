@@ -324,7 +324,6 @@ int main() {
           } while (!StringHelper::isCountry(location));
         }
 
-
         if (listID == 0) {
           try {
             studentLists[listID]->addStudentNode(new DomesticStudent(
@@ -363,7 +362,10 @@ int main() {
         std::cin >> firstName;
         std::cout << "Enter last name: ";
         std::cin >> lastName;
-        studentLists[listID]->deleteFirstLast(firstName, lastName);
+        if (studentLists[listID]->deleteFirstLast(firstName, lastName))
+          std::cout << "\033[32mDeleted specified students.\033[0m\n";
+        else
+          std::cout << "\033[31mNo matching records found.\033[0m\n";
 
       } else if (StringHelper::toUpper(taskChoice) == "D" ||
                  StringHelper::isAnagramOf(taskChoice, "delete")) {

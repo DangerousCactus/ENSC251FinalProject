@@ -287,7 +287,7 @@ void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
 
 // Delete all objects in the list which have the specified first and last name
 template <typename T>
-void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
+bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   StudentNodePtr<T> currHead = head;
   bool found = false;
   T temp;
@@ -305,10 +305,7 @@ void StudentList<T>::deleteFirstLast(std::string first, std::string last) {
       currHead = currHead->getLink();
     }
   }
-  if (found)
-    std::cout << "\033[32mDeleted specified students.\033[0m\n";
-  else
-    std::cout << "\033[31mNo matching records found.\033[0m\n";
+  return found;
 }
 
 // Delete the head and tail of the list

@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.16.3)
+cmake_minimum_required(VERSION 2.8.8)
 
 set(This finalProject)
 
-project(${This} C CXX)
+#project(${This} C CXX)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
@@ -10,7 +10,7 @@ set(CMAKE_POSITION_INDEPENDENT ON)
 
 enable_testing()
 
-add_subdirectory(/usr/src/googletest/googletest googletest)
+add_subdirectory(googletest googletest)
 
 set(Headers
     student.hpp

@@ -38,6 +38,5 @@ main
 *.zip
 .replit
 
-googletest/
 build/
 
