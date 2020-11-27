@@ -46,6 +46,7 @@ bool isValidMenuOption(std::string option) {
 
 bool isAnagramOf(std::string str1, std::string str2) {
   // Keep track of the frequency of each letter
+  int diff = 0;
   int letterCount1[26] = {0};
   int letterCount2[26] = {0};
   if (str1.length() != str2.length())
@@ -59,9 +60,9 @@ bool isAnagramOf(std::string str1, std::string str2) {
   // If the letter counts match, then we have a valid anagram
   for (int i = 0; i < 26; i++)
     if (letterCount1[i] != letterCount2[i])
-      return false;
+      diff++;
 
-  return true;
+  return diff <= AUTOCORRECT_TOLERANCE;
 }
 
 std::string anagramOfCountry(std::string country) {

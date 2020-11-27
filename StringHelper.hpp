@@ -5,6 +5,10 @@
 
 // Use a namespace so we don't clutter the global namespace
 namespace StringHelper {
+
+// Constants that control the strength of the autocorrect
+const int AUTOCORRECT_TOLERANCE = 2;
+
 // Abbreviations of Canadian provinces
 const std::string PROVINCES[] = {"NL", "PE", "NS", "NB", "QC", "ON", "MB",
                                  "SK", "AB", "BC", "YT", "NT", "NU"};
