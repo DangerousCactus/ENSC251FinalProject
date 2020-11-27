@@ -45,11 +45,7 @@ StringHelper.o: StringHelper.cpp
 clean:
 	rm -rf main *.o *~
 
-#GitHub CI function - install gtest
-gtest:
-	sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp *.a /usr/lib &&\
-	sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-	
+#GitHub CI
 #make the tests and run them
 runtest:
 	cmake --no-warn-unused-cli -DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE -DCMAKE_BUILD_TYPE:STRING=Debug -B build/ -G "Unix Makefiles" &&\

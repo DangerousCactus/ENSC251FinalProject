@@ -20,8 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install gtest manually
-        run: make gtest
       - name: Run Tests
         run:  make runtest      
 
