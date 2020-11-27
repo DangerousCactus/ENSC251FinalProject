@@ -206,6 +206,8 @@ void StudentList<T>::searchAppID(int id) const {
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getApplicationID() == id) {
+      if (!found)
+        std::cout << std::string(80, '-') << std::endl;
       std::cout << *currHead->getStudent() << std::endl;
       found = true;
     }
@@ -213,6 +215,8 @@ void StudentList<T>::searchAppID(int id) const {
   }
   if (!found)
     std::cout << "\033[31mNo matching records found.\033[0m\n";
+  else
+    std::cout << std::string(80, '-') << std::endl;
 }
 
 template <typename T>
@@ -221,6 +225,8 @@ void StudentList<T>::searchCGPA(float cgpa) const {
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getCGPA() == cgpa) {
+      if (!found)
+        std::cout << std::string(80, '-') << std::endl;
       std::cout << *currHead->getStudent() << std::endl;
       found = true;
     }
@@ -228,6 +234,8 @@ void StudentList<T>::searchCGPA(float cgpa) const {
   }
   if (!found)
     std::cout << "\033[31mNo matching records found.\033[0m\n";
+  else
+    std::cout << std::string(80, '-') << std::endl;
 }
 
 template <typename T>
@@ -236,6 +244,8 @@ void StudentList<T>::searchResearchScore(int score) const {
   bool found = false;
   while (currHead != nullptr) {
     if (currHead->getStudent()->getResearchScore() == score) {
+      if (!found)
+        std::cout << std::string(80, '-') << std::endl;
       std::cout << *currHead->getStudent() << std::endl;
       found = true;
     }
@@ -243,6 +253,8 @@ void StudentList<T>::searchResearchScore(int score) const {
   }
   if (!found)
     std::cout << "\033[31mNo matching records found.\033[0m\n";
+  else
+    std::cout << std::string(80, '-') << std::endl;
 }
 
 template <typename T>
@@ -257,6 +269,8 @@ void StudentList<T>::searchFirstLast(std::string first,
   while (currHead != nullptr) {
     if (compareFirstName(*currHead->getStudent(), temp) == 0 &&
         compareLastName(*currHead->getStudent(), temp) == 0) {
+      if (!found)
+        std::cout << std::string(80, '-') << std::endl;
       std::cout << *currHead->getStudent() << std::endl;
       found = true;
     }
@@ -264,6 +278,8 @@ void StudentList<T>::searchFirstLast(std::string first,
   }
   if (!found)
     std::cout << "\033[31mNo matching records found.\033[0m\n";
+  else
+    std::cout << std::string(80, '-') << std::endl;
 }
 
 // Print out all students that meet the CGPA and Research Score threshold
@@ -276,6 +292,8 @@ void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
   while (currHead != nullptr) {
     if (currHead->getStudent()->getCGPA() >= CGPA &&
         currHead->getStudent()->getResearchScore() >= score) {
+      if (!found)
+        std::cout << std::string(80, '-') << std::endl;
       std::cout << *currHead->getStudent() << std::endl;
       found = true;
     }
@@ -283,6 +301,8 @@ void StudentList<T>::searchCGPAandResearchScoreThreshold(float CGPA,
   }
   if (!found)
     std::cout << "\033[31mNo matching records found.\033[0m\n";
+  else
+    std::cout << std::string(80, '-') << std::endl;
 }
 
 // Delete all objects in the list which have the specified first and last name

@@ -40,6 +40,31 @@ void forceIntInput(std::istream& inps, std::string message, int& field,
   } while (true);
 }
 
+void forceCGPAinput(std::istream& inps, float& field) {
+  do {
+    std::cout << "Enter CGPA: ";
+    inps >> field;
+
+    if (inps.fail()) {
+      inps.clear();
+      inps.ignore(INT_MAX, '\n');
+      std::cout << YELLOW << BOLD << "Enter a number please. Try again:\n"
+                << CLR;
+      continue;
+    }
+
+    inps.ignore(INT_MAX, '\n');
+
+    if (field >= 0 && field <= 4.33)
+      break;
+
+    std::cout << YELLOW << BOLD
+              << "Please enter a value between 0 and 4.33. Try again:\n"
+              << CLR;
+
+  } while (true);
+}
+
 int main() {
   StudentList<Student> dslist;
   StudentList<Student> islist;
@@ -184,14 +209,6 @@ int main() {
 
   // End reading of files and loading of student data
 
-  /*
-  Search Student
-    APPID
-    CGPA
-    ResearchScore
-    First & Last Name
-    Hybrid Threshold
-  */
   StudentList<Student> mergedList;
   StudentList<Student>* studentLists[] = {&dslist, &islist, &mergedList};
   std::string studentListNames[] = {"Domestic", "International",
@@ -279,7 +296,60 @@ int main() {
 
       if (StringHelper::toUpper(taskChoice) == "S" ||
           StringHelper::isAnagramOf(taskChoice, "search")) {
-        // Search Options
+        // Search Options //TODO
+        /*
+        Search Student
+          CGPA
+          Hybrid Threshold
+        */
+        std::string searchMethod;
+
+        std::cout << "\nHow would you like to search the list?\n";
+        std::cout << "(A)pplication ID\n";
+        std::cout << "(C)GPA\n";
+        std::cout << "(R)esearch Score\n";
+        std::cout << "(F)irst and Last name\n";
+        std::cout << "(H)ybrid Threshold of CGPA and Research Score\n";
+
+        std::cin >> searchMethod;
+
+        if (StringHelper::toUpper(searchMethod) == "A" ||
+            StringHelper::isAnagramOf(searchMethod, "application")) {
+          int id;
+          forceIntInput(std::cin, "Enter the application ID: ", id, INT_MAX);
+          studentLists[listID]->searchAppID(id);
+
+        } else if (StringHelper::toUpper(searchMethod) == "C" ||
+                   StringHelper::isAnagramOf(searchMethod, "cgpa")) {
+          float cgpa;
+          forceCGPAinput(std::cin, cgpa);
+          studentLists[listID]->searchCGPA(cgpa);
+        } else if (StringHelper::toUpper(searchMethod) == "R" ||
+                   StringHelper::isAnagramOf(searchMethod, "research")) {
+          int score;
+          forceIntInput(std::cin, "Enter the research score: ", score, 100);
+          studentLists[listID]->searchResearchScore(score);
+        } else if (StringHelper::toUpper(searchMethod) == "F" ||
+                   StringHelper::isAnagramOf(searchMethod, "first")) {
+          std::string firstName, lastName;
+          std::cout << "Enter first name: ";
+          std::cin >> firstName;
+          std::cout << "Enter last name: ";
+          std::cin >> lastName;
+          studentLists[listID]->searchFirstLast(firstName, lastName);
+        } else if (StringHelper::toUpper(searchMethod) == "H" ||
+                   StringHelper::isAnagramOf(searchMethod, "hybrid")) {
+          float cgpa;
+          forceCGPAinput(std::cin, cgpa);
+          int score;
+          forceIntInput(std::cin, "Enter the research score: ", score, 100);
+          studentLists[listID]->searchCGPAandResearchScoreThreshold(cgpa,
+                                                                    score);
+        } else {
+          std::cout << RED << taskChoice << " is not a valid option."
+                    << std::endl;
+        }
+
       } else if (StringHelper::toUpper(taskChoice) == "C" ||
                  StringHelper::isAnagramOf(taskChoice, "create")) {
         if (listID == 2)
@@ -292,17 +362,7 @@ int main() {
         std::cin >> firstName;
         std::cout << "Enter last name: ";
         std::cin >> lastName;
-        do {
-          std::cout << "Enter CGPA: ";
-          std::cin >> CGPA;
-          if (CGPA <= 0 || CGPA > 4.33 || std::cin.fail()) {
-            std::cout << YELLOW << "Please enter a number between 0 and 4.33\n"
-                      << CLR;
-            std::cin.clear();
-            std::cin.ignore(INT_MAX, '\n');
-            CGPA = -1;
-          }
-        } while (CGPA <= 0 || CGPA > 4.33);
+        forceCGPAinput(std::cin, CGPA);
         forceIntInput(std::cin, "Enter Research Score: ", researchScore, 100);
 
         if (listID == 0) {
