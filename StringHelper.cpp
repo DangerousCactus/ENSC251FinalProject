@@ -62,8 +62,7 @@ bool isAnagramOf(std::string str1, std::string str2) {
 
   // If the letter counts match, then we have a valid anagram
   for (int i = 0; i < 26; i++)
-    if (letterCount1[i] != letterCount2[i])
-      diff++;
+    diff += abs(letterCount1[i] - letterCount2[i]);
 
   return diff <= AUTOCORRECT_TOLERANCE + AUTOCORRECT_TOLERANCE / 2;
 }
