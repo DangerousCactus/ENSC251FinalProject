@@ -70,6 +70,8 @@ void listSelect(StudentList<Student>* list[3], std::string listNames[3],
 void actionSelect(StudentList<Student>* list, std::string listName,
                   int& domCount, int& intCount);
 void searchSelect(StudentList<Student>* list);
+void insertStudent(StudentList<Student>* list, std::string listName,
+                   int& domCount, int& intCount);
 
 int main() {
   StudentList<Student> dslist;
@@ -235,7 +237,7 @@ void listSelect(StudentList<Student>* list[3], std::string listNames[3],
     std::cout << "Student Database\n";
     std::cout << std::string(50, '-') << '\n';
 
-    std::cout << "Choose a list to interact with:" << std::endl;
+    std::cout << BOLD << "Choose a list to interact with:" << CLR << std::endl;
     std::cout << "(D)omestic" << std::endl;
     std::cout << "(I)nternational" << std::endl;
     std::cout << "(M)erged Domestic and International (this copies both lists "
@@ -294,9 +296,10 @@ void listSelect(StudentList<Student>* list[3], std::string listNames[3],
 void actionSelect(StudentList<Student>* list, std::string listName,
                   int& domCount, int& intCount) {
   std::string taskChoice;
-  while (true) {
-    std::cout << "\nChoose a task to perform on the " << listName
-              << " student list:" << std::endl;
+  bool selecting = true;
+  while (selecting) {
+    std::cout << BOLD << "\nChoose a task to perform on the " << listName
+              << " student list:" << CLR << std::endl;
     std::cout << "(S)earch Student" << std::endl;
     std::cout << ((listName.substr(0, 6) == "Merged") ? ""
                                                       : "(C)reate Student\n");
@@ -313,64 +316,10 @@ void actionSelect(StudentList<Student>* list, std::string listName,
     } else if (StringHelper::toUpper(taskChoice) == "C" ||
                StringHelper::isAnagramOf(taskChoice, "create")) {
       if (listName.substr(0, 6) == "Merged")
-        continue;
-
-      std::string firstName, lastName, location;
-      float CGPA = -1;
-      int researchScore = -1;
-      std::cout << "Enter first name: ";
-      std::cin >> firstName;
-      std::cout << "Enter last name: ";
-      std::cin >> lastName;
-      forceCGPAinput(std::cin, CGPA);
-      forceIntInput(std::cin, "Enter Research Score: ", researchScore, 100);
-
-      if (listName == "Domestic") {
-        do {
-          std::cout << "Enter Province Code (AB, BC,...):";
-          std::cin >> location;
-          if (!StringHelper::isProvince(location))
-            std::cout << RED << "That is not a valid province code.\n" << CLR;
-
-        } while (!StringHelper::isProvince(location));
-
-      } else if (listName == "International") {
-        do {
-          std::cout << "Enter Country";
-          std::cin >> location;
-          if (!StringHelper::isCountry(location))
-            std::cout << RED << "That is not a valid country code.\n" << CLR;
-
-        } while (!StringHelper::isCountry(location));
-      }
-
-      if (listName == "Domestic") {
-        try {
-          list->addStudentNode(
-              new DomesticStudent(firstName, lastName, CGPA, researchScore,
-                                  20202020 + intCount + domCount++, location));
-        } catch (std::bad_alloc) {
-          std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-          exit(-1);
-        }
-
-      } else {
-        int r, l, s, w;
-        forceIntInput(std::cin, "Enter TOEFL Reading Score (max 30): ", r, 30);
-        forceIntInput(std::cin, "Enter TOEFL Listening Score (max 30): ", l,
-                      30);
-        forceIntInput(std::cin, "Enter TOEFL Speaking Score (max 30): ", s, 30);
-        forceIntInput(std::cin, "Enter TOEFL Writing Score (max 30): ", w, 30);
-        try {
-          list->addStudentNode(new InternationalStudent(
-              firstName, lastName, CGPA, researchScore,
-              20202020 + domCount + intCount++, location, r, l, s, w));
-        } catch (std::bad_alloc) {
-          std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-          exit(-1);
-        }
-      }
-
+        std::cout << RED << taskChoice << " is not a valid option." << CLR
+                  << std::endl;
+      else
+        insertStudent(list, listName, domCount, intCount);
     } else if (StringHelper::toUpper(taskChoice) == "R" ||
                StringHelper::isAnagramOf(taskChoice, "remove")) {
       std::string firstName, lastName;
@@ -385,13 +334,17 @@ void actionSelect(StudentList<Student>* list, std::string listName,
 
     } else if (StringHelper::toUpper(taskChoice) == "D" ||
                StringHelper::isAnagramOf(taskChoice, "delete")) {
-      list->deleteHeadTail();
+      if (list->deleteHeadTail()) {
+        std::cout << GREEN << "Deleted head/tail nodes" << CLR << std::endl;
+      } else {
+        std::cout << "\033[31mList is empty - cannot delete\033[0m\n";
+      }
     } else if (StringHelper::toUpper(taskChoice) == "P" ||
                StringHelper::isAnagramOf(taskChoice, "print")) {
       list->print();
     } else if (StringHelper::toUpper(taskChoice) == "B" ||
                StringHelper::isAnagramOf(taskChoice, "back")) {
-      break;
+      selecting = false;
     } else {
       std::cout << RED << taskChoice << " is not a valid option." << std::endl;
       std::cout << YELLOW
@@ -412,13 +365,14 @@ void searchSelect(StudentList<Student>* list) {
   std::string searchMethod;
   bool searchAgain;
   do {
-    bool searchAgain = false;
-    std::cout << "\nHow would you like to search the list?\n";
+    searchAgain = false;
+    std::cout << BOLD << "\nHow would you like to search the list?\n" << CLR;
     std::cout << "(A)pplication ID\n";
     std::cout << "(C)GPA\n";
     std::cout << "(R)esearch Score\n";
     std::cout << "(F)irst and Last name\n";
     std::cout << "(H)ybrid Threshold of CGPA and Research Score\n";
+    std::cout << "(B)ack to previous menu\n";
 
     std::cin >> searchMethod;
 
@@ -453,10 +407,72 @@ void searchSelect(StudentList<Student>* list) {
       int score;
       forceIntInput(std::cin, "Enter the research score: ", score, 100);
       list->searchCGPAandResearchScoreThreshold(cgpa, score);
+    } else if (StringHelper::toUpper(searchMethod) == "B" ||
+               StringHelper::isAnagramOf(searchMethod, "back")) {
+      continue;
     } else {
       std::cout << RED << searchMethod << " is not a valid option."
                 << std::endl;
       searchAgain = true;
     }
   } while (searchAgain);
+}
+
+void insertStudent(StudentList<Student>* list, std::string listName,
+                   int& domCount, int& intCount) {
+  std::string firstName, lastName, location;
+  float CGPA = -1;
+  int researchScore = -1;
+
+  std::cout << "Enter first name: ";
+  std::cin >> firstName;
+  std::cout << "Enter last name: ";
+  std::cin >> lastName;
+  forceCGPAinput(std::cin, CGPA);
+  forceIntInput(std::cin, "Enter Research Score: ", researchScore, 100);
+
+  if (listName == "Domestic") {
+    do {
+      std::cout << "Enter Province Code (AB, BC,...):";
+      std::cin >> location;
+      if (!StringHelper::isProvince(location))
+        std::cout << RED << "That is not a valid province code.\n" << CLR;
+
+    } while (!StringHelper::isProvince(location));
+
+  } else if (listName == "International") {
+    do {
+      std::cout << "Enter Country: ";
+      std::cin >> location;
+      if (!StringHelper::isCountry(location))
+        std::cout << RED << "That is not a valid country code.\n" << CLR;
+
+    } while (!StringHelper::isCountry(location));
+  }
+
+  if (listName == "Domestic") {
+    try {
+      list->addStudentNode(
+          new DomesticStudent(firstName, lastName, CGPA, researchScore,
+                              20202020 + intCount + domCount++, location));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
+
+  } else {
+    int r, l, s, w;
+    forceIntInput(std::cin, "Enter TOEFL Reading Score (max 30): ", r, 30);
+    forceIntInput(std::cin, "Enter TOEFL Listening Score (max 30): ", l, 30);
+    forceIntInput(std::cin, "Enter TOEFL Speaking Score (max 30): ", s, 30);
+    forceIntInput(std::cin, "Enter TOEFL Writing Score (max 30): ", w, 30);
+    try {
+      list->addStudentNode(new InternationalStudent(
+          firstName, lastName, CGPA, researchScore,
+          20202020 + domCount + intCount++, location, r, l, s, w));
+    } catch (std::bad_alloc) {
+      std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
+      exit(-1);
+    }
+  }
 }

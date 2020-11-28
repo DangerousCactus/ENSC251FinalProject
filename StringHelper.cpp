@@ -65,7 +65,7 @@ bool isAnagramOf(std::string str1, std::string str2) {
     if (letterCount1[i] != letterCount2[i])
       diff++;
 
-  return diff <= AUTOCORRECT_TOLERANCE + abs(str1.length() - str2.length());
+  return diff <= AUTOCORRECT_TOLERANCE + AUTOCORRECT_TOLERANCE / 2;
 }
 
 std::string anagramOfCountry(std::string country) {

@@ -330,12 +330,13 @@ bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
 
 // Delete the head and tail of the list
 template <typename T>
-void StudentList<T>::deleteHeadTail() {
+bool StudentList<T>::deleteHeadTail() {
   if (head == nullptr)
-    std::cout << "\033[31mList is empty - cannot delete\033[0m\n";
+    return false;
   else {
     deleteStudentNode(head);
     deleteStudentNode(tail);
   }
+  return true;
 }
 #endif
