@@ -1,6 +1,8 @@
 #ifndef STUDENTLIST_CPP
 #define STUDENTLIST_CPP
 #include "StudentList.hpp"
+#include <iostream>
+#include <sstream>
 #include "StringHelper.hpp"
 
 template <typename T>
@@ -248,6 +250,8 @@ void StudentList<T>::searchFirstLast(std::string first,
   StudentNodePtr<T> currHead = head;
   bool found = false;
   bool foundClose = false;
+  std::stringstream possibleMatches;
+
   T temp;
   temp.setFirstName(first);
   temp.setLastName(last);
@@ -263,13 +267,21 @@ void StudentList<T>::searchFirstLast(std::string first,
                                          first) &&
                StringHelper::isAnagramOf(currHead->getStudent()->getLastName(),
                                          last)) {
-      NULL;
+      possibleMatches << *currHead->getStudent();
+      foundClose = true;
     }
     currHead = currHead->getLink();
   }
-  if (!found)
+  if (!found) {
     std::cout << "\033[31mNo matching records found.\033[0m\n";
-  else
+    if (foundClose) {
+      std::cout << "\033[33mHowever, we did find some similar students to your "
+                   "query\033[0m\n";
+      std::cout << std::string(80, '-') << std::endl
+                << possibleMatches.str() << std::endl
+                << std::string(80, '-') << std::endl;
+    }
+  } else
     std::cout << std::string(80, '-') << std::endl;
 }
 

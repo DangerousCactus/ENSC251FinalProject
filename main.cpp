@@ -412,7 +412,7 @@ void searchSelect(StudentList<Student>* list) {
       continue;
     } else {
       std::cout << RED << searchMethod << " is not a valid option."
-                << std::endl;
+                << CLR << std::endl;
       searchAgain = true;
     }
   } while (searchAgain);

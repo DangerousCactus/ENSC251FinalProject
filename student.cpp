@@ -81,8 +81,8 @@ int compareFirstName(const Student& student1, const Student& student2) {
 // Compares two students' Last Names
 // Case insensitive
 int compareLastName(const Student& student1, const Student& student2) {
-  std::string name1 = StringHelper::toUpper(student1.firstName);
-  std::string name2 = StringHelper::toUpper(student2.firstName);
+  std::string name1 = StringHelper::toUpper(student1.lastName);
+  std::string name2 = StringHelper::toUpper(student2.lastName);
 
   if (name1 < name2)
     return -1;
