@@ -45,7 +45,6 @@ set(This finalProject)
 #project(${This} C CXX)
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT ON)
 
 enable_testing()
