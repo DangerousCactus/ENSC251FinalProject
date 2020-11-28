@@ -21,8 +21,8 @@ struct sortingTest : public ::testing::Test {
       "Bob", "Joe", 4.0, 10, 20202024, "China", 25, 25, 25, 25);
   InternationalStudent isfirst = InternationalStudent(
       "Bob", "Joe", 4.4, 100, 20202025, "China", 25, 25, 25, 25);
-  StudentList<DomesticStudent> dslist;
-  StudentList<InternationalStudent> islist;
+  StudentList<Student> dslist;
+  StudentList<Student> islist;
 
   virtual void SetUp() override {
     std::string line;
@@ -63,7 +63,7 @@ struct sortingTest : public ::testing::Test {
 
       applicationID = 20200000 + dom_stu_count;
 
-      dslist.addStudentNode(DomesticStudent(
+      dslist.addStudentNode(new DomesticStudent(
           firstName, lastName, cgpa, researchScore, applicationID, province));
 
       dom_stu_count++;
@@ -126,7 +126,7 @@ struct sortingTest : public ::testing::Test {
 
       applicationID = 20200000 + dom_stu_count + int_stu_count;
 
-      islist.addStudentNode(InternationalStudent(
+      islist.addStudentNode(new InternationalStudent(
           firstName, lastName, cgpa, researchScore, applicationID, country,
           reading, listening, speaking, writing));
 
@@ -153,9 +153,8 @@ bool isListSorted(StudentList<T> studentList) {
   return true;
 }
 
-template <typename T>
-bool doesStudentExist(StudentList<T> studentList, T student) {
-  StudentNodePtr<T> head = studentList.getHead();
+bool doesStudentExist(StudentList<Student> studentList, Student student) {
+  StudentNodePtr<Student> head = studentList.getHead();
   while (head != nullptr) {
     if (head->getStudent()->getApplicationID() == student.getApplicationID())
       return true;
@@ -198,49 +197,49 @@ DomesticStudent (and InternationalStudent) singly linked list in order.
 TEST_F(sortingTest, listInsertTestDomestic) {
   EXPECT_TRUE(isListSorted(dslist));
   // Normal case
-  dslist.addStudentNode(dstest1);
+  dslist.addStudentNode(new DomesticStudent(dstest1));
   EXPECT_TRUE(doesStudentExist(dslist, dstest1));
   EXPECT_TRUE(isListSorted(dslist));
 
   // Edge Cases, insert at front or back
-  dslist.addStudentNode(dslast);
+  dslist.addStudentNode(new DomesticStudent(dslast));
   EXPECT_TRUE(doesStudentExist(dslist, dslast));
   EXPECT_TRUE(isListSorted(dslist));
 
-  dslist.addStudentNode(dsfirst);
+  dslist.addStudentNode(new DomesticStudent(dsfirst));
   EXPECT_TRUE(doesStudentExist(dslist, dsfirst));
   EXPECT_TRUE(isListSorted(dslist));
 
-  // Illegal case (will report failure):
-  // StudentNodePtr<DomesticStudent> temp =
-  //     new StudentNode<DomesticStudent>(dstest1);
-  // dslist.getTail()->setLink(temp);
-  // dslist.setTail(temp);
-  // EXPECT_TRUE(isListSorted(dslist));
+  // Illegal case:
+  StudentNodePtr<Student> temp =
+      new StudentNode<Student>(new DomesticStudent(dstest1));
+  dslist.getTail()->setLink(temp);
+  dslist.setTail(temp);
+  EXPECT_FALSE(isListSorted(dslist));
 }
 
 TEST_F(sortingTest, listInsertTestInternational) {
   EXPECT_TRUE(isListSorted(islist));
   // Normal case
-  islist.addStudentNode(istest1);
+  islist.addStudentNode(new InternationalStudent(istest1));
   EXPECT_TRUE(doesStudentExist(islist, istest1));
   EXPECT_TRUE(isListSorted(islist));
 
   // Edge Cases, insert at front or back
-  islist.addStudentNode(islast);
+  islist.addStudentNode(new InternationalStudent(islast));
   EXPECT_TRUE(doesStudentExist(islist, islast));
   EXPECT_TRUE(isListSorted(islist));
 
-  islist.addStudentNode(isfirst);
+  islist.addStudentNode(new InternationalStudent(isfirst));
   EXPECT_TRUE(doesStudentExist(islist, isfirst));
   EXPECT_TRUE(isListSorted(islist));
 
-  // Illegal case (will report failure):
-  // StudentNodePtr<DomesticStudent> temp =
-  //     new StudentNode<DomesticStudent>(istest1);
-  // islist.getTail()->setLink(temp);
-  // islist.setTail(temp);
-  // EXPECT_TRUE(isListSorted(islist));
+  // Illegal case
+  StudentNodePtr<Student> temp =
+      new StudentNode<Student>(new InternationalStudent(istest1));
+  islist.getTail()->setLink(temp);
+  islist.setTail(temp);
+  EXPECT_FALSE(isListSorted(islist));
 }
 
 /*
@@ -324,14 +323,14 @@ information “firstName and lastName”.
 */
 TEST_F(sortingTest, listDeleteTest) {
   // Normal Case
-  DomesticStudent currHeadStudent = *(dslist.getHead()->getStudent());
-  EXPECT_TRUE(doesStudentExist(dslist, currHeadStudent));
-  dslist.deleteFirstLast("Aurora", "Foster");
-  EXPECT_FALSE(doesStudentExist(dslist, currHeadStudent));
+  Student* currHeadStudent = dslist.getHead()->getStudent();
+  EXPECT_TRUE(doesStudentExist(dslist, *currHeadStudent));
+  dslist.deleteFirstLast(currHeadStudent->getFirstName(),
+                         currHeadStudent->getLastName());
+  EXPECT_FALSE(doesStudentExist(dslist, *currHeadStudent));
 
   // Illegal case
-  DomesticStudent dsfake =
-      DomesticStudent("John", "Doe", 2.0, 67, 20205020, "BC");
+  Student dsfake = DomesticStudent("John", "Doe", 2.0, 67, 20205020, "BC");
   EXPECT_FALSE(doesStudentExist(dslist, dsfake));
   dslist.deleteFirstLast("John", "Doe");
   EXPECT_FALSE(doesStudentExist(dslist, dsfake));
@@ -342,8 +341,8 @@ TEST_F(sortingTest, listDeleteTest) {
 InternationalStudent) linked list in a single delete function.
 */
 TEST_F(sortingTest, listHeadTailDeleteTest) {
-  DomesticStudent currHeadStudent = *(dslist.getHead()->getStudent());
-  DomesticStudent currTailStudent = *(dslist.getTail()->getStudent());
+  Student currHeadStudent = *(dslist.getHead()->getStudent());
+  Student currTailStudent = *(dslist.getTail()->getStudent());
   EXPECT_TRUE(doesStudentExist(dslist, currHeadStudent));
   EXPECT_TRUE(doesStudentExist(dslist, currTailStudent));
   dslist.deleteHeadTail();
@@ -361,21 +360,23 @@ input information “cgpa_threshold and researchScore_threshold”.
 */
 TEST_F(sortingTest, listMergeTest) {
   StudentList<Student> mergedList;
-  StudentNodePtr<DomesticStudent> tempds = dslist.getHead();
-  while (tempds != nullptr) {
-    mergedList.addStudentNode(DomesticStudent(*(tempds->getStudent())));
-    tempds = tempds->getLink();
+  StudentNodePtr<Student> tempNode = dslist.getHead();
+  while (tempNode != nullptr) {
+    DomesticStudent* tempStudent =
+        dynamic_cast<DomesticStudent*>(tempNode->getStudent());
+    mergedList.addStudentNode(new DomesticStudent(*tempStudent));
+    tempNode = tempNode->getLink();
   }
 
-  StudentNodePtr<InternationalStudent> tempis = islist.getHead();
-  while (tempis != nullptr) {
-    ToeflScore tempToefl = tempis->getStudent()->getToefl();
+  tempNode = islist.getHead();
+  while (tempNode != nullptr) {
+    InternationalStudent* tempStudent =
+        dynamic_cast<InternationalStudent*>(tempNode->getStudent());
 
-    // If the TOEFL score meets the conditions, add it into the merged list
-    if (tempToefl.meetsRequirements()) {
-      mergedList.addStudentNode(InternationalStudent(*(tempis->getStudent())));
-    }
-    tempis = tempis->getLink();
+    // If the TOEFL score meets the conditions, add it
+    if (tempStudent->getToefl().meetsRequirements())
+      mergedList.addStudentNode(new InternationalStudent(*tempStudent));
+    tempNode = tempNode->getLink();
   }
 
   testing::internal::CaptureStdout();

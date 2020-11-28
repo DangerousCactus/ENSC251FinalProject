@@ -28,11 +28,6 @@ class StudentList {
   void setHead(const StudentNodePtr<T> head);
   void setTail(const StudentNodePtr<T> tail);
 
-  // If the type of the student is not equal to the type of the StudentList, you
-  // must use pass a pointer to the student to avoid the slicing problem.
-
-  // Add a student to the list by passing a copy of student object itself.
-  void addStudentNode(T student);
   // Add a student to the list by passing a pointer to the student object.
   void addStudentNode(T* student);
 

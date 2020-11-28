@@ -92,21 +92,6 @@ void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
   this->tail = tail;
 }
 
-// Allocate memory for the student and then place the student into the list
-template <typename T>
-void StudentList<T>::addStudentNode(T student) {
-  StudentNodePtr<T> currParent = head;
-  T* newStudent;
-  try {
-    newStudent = new T(student);
-  } catch (std::bad_alloc) {
-    std::cerr << "ERROR: Unable to allocate memory. Exiting program.\n";
-    exit(-1);
-  }
-
-  addStudentNode(newStudent);
-}
-
 // Takes a pointer to a student and places it into the list while maintaining a
 // sorted order
 template <typename T>
@@ -262,6 +247,7 @@ void StudentList<T>::searchFirstLast(std::string first,
                                      std::string last) const {
   StudentNodePtr<T> currHead = head;
   bool found = false;
+  bool foundClose = false;
   T temp;
   temp.setFirstName(first);
   temp.setLastName(last);
@@ -273,6 +259,11 @@ void StudentList<T>::searchFirstLast(std::string first,
         std::cout << std::string(80, '-') << std::endl;
       std::cout << *currHead->getStudent() << std::endl;
       found = true;
+    } else if (StringHelper::isAnagramOf(currHead->getStudent()->getFirstName(),
+                                         first) &&
+               StringHelper::isAnagramOf(currHead->getStudent()->getLastName(),
+                                         last)) {
+      NULL;
     }
     currHead = currHead->getLink();
   }
@@ -313,6 +304,18 @@ bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   T temp;
   temp.setFirstName(StringHelper::toUpper(first));
   temp.setLastName(StringHelper::toUpper(last));
+
+  if (head == nullptr)
+    return true;
+
+  while (compareFirstName(*currHead->getStudent(), temp) == 0 &&
+         compareLastName(*currHead->getStudent(), temp) == 0 &&
+         head != nullptr) {
+    head = head->getLink();
+    delete currHead;
+    currHead = head;
+    currHead = currHead->getLink();
+  }
 
   while (currHead != nullptr) {
     if (compareFirstName(*currHead->getStudent(), temp) == 0 &&
