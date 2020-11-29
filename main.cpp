@@ -285,6 +285,11 @@ void listSelect(StudentList<Student>* list[3], std::string listNames[3],
       std::cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLR;
       return;
     } else {
+      if (std::cin.eof()) {
+        std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n"
+                  << CLR;
+        exit(-1);
+      }
       std::cout << RED << listChoice << " is not a valid option." << std::endl;
       std::cout << YELLOW << "Please choose one of the lists to get started"
                 << CLR << std::endl;
@@ -346,6 +351,11 @@ void actionSelect(StudentList<Student>* list, std::string listName,
                StringHelper::isAnagramOf(taskChoice, "back")) {
       selecting = false;
     } else {
+      if (std::cin.eof()) {
+        std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n"
+                  << CLR;
+        exit(-1);
+      }
       std::cout << RED << taskChoice << " is not a valid option." << std::endl;
       std::cout << YELLOW
                 << "Please choose one of following tasks to get started" << CLR
@@ -411,8 +421,13 @@ void searchSelect(StudentList<Student>* list) {
                StringHelper::isAnagramOf(searchMethod, "back")) {
       continue;
     } else {
-      std::cout << RED << searchMethod << " is not a valid option."
-                << CLR << std::endl;
+      if (std::cin.eof()) {
+        std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n"
+                  << CLR;
+        exit(-1);
+      }
+      std::cout << RED << searchMethod << " is not a valid option." << CLR
+                << std::endl;
       searchAgain = true;
     }
   } while (searchAgain);

@@ -267,7 +267,7 @@ void StudentList<T>::searchFirstLast(std::string first,
                                          first) &&
                StringHelper::isAnagramOf(currHead->getStudent()->getLastName(),
                                          last)) {
-      possibleMatches << *currHead->getStudent();
+      possibleMatches << *currHead->getStudent() << '\n';
       foundClose = true;
     }
     currHead = currHead->getLink();
@@ -278,8 +278,7 @@ void StudentList<T>::searchFirstLast(std::string first,
       std::cout << "\033[33mHowever, we did find some similar students to your "
                    "query\033[0m\n";
       std::cout << std::string(80, '-') << std::endl
-                << possibleMatches.str() << std::endl
-                << std::string(80, '-') << std::endl;
+                << possibleMatches.str() << std::string(80, '-') << std::endl;
     }
   } else
     std::cout << std::string(80, '-') << std::endl;
