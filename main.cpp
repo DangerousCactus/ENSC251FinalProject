@@ -14,11 +14,20 @@ const std::string YELLOW = "\033[33m";
 const std::string BOLD = "\033[1m";
 const std::string CLR = "\033[0m";
 
+void failOnEOF(std::istream& inps) {
+  if (inps.eof()) {
+    std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n" << CLR;
+    exit(-1);
+  }
+}
+
 void forceIntInput(std::istream& inps, std::string message, int& field,
                    int maxAllow) {
   do {
     std::cout << message;
     inps >> field;
+
+    failOnEOF(inps);
 
     if (inps.fail()) {
       inps.clear();
@@ -44,6 +53,8 @@ void forceCGPAinput(std::istream& inps, float& field) {
   do {
     std::cout << "Enter CGPA: ";
     inps >> field;
+
+    failOnEOF(inps);
 
     if (inps.fail()) {
       inps.clear();
@@ -228,11 +239,10 @@ int main() {
 
 void listSelect(StudentList<Student>* list[3], std::string listNames[3],
                 int& domCount, int& intCount) {
-  std::string listChoice;
-
   // Menu while loop
   // User chooses either Domestic or International student database
   while (true) {
+    std::string listChoice;
     std::cout << std::string(50, '-') << '\n';
     std::cout << "Student Database\n";
     std::cout << std::string(50, '-') << '\n';
@@ -285,11 +295,7 @@ void listSelect(StudentList<Student>* list[3], std::string listNames[3],
       std::cout << RED << BOLD << "\nPROGRAM EXITED\n\n" << CLR;
       return;
     } else {
-      if (std::cin.eof()) {
-        std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n"
-                  << CLR;
-        exit(-1);
-      }
+      failOnEOF(std::cin);
       std::cout << RED << listChoice << " is not a valid option." << std::endl;
       std::cout << YELLOW << "Please choose one of the lists to get started"
                 << CLR << std::endl;
@@ -300,9 +306,9 @@ void listSelect(StudentList<Student>* list[3], std::string listNames[3],
 }
 void actionSelect(StudentList<Student>* list, std::string listName,
                   int& domCount, int& intCount) {
-  std::string taskChoice;
   bool selecting = true;
   while (selecting) {
+    std::string taskChoice;
     std::cout << BOLD << "\nChoose a task to perform on the " << listName
               << " student list:" << CLR << std::endl;
     std::cout << "(S)earch Student" << std::endl;
@@ -341,8 +347,11 @@ void actionSelect(StudentList<Student>* list, std::string listName,
       std::cin >> firstName;
       std::cout << "Enter last name: ";
       std::cin >> lastName;
-      list->deleteFirstLast(firstName, lastName);
-      std::cout << "\033[32mDeleted specified students.\033[0m\n";
+      if (list->deleteFirstLast(firstName, lastName)) {
+        std::cout << GREEN << "Deleted specified students.\n" << CLR;
+      } else {
+        std::cout << RED << "No students matched your query\n" << CLR;
+      }
 
     } else if (StringHelper::toUpper(taskChoice) == "D" ||
                StringHelper::isAnagramOf(taskChoice, "delete")) {
@@ -360,11 +369,7 @@ void actionSelect(StudentList<Student>* list, std::string listName,
                StringHelper::isAnagramOf(taskChoice, "back")) {
       selecting = false;
     } else {
-      if (std::cin.eof()) {
-        std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n"
-                  << CLR;
-        exit(-1);
-      }
+      failOnEOF(std::cin);
       std::cout << RED << taskChoice << " is not a valid option." << std::endl;
       std::cout << YELLOW
                 << "Please choose one of following tasks to get started" << CLR
@@ -430,11 +435,7 @@ void searchSelect(StudentList<Student>* list) {
                StringHelper::isAnagramOf(searchMethod, "back")) {
       continue;
     } else {
-      if (std::cin.eof()) {
-        std::cout << RED << BOLD << "\nPROGRAM TERMINATED UNEXPECTEDLY\n\n"
-                  << CLR;
-        exit(-1);
-      }
+      failOnEOF(std::cin);
       std::cout << RED << searchMethod << " is not a valid option." << CLR
                 << std::endl;
       searchAgain = true;
@@ -457,7 +458,7 @@ void insertStudent(StudentList<Student>* list, std::string listName,
 
   if (listName == "Domestic") {
     do {
-      std::cout << "Enter Province Code (AB, BC,...):";
+      std::cout << "Enter Province Code (AB, BC,...): ";
       std::cin >> location;
       if (!StringHelper::isProvince(location))
         std::cout << RED << "That is not a valid province code.\n" << CLR;

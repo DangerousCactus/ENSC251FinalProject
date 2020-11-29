@@ -352,6 +352,5 @@ template <typename T>
 void StudentList<T>::deleteHeadTail() {
   deleteStudentNode(head);
   deleteStudentNode(tail);
-  ;
 }
 #endif
