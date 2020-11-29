@@ -96,7 +96,7 @@ void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
 
 template <typename T>
 bool StudentList<T>::isEmpty() {
-  return this.head == nullptr;
+  return head == nullptr;
 }
 
 // Takes a pointer to a student and places it into the list while maintaining a
@@ -322,7 +322,7 @@ bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   temp.setLastName(StringHelper::toUpper(last));
 
   if (this->isEmpty())
-    return true;
+    return false;
 
   while (compareFirstName(*currHead->getStudent(), temp) == 0 &&
          compareLastName(*currHead->getStudent(), temp) == 0 &&
@@ -349,7 +349,9 @@ bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
 
 // Delete the head and tail of the list
 template <typename T>
-bool StudentList<T>::deleteHeadTail() {
-  return deleteStudentNode(head) && deleteStudentNode(tail);
+void StudentList<T>::deleteHeadTail() {
+  deleteStudentNode(head);
+  deleteStudentNode(tail);
+  ;
 }
 #endif

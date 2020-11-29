@@ -34,7 +34,7 @@ class StudentList {
   // Delete a student from the list based on first and last name
   bool deleteFirstLast(std::string first, std::string last);
   // Delete both the head and tail of the student list in one delete function
-  bool deleteHeadTail();
+  void deleteHeadTail();
 
   /*Search students in the list based on multiple fields*/
 

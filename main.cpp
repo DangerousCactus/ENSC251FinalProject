@@ -341,17 +341,17 @@ void actionSelect(StudentList<Student>* list, std::string listName,
       std::cin >> firstName;
       std::cout << "Enter last name: ";
       std::cin >> lastName;
-      if (list->deleteFirstLast(firstName, lastName))
-        std::cout << "\033[32mDeleted specified students.\033[0m\n";
-      else
-        std::cout << "\033[31mNo matching records found.\033[0m\n";
+      list->deleteFirstLast(firstName, lastName);
+      std::cout << "\033[32mDeleted specified students.\033[0m\n";
 
     } else if (StringHelper::toUpper(taskChoice) == "D" ||
                StringHelper::isAnagramOf(taskChoice, "delete")) {
-      if (list->deleteHeadTail()) {
-        std::cout << GREEN << "Deleted head/tail nodes" << CLR << std::endl;
+      if (list->isEmpty()) {
+        std::cout << RED << "The list is empty." << CLR << std::endl;
+        selecting = false;
       } else {
-        std::cout << "\033[31mList is empty - cannot delete\033[0m\n";
+        list->deleteHeadTail();
+        std::cout << GREEN << "Deleted head/tail nodes" << CLR << std::endl;
       }
     } else if (StringHelper::toUpper(taskChoice) == "P" ||
                StringHelper::isAnagramOf(taskChoice, "print")) {
