@@ -324,10 +324,11 @@ information “firstName and lastName”.
 TEST_F(sortingTest, listDeleteTest) {
   // Normal Case
   Student* currHeadStudent = dslist.getHead()->getStudent();
-  EXPECT_TRUE(doesStudentExist(dslist, *currHeadStudent));
+  DomesticStudent dstemp(*dynamic_cast<DomesticStudent*>(currHeadStudent));
+  EXPECT_TRUE(doesStudentExist(dslist, dstemp));
   dslist.deleteFirstLast(currHeadStudent->getFirstName(),
                          currHeadStudent->getLastName());
-  EXPECT_FALSE(doesStudentExist(dslist, *currHeadStudent));
+  EXPECT_FALSE(doesStudentExist(dslist, dstemp));
 
   // Illegal case
   Student dsfake = DomesticStudent("John", "Doe", 2.0, 67, 20205020, "BC");

@@ -43,7 +43,7 @@ StringHelper.o: StringHelper.cpp
 
 #remove built files
 clean:
-	rm -rf main *.o *~ build/
+	rm -rf main *.o *~ && cd build/ && make clean -s && cd ..
 
 #GitHub CI
 #make the tests and run them
