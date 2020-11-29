@@ -94,6 +94,11 @@ void StudentList<T>::setTail(const StudentNodePtr<T> tail) {
   this->tail = tail;
 }
 
+template <typename T>
+bool StudentList<T>::isEmpty() {
+  return this.head == nullptr;
+}
+
 // Takes a pointer to a student and places it into the list while maintaining a
 // sorted order
 template <typename T>
@@ -178,7 +183,7 @@ void StudentList<T>::print() {
     std::cout << *currHead->getStudent() << std::endl;
     currHead = currHead->getLink();
   }
-  if (head == nullptr) {
+  if (this->isEmpty()) {
     std::cout << "\033[31m"
               << "The list is empty."
               << "\033[0m" << std::endl;
@@ -316,7 +321,7 @@ bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
   temp.setFirstName(StringHelper::toUpper(first));
   temp.setLastName(StringHelper::toUpper(last));
 
-  if (head == nullptr)
+  if (this->isEmpty())
     return true;
 
   while (compareFirstName(*currHead->getStudent(), temp) == 0 &&
@@ -345,12 +350,6 @@ bool StudentList<T>::deleteFirstLast(std::string first, std::string last) {
 // Delete the head and tail of the list
 template <typename T>
 bool StudentList<T>::deleteHeadTail() {
-  if (head == nullptr)
-    return false;
-  else {
-    deleteStudentNode(head);
-    deleteStudentNode(tail);
-  }
-  return true;
+  return deleteStudentNode(head) && deleteStudentNode(tail);
 }
 #endif

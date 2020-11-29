@@ -317,7 +317,11 @@ void actionSelect(StudentList<Student>* list, std::string listName,
 
     if (StringHelper::toUpper(taskChoice) == "S" ||
         StringHelper::isAnagramOf(taskChoice, "search")) {
-      searchSelect(list);
+      if (list->isEmpty()) {
+        std::cout << RED << "The list is empty." << CLR << std::endl;
+        selecting = false;
+      } else
+        searchSelect(list);
     } else if (StringHelper::toUpper(taskChoice) == "C" ||
                StringHelper::isAnagramOf(taskChoice, "create")) {
       if (listName.substr(0, 6) == "Merged")
@@ -327,6 +331,11 @@ void actionSelect(StudentList<Student>* list, std::string listName,
         insertStudent(list, listName, domCount, intCount);
     } else if (StringHelper::toUpper(taskChoice) == "R" ||
                StringHelper::isAnagramOf(taskChoice, "remove")) {
+      if (list->isEmpty()) {
+        std::cout << RED << "The list is empty." << CLR << std::endl;
+        selecting = false;
+        continue;
+      }
       std::string firstName, lastName;
       std::cout << "Enter first name: ";
       std::cin >> firstName;

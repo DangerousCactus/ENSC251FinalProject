@@ -51,6 +51,8 @@ class StudentList {
   // function of each object
   void print();
 
+  bool isEmpty();
+
  private:
   // Internal recursive/iterative functions used for initialization and
   // destruction of the StudentList
