@@ -9,7 +9,10 @@ std::string toUpper(std::string str) {
   // Iterate over the string
   for (std::string::const_iterator i = str.begin(); i != str.end(); i++)
     // Capitalize the character and save it
-    temp.push_back(toupper(*i));
+    if (isalpha(*i))
+      temp.push_back(toupper(*i));
+    else
+      temp.push_back(*i);
 
   return temp;
 }
@@ -54,11 +57,17 @@ bool isAnagramOf(std::string str1, std::string str2) {
   if (abs(str1.length() - str2.length()) > 1)
     return false;
 
-  for (int i = 0; i < str1.length(); i++)
+  for (int i = 0; i < str1.length(); i++) {
+    if (!isalpha(str1[i]))
+      return false;
     letterCount1[toupper(str1[i]) - 'A'] += 1;
+  }
 
-  for (int i = 0; i < str2.length(); i++)
+  for (int i = 0; i < str2.length(); i++) {
+    if (!isalpha(str2[i]))
+      return false;
     letterCount2[toupper(str2[i]) - 'A'] += 1;
+  }
 
   // If the letter counts match, then we have a valid anagram
   for (int i = 0; i < 26; i++)

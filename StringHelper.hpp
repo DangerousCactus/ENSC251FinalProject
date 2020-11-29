@@ -18,6 +18,8 @@ const std::string COUNTRIES[] = {"Canada", "China", "India", "Iran", "Korea"};
 const std::string MENU_OPTIONS[] = {"INSERT", "SEARCH", "DELETE", "MERGE"};
 
 // Returns the given string converted to upper case
+// If the string contains non-alpha characters, then those characters are passed
+// through unchanged
 std::string toUpper(std::string str);
 
 // Checks the given province against our list of 13 provinces
